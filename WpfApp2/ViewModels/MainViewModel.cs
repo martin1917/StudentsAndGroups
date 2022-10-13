@@ -1,0 +1,47 @@
+﻿using System.Windows.Input;
+using WpfApp2.Infrastructure.Commands;
+using WpfApp2.State;
+
+namespace WpfApp2.ViewModels;
+
+public class MainViewModel : BaseViewModel
+{
+	private readonly Navigator _navigator;
+
+    public MainViewModel(Navigator navigator) : base(ViewModelType.Main)
+	{
+		_navigator = navigator;
+		_navigator.StateChanged += Navigator_StateChanged;
+    }
+
+	private void Navigator_StateChanged()
+	{
+		OnPropertyChanged(nameof(CurrentViewModel));
+	}
+
+	public override void Dispose()
+	{
+		_navigator.StateChanged -= Navigator_StateChanged;
+		base.Dispose();
+	}
+
+    public BaseViewModel CurrentViewModel => _navigator.CurrentViewModel;
+
+    private ICommand _updateCurrentViewModelCommand;
+	public ICommand UpdateCurrentViewModelCommand => _updateCurrentViewModelCommand
+		??= new Command(OnUpdateCurrentViewModelCommandExecuted, CanUpdateCurrentViewModelCommandExecute);
+
+	private bool CanUpdateCurrentViewModelCommandExecute(object? param)
+	{
+		return param is ViewModelType viewType 
+			&& viewType != CurrentViewModel?.ViewModelType;
+    }
+
+    private void OnUpdateCurrentViewModelCommandExecuted(object? param)
+	{
+		if (param is ViewModelType viewType)
+		{
+			_navigator.ChangeState(viewType);
+		}
+	}
+}
