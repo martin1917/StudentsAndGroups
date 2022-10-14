@@ -3,8 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
 using System.Windows;
 using WpfApp2.Data;
+using WpfApp2.Services;
 using WpfApp2.State;
 using WpfApp2.ViewModels;
 
@@ -12,6 +14,12 @@ namespace WpfApp2;
 
 public partial class App
 {
+    public static Window? ActiveWindow => Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+
+    public static Window? FocusedWindow => Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsFocused);
+
+    public static Window? CurrentWindow => FocusedWindow ?? ActiveWindow;
+
     private static IHost? __host;
     public static IHost Host => __host
         ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).ConfigureAppConfiguration(conf =>
@@ -42,7 +50,8 @@ public partial class App
         .AddTransient<MainViewModel>()
         .AddSingleton<CreateViewModel<GroupsStudentsViewModel>>(s => () => s.GetRequiredService<GroupsStudentsViewModel>())
         .AddSingleton<ViewModelFactory>()
-        .AddSingleton<Navigator>();
+        .AddSingleton<Navigator>()
+        .AddTransient<StudentDialogService>();
 
     protected override void OnStartup(StartupEventArgs e)
     {
