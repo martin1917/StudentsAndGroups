@@ -10,7 +10,7 @@ public abstract class BaseViewModel : INotifyPropertyChanged
 
     public ViewModelType ViewModelType { get; init; }
 
-    public BaseViewModel(ViewModelType viewModelType)
+    public BaseViewModel(ViewModelType viewModelType = ViewModelType.Other)
     {
         ViewModelType = viewModelType;
     }
