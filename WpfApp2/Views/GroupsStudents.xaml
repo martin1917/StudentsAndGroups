@@ -102,9 +102,8 @@
                     <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Patronymic}"/>
                     <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding BirthDay, StringFormat=dd.MM.yyyy}"/>
                 </Grid>
-                <Button FontSize="15" Content="Редактировать" HorizontalAlignment="Left" Padding="5" Margin="3"/>
+                <Button FontSize="15" Content="Редактировать" HorizontalAlignment="Left" Padding="5" Margin="3" Command="{Binding Path=DataContext.EditStudentCommand, RelativeSource={RelativeSource AncestorType=GroupBox}}"/>
             </StackPanel>
         </GroupBox>
-
     </Grid>
 </UserControl>
