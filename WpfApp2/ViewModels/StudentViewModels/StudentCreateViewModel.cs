@@ -9,6 +9,7 @@ public class StudentCreateViewModel : BaseViewModel
     public StudentCreateViewModel(GroupModel group)
     {
         GroupModel = group;
+        BirthDay = DateTime.Now;
     }
 
     private string _firstName;
@@ -20,7 +21,7 @@ public class StudentCreateViewModel : BaseViewModel
     private string _patronymic;
     public string Patronymic { get => _patronymic; set => Set(ref _patronymic, value); }
 
-    private DateTime _birthDay = DateTime.Now;
+    private DateTime _birthDay;
     public DateTime BirthDay { get => _birthDay; set => Set(ref _birthDay, value); }
 
     private GroupModel _groupModel;

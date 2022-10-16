@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using WpfApp2.Data;
 using WpfApp2.Entity;
@@ -16,15 +18,18 @@ namespace WpfApp2.ViewModels;
 public class GroupsStudentsViewModel : BaseViewModel
 {
     private StudentDialogService _studentDialogService;
+    private GroupDialogService _groupDialogService;
     private CommonDialogService _commonDialogService;
     private IMapper _mapper;
 
     public GroupsStudentsViewModel(
         StudentDialogService studentDialogService,
+        GroupDialogService groupDialogService,
         CommonDialogService commonDialogService,
         IMapper mapper) : base(ViewModelType.GroupsStudents)
     {
         _studentDialogService = studentDialogService;
+        _groupDialogService = groupDialogService;
         _commonDialogService = commonDialogService;
         _mapper = mapper;
 
@@ -68,7 +73,6 @@ public class GroupsStudentsViewModel : BaseViewModel
             return;
         }
 
-
         var student = _mapper.Map<Student>(SelectedStudent);
         var context = ContextFactory.CreateContext();
         context.Entry(student).State = EntityState.Modified;
@@ -101,9 +105,10 @@ public class GroupsStudentsViewModel : BaseViewModel
 
         var student = _mapper.Map<Student>(newStudentModel);
         var context = ContextFactory.CreateContext();
-        context.Students.Add(student);
+        var addedStudent = context.Students.Add(student);
         context.SaveChanges();
 
+        newStudentModel.Id = addedStudent.Entity.Id;
         var group = Groups.First(g => g.Id == newStudentModel!.GroupId);
         group.StudentModels.Add(newStudentModel);
     }
@@ -118,7 +123,7 @@ public class GroupsStudentsViewModel : BaseViewModel
 
     private void OnDeleteStudentCommandExecuted(object? param)
     {
-        if (!_commonDialogService.ConfirmInformation($"Вы точно хотите удалить студента\n" +
+        if (!_commonDialogService.ConfirmInformation($"Вы точно хотите удалить студента ?\n" +
             $"Имя: {SelectedStudent.FirstName}\n" +
             $"Фамилия: {SelectedStudent.SecondName}\n" +
             $"Отчество: {SelectedStudent.Patronymic}\n" +
@@ -135,5 +140,84 @@ public class GroupsStudentsViewModel : BaseViewModel
 
         var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
         group.StudentModels.Remove(SelectedStudent);
+    }
+
+    // редактирование группы
+    private ICommand _editGroupCommand;
+    public ICommand EditGroupCommand => _editGroupCommand
+        ??= new Command(OnEditGroupCommandExecuted, CanEditGroupCommandExecute);
+
+    private bool CanEditGroupCommandExecute(object? param)
+        => SelectedGroup != null;
+
+    private void OnEditGroupCommandExecuted(object? param)
+    {
+        if (!_groupDialogService.Edit(SelectedGroup))
+        {
+            return;
+        }
+
+        var group = _mapper.Map<Group>(SelectedGroup);
+        var context = ContextFactory.CreateContext();
+        context.Entry(group).State = EntityState.Modified;
+        context.SaveChanges();
+    }
+
+    // Создание группы
+    private ICommand _createGroupCommand;
+    public ICommand CreateGroupCommand => _createGroupCommand
+        ??= new Command(OnCreateGroupCommandExecuted);
+
+    private void OnCreateGroupCommandExecuted(object? param)
+    {
+        var newGroupModel = new GroupModel();
+        if (!_groupDialogService.Edit(newGroupModel))
+        {
+            return;
+        }
+
+        var group = _mapper.Map<Group>(newGroupModel);
+        var context = ContextFactory.CreateContext();
+        var addedGroup = context.Groups.Add(group);
+        context.SaveChanges();
+
+        newGroupModel.Id = addedGroup.Entity.Id;
+
+        Groups.Add(newGroupModel);
+    }
+
+    // удаление группы
+    private ICommand _deleteGroupCommand;
+    public ICommand DeleteGroupCommand => _deleteGroupCommand
+        ??= new Command(OnDeleteGroupCommandExecuted, CanDeleteGroupCommandExecute);
+
+    private bool CanDeleteGroupCommandExecute(object? param)
+        => SelectedGroup != null;
+
+    private void OnDeleteGroupCommandExecuted(object? param)
+    {
+        if (!_commonDialogService.ConfirmInformation($"Вы точно хотите удалить группу ?\n" +
+            $"Имя: {SelectedGroup.Name}\n" +
+            $"ВСЕ СТУДЕНТЫ БУДУТ УДАЛЕНЫ ИЗ ЭТОЙ ГРУППЫ", "Удаление группы"))
+        {
+            return;
+        }
+
+        var context = ContextFactory.CreateContext();
+
+        if (SelectedGroup.StudentModels != null)
+        {
+            foreach (var studentModel in SelectedGroup.StudentModels)
+            {
+                var student = _mapper.Map<Student>(studentModel);
+                context.Entry(student).State = EntityState.Deleted;
+            }
+        }
+
+        var group = _mapper.Map<Group>(SelectedGroup);
+        context.Entry(group).State = EntityState.Deleted;
+        context.SaveChanges();
+
+        Groups.Remove(SelectedGroup);
     }
 }

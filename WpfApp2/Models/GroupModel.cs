@@ -15,7 +15,7 @@ public class GroupModel : BaseViewModel
     private DateOnly _dateCreated;
     public DateOnly DateCreated { get => _dateCreated; set => Set(ref _dateCreated, value); }
 
-    private ObservableCollection<StudentModel> _studentModels;
+    private ObservableCollection<StudentModel> _studentModels = new();
     public ObservableCollection<StudentModel> StudentModels { get => _studentModels; set => Set(ref _studentModels, value); }
 }
 
