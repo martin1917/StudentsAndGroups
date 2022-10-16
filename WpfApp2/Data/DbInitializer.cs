@@ -7,14 +7,11 @@ namespace WpfApp2.Data;
 
 public class DbInitializer
 {
-	private Context _ctx;
-
-	public DbInitializer(Context ctx) => _ctx = ctx;
-
     public void Initialize()
     {
-        _ctx.Database.EnsureDeleted();
-        _ctx.Database.EnsureCreated();
+        var context = ContextFactory.CreateContext();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
 
         var rnd = new Random();
         var initDate = new DateOnly(2015, 9, 1);
@@ -25,7 +22,7 @@ public class DbInitializer
             Name = $"Group: {i}",
             DateCreated = initDate.AddYears(rnd.Next(0, 8))
         }).ToList();
-        _ctx.Groups.AddRange(groups);
+        context.Groups.AddRange(groups);
 
         // Добавление студентов
         var students = new List<Student>();
@@ -44,7 +41,7 @@ public class DbInitializer
                 });
             }
         }
-        _ctx.Students.AddRange(students);
+        context.Students.AddRange(students);
 
         // Добавление предметов
         string[] subjectsName = { "math", "algebra", "himia", "language", "phisic", "drawing", "sports", "astronomics" };
@@ -56,7 +53,7 @@ public class DbInitializer
                 Name = subject
             });
         }
-        _ctx.Subjects.AddRange(subjects);
+        context.Subjects.AddRange(subjects);
 
         // указание какие группы изучают какой предмет
         var subjectGroups = new List<SubjectGroup>();
@@ -75,7 +72,7 @@ public class DbInitializer
                 });
             }
         }
-        _ctx.SubjectGroups.AddRange(subjectGroups);
+        context.SubjectGroups.AddRange(subjectGroups);
 
         // добавление отметок
         var startDate = new DateTime(2022, 10, 1);
@@ -107,8 +104,8 @@ public class DbInitializer
                 Mark = mark
             });
         }
-        _ctx.AcademicPerformanceLogs.AddRange(academicPerformanceLogs);
-        
-        _ctx.SaveChanges();
+        context.AcademicPerformanceLogs.AddRange(academicPerformanceLogs);
+
+        context.SaveChanges();
     }
 }

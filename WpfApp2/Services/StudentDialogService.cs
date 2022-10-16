@@ -13,10 +13,12 @@ namespace WpfApp2.Services;
 public class StudentDialogService
 {
     private IMapper _mapper;
+    private CommonDialogService _commonDialogService;
 
-    public StudentDialogService(IMapper mapper)
+    public StudentDialogService(IMapper mapper, CommonDialogService commonDialogService)
     {
         _mapper = mapper;
+        _commonDialogService = commonDialogService;
     }
 
     public bool Edit(StudentModel student)

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -9,7 +8,6 @@ using WpfApp2.Data;
 using WpfApp2.Mapper;
 using WpfApp2.Services;
 using WpfApp2.State;
-using WpfApp2.ViewModels;
 using WpfApp2.ViewModels.Utils;
 
 namespace WpfApp2;
@@ -33,19 +31,10 @@ public partial class App
     public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
         .AddTransient<DbInitializer>()
         .AddAutoMapper(typeof(AppMappingProfile))
-        .AddTransient<GroupsStudentsViewModel>()
-        .AddTransient<AllSubjectsViewModel>()
-        .AddTransient<SubjectForGroupViewModel>()
-        .AddTransient<MainViewModel>()
-        .AddSingleton<CreateViewModel<GroupsStudentsViewModel>>(s => () => s.GetRequiredService<GroupsStudentsViewModel>())
-        .AddSingleton<CreateViewModel<AllSubjectsViewModel>>(s => () => s.GetRequiredService<AllSubjectsViewModel>())
-        .AddSingleton<CreateViewModel<SubjectForGroupViewModel>>(s => () => s.GetRequiredService<SubjectForGroupViewModel>())
-        .AddSingleton<ViewModelFactory>()
+        .AddViewModels()
+        .AddFactoryViewModels()
         .AddSingleton<Navigator>()
-        .AddTransient<CommonDialogService>()
-        .AddTransient<StudentDialogService>()
-        .AddTransient<GroupDialogService>()
-        .AddTransient<SubjectDialogService>();
+        .AddDialogService();
 
     protected override void OnStartup(StartupEventArgs e)
     {

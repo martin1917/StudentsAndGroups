@@ -26,4 +26,6 @@ public class StudentCreateViewModel : BaseViewModel
 
     private GroupModel _groupModel;
     public GroupModel GroupModel { get => _groupModel; set => Set(ref _groupModel, value); }
+    
+    // TODO: сделать валидацию данных
 }
