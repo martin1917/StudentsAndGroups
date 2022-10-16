@@ -5,7 +5,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp2.Views"
-             xmlns:m="clr-namespace:WpfApp2.Entity"
+             xmlns:m="clr-namespace:WpfApp2.Models"
              xmlns:vm="clr-namespace:WpfApp2.ViewModels"
              xmlns:conv="clr-namespace:WpfApp2.Infrastructure.Converters"
              mc:Ignorable="d" 
@@ -32,7 +32,7 @@
                 </UniformGrid>
                 <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type m:Group}">
+                        <DataTemplate DataType="{x:Type m:GroupModel}">
                             <TextBlock Text="{Binding Name}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -46,9 +46,9 @@
                     <Button Content="Добавить" Margin="3 0" FontSize="15"/>
                     <Button Content="Удалить" Margin="3 0" FontSize="15"/>
                 </UniformGrid>
-                <ListBox ItemsSource="{Binding SelectedGroup.Students}" SelectedItem="{Binding SelectedStudent}">
+                <ListBox ItemsSource="{Binding SelectedGroup.StudentModels}" SelectedItem="{Binding SelectedStudent}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type m:Student}">
+                        <DataTemplate DataType="{x:Type m:StudentModel}">
                             <TextBlock>
                                 <TextBlock Text="{Binding SecondName}"/>
                             </TextBlock>

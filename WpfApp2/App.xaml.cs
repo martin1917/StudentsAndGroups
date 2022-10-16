@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using WpfApp2.Data;
+using WpfApp2.Mapper;
 using WpfApp2.Services;
 using WpfApp2.State;
 using WpfApp2.ViewModels;
@@ -46,6 +47,7 @@ public partial class App
 
         })
         .AddTransient<DbInitializer>()
+        .AddAutoMapper(typeof(AppMappingProfile))
         .AddTransient<GroupsStudentsViewModel>()
         .AddTransient<MainViewModel>()
         .AddSingleton<CreateViewModel<GroupsStudentsViewModel>>(s => () => s.GetRequiredService<GroupsStudentsViewModel>())

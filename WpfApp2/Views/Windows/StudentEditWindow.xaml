@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2.Views.Windows"
-        xmlns:m="clr-namespace:WpfApp2.Entity"
+        xmlns:m="clr-namespace:WpfApp2.Models"
         xmlns:vm="clr-namespace:WpfApp2.ViewModels"
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
@@ -54,9 +54,9 @@
             <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Text="{Binding SecondName}"/>
             <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="16" Text="{Binding Patronymic}"/>
             <DatePicker Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Text="{Binding BirthDay}"/>
-            <ComboBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" FontSize="16" ItemsSource="{Binding AllGroups}" SelectedItem="{Binding Group}">
+            <ComboBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" FontSize="16" ItemsSource="{Binding AllGroups}" SelectedItem="{Binding GroupModel}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type m:Group}">
+                    <DataTemplate DataType="{x:Type m:GroupModel}">
                         <TextBlock Text="{Binding Name}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
 using WpfApp2.Data;
 using WpfApp2.Entity;
+using WpfApp2.Models;
 using WpfApp2.ViewModels;
 using WpfApp2.Views.Windows;
 
@@ -9,16 +12,17 @@ namespace WpfApp2.Services;
 public class StudentDialogService
 {
     private Context _ctx;
+    private IMapper _mapper;
 
-    public StudentDialogService(Context ctx)
+    public StudentDialogService(Context ctx, IMapper mapper)
     {
         _ctx = ctx;
+        _mapper = mapper;
     }
 
-    public bool Edit(Student student)
+    public bool Edit(StudentModel student)
     {
-        var groups = _ctx.Groups.ToList();
-
+        var groups = _mapper.Map<List<GroupModel>>(_ctx.Groups.ToList());
         var vm = new StudentEditViewModel(student, groups);
         var window = new StudentEditWindow
         {
@@ -34,7 +38,8 @@ public class StudentDialogService
         student.SecondName = vm.SecondName;
         student.Patronymic = vm.Patronymic;
         student.BirthDay = vm.BirthDay;
-        student.Group = vm.Group;
+        student.GroupModel = vm.GroupModel;
+        student.GroupId = vm.GroupModel.Id;
 
         return true;
     }

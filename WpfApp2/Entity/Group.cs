@@ -9,6 +9,5 @@ public class Group : BaseEntity
 
     public DateOnly DateCreated { get; set; }
 
-
     public List<Student> Students { get; set; }
 }
