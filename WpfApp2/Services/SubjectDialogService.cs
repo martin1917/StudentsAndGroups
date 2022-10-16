@@ -57,13 +57,7 @@ public class SubjectDialogService
             .Select(s => s.NumGroup)
             .ToList();
 
-        ObservableCollection<int> collection = new();
-        foreach (var num in nums)
-        {
-            collection.Add(num);
-        }
-
-        var vm = new SubjectCreateViewModel(subject) { NumGroups = collection };
+        var vm = new SubjectCreateViewModel(subject) { NumGroups = nums };
         var windows = new SubjectCreateWindow { DataContext = vm };
 
         if (windows.ShowDialog() == false)

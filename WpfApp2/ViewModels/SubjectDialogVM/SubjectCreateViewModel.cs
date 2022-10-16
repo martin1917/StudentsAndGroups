@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 
@@ -16,6 +16,6 @@ public class SubjectCreateViewModel : BaseViewModel
 	private string _name;
 	public string Name { get => _name; set => Set(ref _name, value); }
 
-    private ObservableCollection<int> _numGroups;
-    public ObservableCollection<int> NumGroups { get => _numGroups; set => Set(ref _numGroups, value); }
+    private List<int> _numGroups;
+    public List<int> NumGroups { get => _numGroups; set => Set(ref _numGroups, value); }
 }
