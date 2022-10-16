@@ -58,6 +58,7 @@ public class GroupsStudentsViewModel : BaseViewModel
         }
     }
 
+    #region Команды по изменение студентов
     // редактирование студента
     private ICommand _editStudentCommand;
     public ICommand EditStudentCommand => _editStudentCommand
@@ -141,7 +142,9 @@ public class GroupsStudentsViewModel : BaseViewModel
         var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
         group.StudentModels.Remove(SelectedStudent);
     }
+    #endregion
 
+    #region Команды по изменение групп
     // редактирование группы
     private ICommand _editGroupCommand;
     public ICommand EditGroupCommand => _editGroupCommand
@@ -220,4 +223,5 @@ public class GroupsStudentsViewModel : BaseViewModel
 
         Groups.Remove(SelectedGroup);
     }
+    #endregion
 }

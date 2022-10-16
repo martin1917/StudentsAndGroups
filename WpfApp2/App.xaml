@@ -11,6 +11,9 @@
             <DataTemplate DataType="{x:Type vm:GroupsStudentsViewModel}">
                 <view:GroupsStudents/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AllSubjectsViewModel}">
+                <view:AllSubjects/>
+            </DataTemplate>
 
             <locator:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>

@@ -9,10 +9,13 @@ public delegate TViewModel CreateViewModel<TViewModel>() where TViewModel : Base
 public class ViewModelFactory
 {
     private readonly CreateViewModel<GroupsStudentsViewModel> _createGroupsStudentsViewModel;
+    private readonly CreateViewModel<AllSubjectsViewModel> _createAllSubjectsViewModel;
 
-    public ViewModelFactory(CreateViewModel<GroupsStudentsViewModel> createGroupsStudentsViewModel)
+    public ViewModelFactory(CreateViewModel<GroupsStudentsViewModel> createGroupsStudentsViewModel,
+        CreateViewModel<AllSubjectsViewModel> createAllSubjectsViewModel)
     {
         _createGroupsStudentsViewModel = createGroupsStudentsViewModel;
+        _createAllSubjectsViewModel = createAllSubjectsViewModel;
     }
 
     public BaseViewModel CreateViewModel(ViewModelType viewType)
@@ -21,6 +24,8 @@ public class ViewModelFactory
         {
             case ViewModelType.GroupsStudents:
                 return _createGroupsStudentsViewModel();
+            case ViewModelType.AllSubjects:
+                return _createAllSubjectsViewModel();
             default:
                 throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType");
         }

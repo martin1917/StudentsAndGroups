@@ -31,42 +31,23 @@ public partial class App
         }).Build();
 
     public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
-        //.AddDbContext<Context>(opt =>
-        //{
-        //    IConfiguration configuration = host.Configuration.GetSection("DataBases");
-        //    var type = configuration["Type"];
-
-        //    switch (type)
-        //    {
-        //        case null: throw new InvalidOperationException("Не определён тип БД");
-        //        default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
-
-        //        case "SQLite":
-        //            opt.UseSqlite(configuration.GetConnectionString(type));
-        //            break;
-        //    }
-
-        //})
         .AddTransient<DbInitializer>()
         .AddAutoMapper(typeof(AppMappingProfile))
         .AddTransient<GroupsStudentsViewModel>()
+        .AddTransient<AllSubjectsViewModel>()
         .AddTransient<MainViewModel>()
         .AddSingleton<CreateViewModel<GroupsStudentsViewModel>>(s => () => s.GetRequiredService<GroupsStudentsViewModel>())
+        .AddSingleton<CreateViewModel<AllSubjectsViewModel>>(s => () => s.GetRequiredService<AllSubjectsViewModel>())
         .AddSingleton<ViewModelFactory>()
         .AddSingleton<Navigator>()
         .AddTransient<CommonDialogService>()
         .AddTransient<StudentDialogService>()
-        .AddTransient<GroupDialogService>();
+        .AddTransient<GroupDialogService>()
+        .AddTransient<SubjectDialogService>();
 
     protected override void OnStartup(StartupEventArgs e)
     {
         var host = Host;
-
-        //using (var scope = host.Services.CreateScope())
-        //{
-        //    scope.ServiceProvider.GetRequiredService<DbInitializer>().Initialize();
-        //}
-
         base.OnStartup(e);
         host.Start();
     }

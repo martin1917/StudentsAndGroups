@@ -25,7 +25,7 @@
             </MenuItem>
             <MenuItem Header="Предметы">
                 <MenuItem Header="Все предметы"/>
-                <MenuItem Header="Предметы по группам"/>
+                <MenuItem Header="Предметы по группам" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AllSubjects}"/>
             </MenuItem>
         </Menu>
 
