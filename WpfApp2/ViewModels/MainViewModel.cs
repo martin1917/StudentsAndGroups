@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.State;
+using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels;
 

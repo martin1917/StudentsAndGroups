@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace WpfApp2.ViewModels;
+namespace WpfApp2.ViewModels.Utils;
 
 public class ViewModelLocator
 {

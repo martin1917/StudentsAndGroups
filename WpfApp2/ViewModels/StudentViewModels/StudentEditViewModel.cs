@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using WpfApp2.Entity;
 using WpfApp2.Models;
+using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels;
+namespace WpfApp2.ViewModels.StudentViewModels;
 
 public class StudentEditViewModel : BaseViewModel
 {
@@ -28,7 +29,7 @@ public class StudentEditViewModel : BaseViewModel
 
     private string _patronymic;
     public string Patronymic { get => _patronymic; set => Set(ref _patronymic, value); }
-    
+
     private DateTime _birthDay = DateTime.Now;
     public DateTime BirthDay { get => _birthDay; set => Set(ref _birthDay, value); }
 

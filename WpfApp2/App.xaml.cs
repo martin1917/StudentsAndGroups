@@ -10,6 +10,7 @@ using WpfApp2.Mapper;
 using WpfApp2.Services;
 using WpfApp2.State;
 using WpfApp2.ViewModels;
+using WpfApp2.ViewModels.Utils;
 
 namespace WpfApp2;
 
@@ -30,22 +31,22 @@ public partial class App
         }).Build();
 
     public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
-        .AddDbContext<Context>(opt =>
-        {
-            IConfiguration configuration = host.Configuration.GetSection("DataBases");
-            var type = configuration["Type"];
+        //.AddDbContext<Context>(opt =>
+        //{
+        //    IConfiguration configuration = host.Configuration.GetSection("DataBases");
+        //    var type = configuration["Type"];
 
-            switch (type)
-            {
-                case null: throw new InvalidOperationException("Не определён тип БД");
-                default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
+        //    switch (type)
+        //    {
+        //        case null: throw new InvalidOperationException("Не определён тип БД");
+        //        default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
 
-                case "SQLite":
-                    opt.UseSqlite(configuration.GetConnectionString(type));
-                    break;
-            }
+        //        case "SQLite":
+        //            opt.UseSqlite(configuration.GetConnectionString(type));
+        //            break;
+        //    }
 
-        })
+        //})
         .AddTransient<DbInitializer>()
         .AddAutoMapper(typeof(AppMappingProfile))
         .AddTransient<GroupsStudentsViewModel>()

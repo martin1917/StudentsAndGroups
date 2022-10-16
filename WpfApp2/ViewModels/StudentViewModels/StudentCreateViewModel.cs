@@ -1,7 +1,8 @@
 ﻿using System;
 using WpfApp2.Models;
+using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels;
+namespace WpfApp2.ViewModels.StudentViewModels;
 
 public class StudentCreateViewModel : BaseViewModel
 {

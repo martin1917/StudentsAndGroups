@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using WpfApp2.State;
 
-namespace WpfApp2.ViewModels;
+namespace WpfApp2.ViewModels.Base;
 
 public abstract class BaseViewModel : INotifyPropertyChanged
 {

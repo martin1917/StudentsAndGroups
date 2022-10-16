@@ -1,5 +1,6 @@
 ﻿using System;
-using WpfApp2.ViewModels;
+using WpfApp2.ViewModels.Base;
+using WpfApp2.ViewModels.Utils;
 
 namespace WpfApp2.State;
 

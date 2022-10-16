@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WpfApp2"
              xmlns:vm="clr-namespace:WpfApp2.ViewModels"
+             xmlns:locator="clr-namespace:WpfApp2.ViewModels.Utils"
              xmlns:view="clr-namespace:WpfApp2.Views"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
@@ -11,7 +12,7 @@
                 <view:GroupsStudents/>
             </DataTemplate>
 
-            <vm:ViewModelLocator x:Key="Locator"/>
+            <locator:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -9,23 +9,21 @@ using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
 using WpfApp2.Services;
 using WpfApp2.State;
+using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels;
 
 public class GroupsStudentsViewModel : BaseViewModel
 {
-	private Context _ctx;
     private StudentDialogService _studentDialogService;
     private CommonDialogService _commonDialogService;
     private IMapper _mapper;
 
     public GroupsStudentsViewModel(
-        Context ctx, 
         StudentDialogService studentDialogService,
         CommonDialogService commonDialogService,
         IMapper mapper) : base(ViewModelType.GroupsStudents)
     {
-        _ctx = ctx;
         _studentDialogService = studentDialogService;
         _commonDialogService = commonDialogService;
         _mapper = mapper;
@@ -46,7 +44,8 @@ public class GroupsStudentsViewModel : BaseViewModel
 
     private void LoadData()
     {
-        var items = _mapper.Map<ObservableCollection<GroupModel>>(_ctx.Groups.AsNoTracking().Include(g => g.Students));
+        var context = ContextFactory.CreateContext();
+        var items = _mapper.Map<ObservableCollection<GroupModel>>(context.Groups.AsNoTracking().Include(g => g.Students));
         Groups.Clear();
         foreach (var item in items)
         {
@@ -69,9 +68,11 @@ public class GroupsStudentsViewModel : BaseViewModel
             return;
         }
 
+
         var student = _mapper.Map<Student>(SelectedStudent);
-        _ctx.Entry(student).State = EntityState.Modified;
-        _ctx.SaveChanges();
+        var context = ContextFactory.CreateContext();
+        context.Entry(student).State = EntityState.Modified;
+        context.SaveChanges();
 
         if (SelectedGroup!.Id != SelectedStudent!.GroupId)
         {
@@ -99,8 +100,9 @@ public class GroupsStudentsViewModel : BaseViewModel
         }
 
         var student = _mapper.Map<Student>(newStudentModel);
-        _ctx.Students.Add(student);
-        _ctx.SaveChanges();
+        var context = ContextFactory.CreateContext();
+        context.Students.Add(student);
+        context.SaveChanges();
 
         var group = Groups.First(g => g.Id == newStudentModel!.GroupId);
         group.StudentModels.Add(newStudentModel);
@@ -127,8 +129,9 @@ public class GroupsStudentsViewModel : BaseViewModel
         }
 
         var student = _mapper.Map<Student>(SelectedStudent);
-        _ctx.Entry(student).State = EntityState.Deleted;
-        _ctx.SaveChanges();
+        var context = ContextFactory.CreateContext();
+        context.Entry(student).State = EntityState.Deleted;
+        context.SaveChanges();
 
         var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
         group.StudentModels.Remove(SelectedStudent);

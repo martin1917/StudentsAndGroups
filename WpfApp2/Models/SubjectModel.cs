@@ -1,4 +1,4 @@
-﻿using WpfApp2.ViewModels;
+﻿using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.Models;
 

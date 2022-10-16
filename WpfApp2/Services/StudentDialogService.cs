@@ -2,28 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WpfApp2.Data;
-using WpfApp2.Entity;
 using WpfApp2.Models;
-using WpfApp2.ViewModels;
-using WpfApp2.Views.Windows;
+using WpfApp2.ViewModels.StudentViewModels;
+using WpfApp2.Views.Windows.Student;
 
 namespace WpfApp2.Services;
 
 public class StudentDialogService
 {
-    private Context _ctx;
     private IMapper _mapper;
 
-    public StudentDialogService(Context ctx, IMapper mapper)
+    public StudentDialogService(IMapper mapper)
     {
-        _ctx = ctx;
         _mapper = mapper;
     }
 
     public bool Edit(StudentModel student)
     {
-        var groups = _mapper.Map<List<GroupModel>>(_ctx.Groups.ToList());
+        var context = ContextFactory.CreateContext();
+        var groups = _mapper.Map<List<GroupModel>>(context.Groups.AsNoTracking().ToList());
         var vm = new StudentEditViewModel(student, groups);
         var window = new StudentEditWindow
         {
