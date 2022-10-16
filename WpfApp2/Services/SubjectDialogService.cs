@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using WpfApp2.Data;
@@ -22,15 +23,10 @@ public class SubjectDialogService
     public bool Create(SubjectModel subject)
     {
         var vm = new SubjectCreateViewModel(subject);
-        var windows = new SubjectCreateWindow
-        {
-            DataContext = vm
-        };
+        var windows = new SubjectCreateWindow { DataContext = vm };
 
         if (windows.ShowDialog() == false)
-        {
             return false;
-        }
 
         subject.Name = vm.Name;
 
@@ -67,15 +63,8 @@ public class SubjectDialogService
             collection.Add(num);
         }
 
-        var vm = new SubjectCreateViewModel(subject)
-        {
-            NumGroups = collection
-        };
-
-        var windows = new SubjectCreateWindow
-        {
-            DataContext = vm
-        };
+        var vm = new SubjectCreateViewModel(subject) { NumGroups = collection };
+        var windows = new SubjectCreateWindow { DataContext = vm };
 
         if (windows.ShowDialog() == false)
         {
@@ -100,6 +89,33 @@ public class SubjectDialogService
             });
         }
 
+        context.SaveChanges();
+        return true;
+    }
+
+    public bool AddSubject(SubjectModel subject, int numGroup)
+    {
+        var context = ContextFactory.CreateContext();
+
+        var alreadyAdded = context.SubjectGroups
+            .Where(sg => sg.NumGroup == numGroup)
+            .Select(sg => sg.SubjectId);
+
+        var subjects = context.Subjects.AsEnumerable().Where(s => !alreadyAdded.Contains(s.Id));
+        var subjectModels = _mapper.Map<List<SubjectModel>>(subjects);
+
+        var vm = new AddSubjectForGroupViewModel(subjectModels, numGroup);
+        var window = new AddSubjectForGroupWindow { DataContext = vm };
+
+        if(window.ShowDialog() == false)
+        {
+            return false;
+        }
+
+        subject.Name = vm.SelectedSubject.Name;
+
+        var selectedSubject = _mapper.Map<Subject>(vm.SelectedSubject);
+        context.SubjectGroups.Add(new SubjectGroup { NumGroup = numGroup, SubjectId = selectedSubject.Id });
         context.SaveChanges();
         return true;
     }

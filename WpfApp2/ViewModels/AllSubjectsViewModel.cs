@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 using WpfApp2.Data;
-using WpfApp2.Entity;
+using WpfApp2.State;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
+using WpfApp2.Entity;
 using WpfApp2.Services;
 using WpfApp2.ViewModels.Base;
 
@@ -22,7 +21,7 @@ public class AllSubjectsViewModel : BaseViewModel
 
     public AllSubjectsViewModel(IMapper mapper,
         SubjectDialogService subjectDialogService,
-        CommonDialogService commonDialogService)
+        CommonDialogService commonDialogService) : base(ViewModelType.AllSubjects)
 	{
 		_mapper = mapper;
 		_subjectDialogService = subjectDialogService;

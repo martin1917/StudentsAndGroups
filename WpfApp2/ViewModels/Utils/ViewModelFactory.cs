@@ -10,12 +10,15 @@ public class ViewModelFactory
 {
     private readonly CreateViewModel<GroupsStudentsViewModel> _createGroupsStudentsViewModel;
     private readonly CreateViewModel<AllSubjectsViewModel> _createAllSubjectsViewModel;
+    private readonly CreateViewModel<SubjectForGroupViewModel> _createSubjectForGroupViewModel;
 
     public ViewModelFactory(CreateViewModel<GroupsStudentsViewModel> createGroupsStudentsViewModel,
-        CreateViewModel<AllSubjectsViewModel> createAllSubjectsViewModel)
+        CreateViewModel<AllSubjectsViewModel> createAllSubjectsViewModel,
+        CreateViewModel<SubjectForGroupViewModel> createSubjectForGroupViewModel)
     {
         _createGroupsStudentsViewModel = createGroupsStudentsViewModel;
         _createAllSubjectsViewModel = createAllSubjectsViewModel;
+        _createSubjectForGroupViewModel = createSubjectForGroupViewModel;
     }
 
     public BaseViewModel CreateViewModel(ViewModelType viewType)
@@ -26,6 +29,8 @@ public class ViewModelFactory
                 return _createGroupsStudentsViewModel();
             case ViewModelType.AllSubjects:
                 return _createAllSubjectsViewModel();
+            case ViewModelType.SubjectsForGroup:
+                return _createSubjectForGroupViewModel();
             default:
                 throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType");
         }

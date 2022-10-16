@@ -24,8 +24,8 @@
                 <MenuItem Header="Журнал посещаемости"/>
             </MenuItem>
             <MenuItem Header="Предметы">
-                <MenuItem Header="Все предметы"/>
-                <MenuItem Header="Предметы по группам" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AllSubjects}"/>
+                <MenuItem Header="Все предметы" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AllSubjects}"/>
+                <MenuItem Header="Предметы по группам" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.SubjectsForGroup}"/>
             </MenuItem>
         </Menu>
 
