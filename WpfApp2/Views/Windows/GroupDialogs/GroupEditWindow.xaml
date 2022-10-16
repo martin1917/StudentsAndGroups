@@ -1,24 +1,24 @@
-﻿<Window x:Class="WpfApp2.Views.Windows.Subject.SubjectCreateWindow"
+﻿<Window x:Class="WpfApp2.Views.Windows.GroupDialogs.GroupEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp2.Views.Windows.Subject"
+        xmlns:local="clr-namespace:WpfApp2.Views.Windows.GroupDialogs"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:m="clr-namespace:WpfApp2.Models"
-        xmlns:vm="clr-namespace:WpfApp2.ViewModels.SubjectViewModels"
-        xmlns:conv="clr-namespace:WpfApp2.Infrastructure.Converters"
+        xmlns:vm="clr-namespace:WpfApp2.ViewModels.GroupDialogVM"
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
-        Title="Добавление/редактирование предметов" Height="196" Width="423"
-        d:DataContext="{d:DesignInstance Type=vm:SubjectCreateViewModel}">
+        Title="Создание/редактирование группы" Height="184" Width="423"
+        d:DataContext="{d:DesignInstance Type=vm:GroupEditViewModel}">
 
     <Window.Resources>
         <c:DialogResultCommand x:Key="DialogResultCommand"/>
-        <conv:StringToCollectionConverter x:Key="StringToCollectionConverter"/>
     </Window.Resources>
-    
+
     <StackPanel Margin="15 0" VerticalAlignment="Center">
         <Grid>
+
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Style.Triggers>
@@ -42,11 +42,11 @@
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Предмет:" TextAlignment="Center" VerticalAlignment="Center" />
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Классы:" TextAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Имя:" TextAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Дата создания:" TextAlignment="Center" VerticalAlignment="Center"/>
 
             <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" FontSize="16" Text="{Binding Name}"/>
-            <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Text="{Binding NumGroups, Converter={StaticResource StringToCollectionConverter}}"/>
+            <DatePicker Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Text="{Binding DateCreated, UpdateSourceTrigger=LostFocus, StringFormat=dd.MM.yyyy}" SelectedDate="{Binding DateCreated}"/>
 
         </Grid>
 

@@ -1,4 +1,4 @@
-﻿namespace WpfApp2.Views.Windows.Subject;
+﻿namespace WpfApp2.Views.Windows.SubjectDialogs;
 
 public partial class AddSubjectForGroupWindow
 {

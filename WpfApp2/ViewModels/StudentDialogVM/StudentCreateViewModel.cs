@@ -2,7 +2,7 @@
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels.StudentViewModels;
+namespace WpfApp2.ViewModels.StudentDialogVM;
 
 public class StudentCreateViewModel : BaseViewModel
 {

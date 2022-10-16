@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace WpfApp2.Views;
+﻿namespace WpfApp2.Views.Controls;
 
 public partial class SubjectForGroup
 {

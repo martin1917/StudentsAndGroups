@@ -5,8 +5,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WpfApp2.Data;
 using WpfApp2.Models;
-using WpfApp2.ViewModels.StudentViewModels;
-using WpfApp2.Views.Windows.Student;
+using WpfApp2.ViewModels.StudentDialogVM;
+using WpfApp2.Views.Windows.StudentDialogs;
 
 namespace WpfApp2.Services;
 

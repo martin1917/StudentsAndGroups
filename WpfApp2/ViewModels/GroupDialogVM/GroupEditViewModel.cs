@@ -2,7 +2,7 @@
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels.GroupViewModels;
+namespace WpfApp2.ViewModels.GroupDialogVM;
 
 public class GroupEditViewModel : BaseViewModel
 {

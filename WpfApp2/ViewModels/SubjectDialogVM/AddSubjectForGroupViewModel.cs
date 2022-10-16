@@ -2,7 +2,7 @@
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels.SubjectViewModels;
+namespace WpfApp2.ViewModels.SubjectDialogVM;
 
 public class AddSubjectForGroupViewModel : BaseViewModel
 {

@@ -6,8 +6,8 @@ using System.Linq;
 using WpfApp2.Data;
 using WpfApp2.Entity;
 using WpfApp2.Models;
-using WpfApp2.ViewModels.SubjectViewModels;
-using WpfApp2.Views.Windows.Subject;
+using WpfApp2.ViewModels.SubjectDialogVM;
+using WpfApp2.Views.Windows.SubjectDialogs;
 
 namespace WpfApp2.Services;
 
@@ -113,6 +113,7 @@ public class SubjectDialogService
         }
 
         subject.Name = vm.SelectedSubject.Name;
+        subject.Id = vm.SelectedSubject.Id;
 
         var selectedSubject = _mapper.Map<Subject>(vm.SelectedSubject);
         context.SubjectGroups.Add(new SubjectGroup { NumGroup = numGroup, SubjectId = selectedSubject.Id });

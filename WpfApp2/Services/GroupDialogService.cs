@@ -1,7 +1,7 @@
 ﻿using System;
 using WpfApp2.Models;
-using WpfApp2.ViewModels.GroupViewModels;
-using WpfApp2.Views.Windows.Group;
+using WpfApp2.ViewModels.GroupDialogVM;
+using WpfApp2.Views.Windows.GroupDialogs;
 
 namespace WpfApp2.Services;
 

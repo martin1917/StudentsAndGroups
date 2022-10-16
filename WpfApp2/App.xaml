@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:WpfApp2"
              xmlns:vm="clr-namespace:WpfApp2.ViewModels"
              xmlns:locator="clr-namespace:WpfApp2.ViewModels.Utils"
-             xmlns:view="clr-namespace:WpfApp2.Views"
+             xmlns:view="clr-namespace:WpfApp2.Views.Controls"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
