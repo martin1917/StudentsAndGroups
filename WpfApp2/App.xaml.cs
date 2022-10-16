@@ -53,6 +53,7 @@ public partial class App
         .AddSingleton<CreateViewModel<GroupsStudentsViewModel>>(s => () => s.GetRequiredService<GroupsStudentsViewModel>())
         .AddSingleton<ViewModelFactory>()
         .AddSingleton<Navigator>()
+        .AddTransient<CommonDialogService>()
         .AddTransient<StudentDialogService>();
 
     protected override void OnStartup(StartupEventArgs e)

@@ -43,8 +43,8 @@
         <GroupBox Header="Студенты" Grid.Column="1">
             <DockPanel>
                 <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="-3 3">
-                    <Button Content="Добавить" Margin="3 0" FontSize="15"/>
-                    <Button Content="Удалить" Margin="3 0" FontSize="15"/>
+                    <Button Content="Добавить" Margin="3 0" FontSize="15" Command="{Binding CreateStudentCommand}"/>
+                    <Button Content="Удалить" Margin="3 0" FontSize="15" Command="{Binding DeleteStudentCommand}"/>
                 </UniformGrid>
                 <ListBox ItemsSource="{Binding SelectedGroup.StudentModels}" SelectedItem="{Binding SelectedStudent}">
                     <ListBox.ItemTemplate>

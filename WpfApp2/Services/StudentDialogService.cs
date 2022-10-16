@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WpfApp2.Data;
@@ -37,10 +38,31 @@ public class StudentDialogService
         student.FirstName = vm.FirstName;
         student.SecondName = vm.SecondName;
         student.Patronymic = vm.Patronymic;
-        student.BirthDay = vm.BirthDay;
+        student.BirthDay = DateOnly.FromDateTime(vm.BirthDay);
         student.GroupModel = vm.GroupModel;
         student.GroupId = vm.GroupModel.Id;
+        return true;
+    }
 
+    public bool Create(StudentModel student, GroupModel group)
+    {
+        var vm = new StudentCreateViewModel(group);
+        var window = new StudentCreateWindow
+        {
+            DataContext = vm
+        };
+
+        if (window.ShowDialog() == false)
+        {
+            return false;
+        }
+
+        student.FirstName = vm.FirstName;
+        student.SecondName = vm.SecondName;
+        student.Patronymic = vm.Patronymic;
+        student.BirthDay = DateOnly.FromDateTime(vm.BirthDay);
+        student.GroupModel = vm.GroupModel;
+        student.GroupId = vm.GroupModel.Id;
         return true;
     }
 }

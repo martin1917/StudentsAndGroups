@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using WpfApp2.Entity;
 using WpfApp2.Models;
 
 namespace WpfApp2.ViewModels;
 
-public class StudentEditViewModel : BaseViewModel
+public class StudentCreateViewModel : BaseViewModel
 {
-    public List<GroupModel> AllGroups { get; set; }
-
-    public StudentEditViewModel(StudentModel student, List<GroupModel> allGroups)
+    public StudentCreateViewModel(GroupModel group)
     {
-        AllGroups = allGroups;
-        FirstName = student.FirstName;
-        SecondName = student.SecondName;
-        Patronymic = student.Patronymic;
-        BirthDay = new DateTime(student.BirthDay.Year, student.BirthDay.Month, student.BirthDay.Day);
-        GroupModel = allGroups.First(g => g.Id == student.GroupId);
+        GroupModel = group;
     }
 
     private string _firstName;
@@ -28,7 +18,7 @@ public class StudentEditViewModel : BaseViewModel
 
     private string _patronymic;
     public string Patronymic { get => _patronymic; set => Set(ref _patronymic, value); }
-    
+
     private DateTime _birthDay = DateTime.Now;
     public DateTime BirthDay { get => _birthDay; set => Set(ref _birthDay, value); }
 

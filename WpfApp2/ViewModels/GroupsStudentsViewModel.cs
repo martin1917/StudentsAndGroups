@@ -15,15 +15,18 @@ public class GroupsStudentsViewModel : BaseViewModel
 {
 	private Context _ctx;
     private StudentDialogService _studentDialogService;
+    private CommonDialogService _commonDialogService;
     private IMapper _mapper;
 
     public GroupsStudentsViewModel(
         Context ctx, 
         StudentDialogService studentDialogService,
+        CommonDialogService commonDialogService,
         IMapper mapper) : base(ViewModelType.GroupsStudents)
     {
         _ctx = ctx;
         _studentDialogService = studentDialogService;
+        _commonDialogService = commonDialogService;
         _mapper = mapper;
 
         LoadData();
@@ -50,14 +53,13 @@ public class GroupsStudentsViewModel : BaseViewModel
         }
     }
 
+    // редактирование студента
     private ICommand _editStudentCommand;
     public ICommand EditStudentCommand => _editStudentCommand
         ??= new Command(OnEditStudentCommandExecuted, CanEditStudentCommandExecute);
 
     private bool CanEditStudentCommandExecute(object? arg)
-    {
-        return SelectedStudent != null;
-    }
+        => SelectedStudent != null;
 
     private void OnEditStudentCommandExecuted(object? obj)
     {
@@ -72,5 +74,51 @@ public class GroupsStudentsViewModel : BaseViewModel
             group.StudentModels.Add(SelectedStudent);
             SelectedGroup.StudentModels.Remove(SelectedStudent);
         }
+    }
+
+    // создание студента
+    private ICommand _createStudentCommand;
+    public ICommand CreateStudentCommand => _createStudentCommand
+        ??= new Command(OnCreateStudentCommandExecuted, CanCreateStudentCommandExecute);
+
+    private bool CanCreateStudentCommandExecute(object? param)
+        => SelectedGroup != null;
+
+    private void OnCreateStudentCommandExecuted(object? param)
+    {
+        var newStudentModel = new StudentModel();
+
+        if (!_studentDialogService.Create(newStudentModel, SelectedGroup!))
+        {
+            return;
+        }
+
+
+        var group = Groups.First(g => g.Id == newStudentModel!.GroupId);
+        group.StudentModels.Add(newStudentModel);
+    }
+
+    // удаление студента
+    private ICommand _deleteStudentCommand;
+    public ICommand DeleteStudentCommand => _deleteStudentCommand
+        ??= new Command(OnDeleteStudentCommandExecuted, CanDeleteStudentCommandExecute);
+
+    private bool CanDeleteStudentCommandExecute(object? param)
+        => SelectedStudent != null;
+
+    private void OnDeleteStudentCommandExecuted(object? param)
+    {
+        if (!_commonDialogService.ConfirmInformation($"Вы точно хотите удалить студента\n" +
+            $"Имя: {SelectedStudent.FirstName}\n" +
+            $"Фамилия: {SelectedStudent.SecondName}\n" +
+            $"Отчество: {SelectedStudent.Patronymic}\n" +
+            $"Дата рождения: {SelectedStudent.BirthDay}\n" +
+            $"Группа: {SelectedStudent.GroupModel.Name}\n", "Удалние студента"))
+        {
+            return;
+        }
+
+        var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
+        group.StudentModels.Remove(SelectedStudent);
     }
 }
