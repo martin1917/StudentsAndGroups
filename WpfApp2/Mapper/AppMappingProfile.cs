@@ -34,7 +34,7 @@ public class AppMappingProfile : Profile
             .ForMember(d => d.SecondName, opt => opt.MapFrom(s => s.SecondName))
             .ForMember(d => d.Patronymic, opt => opt.MapFrom(s => s.Patronymic))
             .ForMember(d => d.BirthDay, opt => opt.MapFrom(s => s.BirthDay))
-            .ForMember(d => d.Group, opt => opt.MapFrom(s => s.GroupModel));
+            .ForMember(d => d.Group, d => d.Ignore());
 
         CreateMap<Subject, SubjectModel>()
             .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
@@ -62,8 +62,8 @@ public class AppMappingProfile : Profile
             .ForMember(d => d.StudentId, opt => opt.MapFrom(s => s.StudentId))
             .ForMember(d => d.Date, opt => opt.MapFrom(s => s.Date))
             .ForMember(d => d.Mark, opt => opt.MapFrom(s => s.Mark))
-            .ForMember(d => d.Subject, opt => opt.MapFrom(s => s.SubjectModel))
-            .ForMember(d => d.Group, opt => opt.MapFrom(s => s.GroupModel))
-            .ForMember(d => d.Student, opt => opt.MapFrom(s => s.StudentModel));
+            .ForMember(d => d.Subject, d => d.Ignore())
+            .ForMember(d => d.Group, d => d.Ignore())
+            .ForMember(d => d.Student, d => d.Ignore());
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using WpfApp2.Data;
+using WpfApp2.Entity;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
 using WpfApp2.Services;
@@ -45,7 +46,7 @@ public class GroupsStudentsViewModel : BaseViewModel
 
     private void LoadData()
     {
-        var items = _mapper.Map<ObservableCollection<GroupModel>>(_ctx.Groups.Include(g => g.Students));
+        var items = _mapper.Map<ObservableCollection<GroupModel>>(_ctx.Groups.AsNoTracking().Include(g => g.Students));
         Groups.Clear();
         foreach (var item in items)
         {
@@ -67,6 +68,10 @@ public class GroupsStudentsViewModel : BaseViewModel
         {
             return;
         }
+
+        var student = _mapper.Map<Student>(SelectedStudent);
+        _ctx.Entry(student).State = EntityState.Modified;
+        _ctx.SaveChanges();
 
         if (SelectedGroup!.Id != SelectedStudent!.GroupId)
         {
@@ -93,6 +98,9 @@ public class GroupsStudentsViewModel : BaseViewModel
             return;
         }
 
+        var student = _mapper.Map<Student>(newStudentModel);
+        _ctx.Students.Add(student);
+        _ctx.SaveChanges();
 
         var group = Groups.First(g => g.Id == newStudentModel!.GroupId);
         group.StudentModels.Add(newStudentModel);
@@ -117,6 +125,10 @@ public class GroupsStudentsViewModel : BaseViewModel
         {
             return;
         }
+
+        var student = _mapper.Map<Student>(SelectedStudent);
+        _ctx.Entry(student).State = EntityState.Deleted;
+        _ctx.SaveChanges();
 
         var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
         group.StudentModels.Remove(SelectedStudent);
