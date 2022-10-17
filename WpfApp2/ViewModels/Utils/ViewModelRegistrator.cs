@@ -9,11 +9,13 @@ public static class ViewModelRegistrator
         .AddTransient<GroupsStudentsViewModel>()
         .AddTransient<AllSubjectsViewModel>()
         .AddTransient<SubjectForGroupViewModel>()
+        .AddTransient<JournalViewModel>()
         .AddTransient<MainViewModel>();
 
     public static IServiceCollection AddFactoryViewModels(this IServiceCollection services) => services
         .AddSingleton<CreateViewModel<GroupsStudentsViewModel>>(s => () => s.GetRequiredService<GroupsStudentsViewModel>())
         .AddSingleton<CreateViewModel<AllSubjectsViewModel>>(s => () => s.GetRequiredService<AllSubjectsViewModel>())
         .AddSingleton<CreateViewModel<SubjectForGroupViewModel>>(s => () => s.GetRequiredService<SubjectForGroupViewModel>())
+        .AddSingleton<CreateViewModel<JournalViewModel>>(s => () => s.GetRequiredService<JournalViewModel>())
         .AddSingleton<ViewModelFactory>();
 }

@@ -17,6 +17,9 @@
             <DataTemplate DataType="{x:Type vm:SubjectForGroupViewModel}">
                 <view:SubjectForGroup/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:JournalViewModel}">
+                <view:Journal/>
+            </DataTemplate>
 
             <locator:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>

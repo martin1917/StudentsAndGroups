@@ -20,7 +20,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Группы и студенты" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.GroupsStudents}"/>
             <MenuItem Header="Журнал">
-                <MenuItem Header="Журнал успеваемости"/>
+                <MenuItem Header="Журнал успеваемости" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AcademyJournal}"/>
                 <MenuItem Header="Журнал посещаемости"/>
             </MenuItem>
             <MenuItem Header="Предметы">
@@ -29,6 +29,6 @@
             </MenuItem>
         </Menu>
 
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <ContentControl x:Name="contentControl" Content="{Binding CurrentViewModel}"/>
     </DockPanel>
 </Window>

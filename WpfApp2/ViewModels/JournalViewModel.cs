@@ -1,0 +1,171 @@
+﻿using WpfApp2.ViewModels.Base;
+using WpfApp2.State;
+using System.Data;
+using WpfApp2.Models;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using WpfApp2.Data;
+using System.Windows.Input;
+using WpfApp2.Infrastructure.Commands;
+using System;
+using Microsoft.EntityFrameworkCore;
+
+namespace WpfApp2.ViewModels;
+
+public class JournalViewModel : BaseViewModel
+{
+	private readonly IMapper _mapper;
+
+	public JournalViewModel(IMapper mapper) : base(ViewModelType.AcademyJournal)
+	{
+		_mapper = mapper;
+        LoadData();
+    }
+
+	private void LoadData()
+	{
+		var ctx = ContextFactory.CreateContext();
+        GroupModels = _mapper.Map<List<GroupModel>>(ctx.Groups);
+		SubjectModels = _mapper.Map<List<SubjectModel>>(ctx.Subjects);
+	}
+
+	public List<SubjectModel> SubjectModels { get; set; }
+
+    private SubjectModel _selectedSubject;
+    public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
+
+	public List<GroupModel> GroupModels { get; set; }
+
+    private GroupModel _selectedGroup;
+	public GroupModel SelectedGroup { get => _selectedGroup; set => Set(ref _selectedGroup, value); }
+
+    public List<string> Months { get; set; } = new()
+    {
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь",
+    };
+
+    private string _selectedMonth;
+	public string SelectedMonth { get => _selectedMonth; set => Set(ref _selectedMonth, value); }
+
+    private string _year;
+	public string Year { get => _year; set => Set(ref _year, value); }
+
+    private DataTable? _dataTable;
+    public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
+
+    private ICommand _loadMarksCommand;
+	public ICommand LoadMarksCommand => _loadMarksCommand
+        ??= new Command(OnLoadMarksCommandExecuted, CanLoadMarksCommandExecute);
+
+	private bool CanLoadMarksCommandExecute(object? param)
+	{
+		var resultParsing = int.TryParse(Year, out int result);
+		return SelectedSubject != null 
+			&& SelectedGroup != null 
+			&& SelectedMonth != null
+			&& resultParsing;
+	}
+
+	private void OnLoadMarksCommandExecuted(object? param)
+	{
+        int year = int.Parse(Year);
+        var month = Months.IndexOf(SelectedMonth) + 1;
+        DateOnly startDate = new DateOnly(year, month, 1);
+        DateOnly endDate = month != 12
+            ? new DateOnly(year, month + 1, 1)
+            : new DateOnly(year + 1, 1, 1);
+
+        var ctx = ContextFactory.CreateContext();
+
+        // запрос на получение всех оценок по предмету для группы за указанный месяц
+        var effectiveLogs = ctx.AcademicPerformanceLogs.FromSqlRaw("SELECT " +
+            "apl.Id as Id, " +
+            "apl.SubjectId as SubjectId, " +
+            "apl.GroupId as GroupId, " +
+            "apl.StudentId as StudentId, " +
+            "apl.Mark as Mark, " +
+            "apl.Date as Date " +
+            "from AcademicPerformanceLogs apl " +
+            $"where apl.GroupId == {SelectedGroup.Id} and " +
+            $"apl.SubjectId == {SelectedSubject.Id} and " +
+            $"apl.Date >= date('{startDate.Year}-{startDate.Month}-0{startDate.Day}') and " +
+            $"apl.Date < date('{endDate.Year}-{endDate.Month}-0{endDate.Day}')").ToList();
+
+        // уникальные даты
+        var uniqueDates = effectiveLogs.AsEnumerable()
+            .Select(i => i.Date)
+            .Distinct()
+            .OrderBy(i => i)
+            .ToList();
+		
+		var SetOfStudentMarks = effectiveLogs.AsEnumerable()
+            .GroupBy(i => i.StudentId)
+            .Select(gr => new StudentAndMarks(
+                gr.Key,
+                gr.GroupBy(i => i.Date).Select(i => new MarkDetail(
+                    i.Select(x => x.Mark).ToList(),
+                    i.Key)).ToList()));
+
+        var extendedTable = new List<StudentAndMarks>();
+        foreach (var studentMarks in SetOfStudentMarks)
+        {
+            var studentId = studentMarks.StudentId;
+            var marks = new List<MarkDetail>();
+
+            foreach (var date in uniqueDates)
+            {
+                var markDetailInDate = studentMarks.GetByDate(date);
+
+                if (markDetailInDate != null)
+                {
+                    marks.Add(new MarkDetail(markDetailInDate.Marks, date));
+                }
+                else
+                {
+                    marks.Add(new MarkDetail(new List<int?>(), date));
+                }
+            }
+
+            extendedTable.Add(new StudentAndMarks(studentId, marks));
+        }
+
+        DataTable tmpTable = new();
+
+        tmpTable.Columns.Add("Student", typeof(string));
+        foreach (var date in uniqueDates)
+        {
+            tmpTable.Columns.Add($"{date.Day} {date.Month} {date.Year}", typeof(string));
+        }
+
+        foreach (var studentAndMarks in extendedTable)
+        {
+            var row = tmpTable.NewRow();
+
+            var student = ctx.Students.First(s => s.Id == studentAndMarks.StudentId);
+            var name = $"{student.Id}) {student.SecondName} {student.FirstName[0]}.{student.Patronymic[0]}";
+            row["Student"] = name;
+
+            foreach (var markDetail in studentAndMarks.MarkDetails)
+            {
+                row[$"{markDetail.Date.Day} {markDetail.Date.Month} {markDetail.Date.Year}"] = markDetail.MarksToString();
+            }
+
+            tmpTable.Rows.Add(row);
+        }
+
+        DataTable?.Dispose();
+        DataTable = tmpTable;
+    }
+}

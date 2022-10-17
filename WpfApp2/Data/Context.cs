@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using System;
 using WpfApp2.Entity;
 
 namespace WpfApp2.Data;
@@ -16,4 +18,9 @@ public class Context : DbContext
 	public DbSet<SubjectGroup> SubjectGroups { get; set; }
 
 	public DbSet<AcademicPerformanceLog> AcademicPerformanceLogs { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
+    }
 }
