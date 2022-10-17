@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -7,9 +6,9 @@ using WpfApp2.Data;
 using WpfApp2.State;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
-using WpfApp2.Entity;
 using WpfApp2.Services;
 using WpfApp2.ViewModels.Base;
+using WpfApp2.Managers;
 
 namespace WpfApp2.ViewModels;
 
@@ -18,14 +17,17 @@ public class AllSubjectsViewModel : BaseViewModel
 	private IMapper _mapper;
 	private SubjectDialogService _subjectDialogService;
     private CommonDialogService _commonDialogService;
+    private SubjectManager _subjectManager;
 
     public AllSubjectsViewModel(IMapper mapper,
         SubjectDialogService subjectDialogService,
-        CommonDialogService commonDialogService) : base(ViewModelType.AllSubjects)
+        CommonDialogService commonDialogService,
+        SubjectManager subjectManager) : base(ViewModelType.AllSubjects)
 	{
 		_mapper = mapper;
 		_subjectDialogService = subjectDialogService;
         _commonDialogService = commonDialogService;
+        _subjectManager = subjectManager;
         LoadData();
 	}
 
@@ -53,9 +55,9 @@ public class AllSubjectsViewModel : BaseViewModel
 
     private void OnCreateSubjectCommandExecuted(object? param)
 	{
-		var newSubject = new SubjectModel();
+        var newSubject = _subjectManager.Create();
 
-		if (!_subjectDialogService.Create(newSubject))
+		if (newSubject == null)
 		{
 			return;
 		}
@@ -73,10 +75,7 @@ public class AllSubjectsViewModel : BaseViewModel
 
 	private void OnEditSubjectCommandExecuted(object? param)
     {
-		if (!_subjectDialogService.Edit(SelectedSubject))
-        {
-            return;
-        }
+        _subjectManager.Edit(SelectedSubject);
     }
 
     // удаление предмета
@@ -89,24 +88,10 @@ public class AllSubjectsViewModel : BaseViewModel
 
     private void OnDeleteSubjectCommandExecuted(object? param)
     {
-        if (!_commonDialogService.ConfirmInformation($"Вы точно хотите удалить предмет ?\n" +
-            $"Предмет: {SelectedSubject.Name}\n", "Удаление группы"))
-        {
-            return;
-        }
-
-        var context = ContextFactory.CreateContext();
-        var subject = _mapper.Map<Subject>(SelectedSubject);
-
-        var SubjectGroups = context.SubjectGroups.Where(sg => sg.SubjectId == subject.Id);
-        foreach (var subjectGroup in SubjectGroups)
-        {
-            context.Entry(subjectGroup).State = EntityState.Deleted;
-        }
-
-        context.Entry(subject).State = EntityState.Deleted;
-        context.SaveChanges();
-
+		if (!_subjectManager.DeleteSubject(SelectedSubject))
+		{
+			return;
+		}
         SubjectModels.Remove(SelectedSubject);
     }
 }

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using WpfApp2.Data;
-using WpfApp2.Entity;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.SubjectDialogVM;
 using WpfApp2.Views.Windows.SubjectDialogs;
@@ -19,77 +17,20 @@ public class SubjectDialogService
         _mapper = mapper;
     }
 
-    public bool Create(SubjectModel subject)
+    public SubjectDTO Edit(SubjectModel subject)
     {
         var vm = new SubjectCreateViewModel(subject);
         var windows = new SubjectCreateWindow { DataContext = vm };
 
         if (windows.ShowDialog() == false)
-            return false;
-
-        subject.Name = vm.Name;
-
-        var context = ContextFactory.CreateContext();
-        var sub = _mapper.Map<Subject>(subject);
-        var addedSubject = context.Subjects.Add(sub);
-        
-        subject.Id = addedSubject.Entity.Id;
-        foreach (var numGroup in vm.NumGroups)
         {
-            context.SubjectGroups.Add(new SubjectGroup
-            {
-                NumGroup = numGroup,
-                Subject = sub
-            });
+            return null;
         }
 
-        context.SaveChanges();
-        return true;
+        return new SubjectDTO(vm.Name, vm.NumGroups);
     }
 
-    public bool Edit(SubjectModel subject)
-    {
-        var context = ContextFactory.CreateContext();
-
-        var nums = context.SubjectGroups
-            .Where(s => s.SubjectId == subject.Id && s.NumGroup != null)
-            .Select(s => s.NumGroup)
-            .ToList();
-
-        var vm = new SubjectCreateViewModel(subject) { NumGroups = nums };
-        var windows = new SubjectCreateWindow { DataContext = vm };
-
-        if (windows.ShowDialog() == false)
-        {
-            return false;
-        }
-
-        var sub = _mapper.Map<Subject>(subject);
-        context.Entry(sub).State = EntityState.Modified;
-
-        var newNums = vm.NumGroups.Except(nums);
-        var PrevNums = nums.Except(vm.NumGroups);
-        
-        foreach (var prevNum in PrevNums)
-        {
-            var prevRow = context.SubjectGroups.First(sg => sg.SubjectId == sub.Id && sg.NumGroup == prevNum);
-            context.Entry(prevRow).State = EntityState.Deleted;
-        }
-
-        foreach (var newNum in newNums)
-        {
-            context.SubjectGroups.Add(new SubjectGroup
-            {
-                NumGroup = newNum,
-                Subject = sub
-            });
-        }
-
-        context.SaveChanges();
-        return true;
-    }
-
-    public bool AddSubject(SubjectModel subject, int numGroup)
+    public SubjectModel? AddSubject(int numGroup)
     {
         var context = ContextFactory.CreateContext();
 
@@ -105,15 +46,9 @@ public class SubjectDialogService
 
         if(window.ShowDialog() == false)
         {
-            return false;
+            return null;
         }
 
-        subject.Name = vm.SelectedSubject.Name;
-        subject.Id = vm.SelectedSubject.Id;
-
-        var selectedSubject = _mapper.Map<Subject>(vm.SelectedSubject);
-        context.SubjectGroups.Add(new SubjectGroup { NumGroup = numGroup, SubjectId = selectedSubject.Id });
-        context.SaveChanges();
-        return true;
+        return vm.SelectedSubject;
     }
 }

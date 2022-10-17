@@ -1,31 +1,26 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using WpfApp2.Data;
 using WpfApp2.State;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
-using WpfApp2.Services;
+using WpfApp2.Managers;
 
 namespace WpfApp2.ViewModels;
 
 public class SubjectForGroupViewModel : BaseViewModel
 {
     private IMapper _mapper;
-    private CommonDialogService _commonDialogService;
-    private SubjectDialogService _subjectDialogService;
+    private SubjectManager _subjectManager;
 
     public SubjectForGroupViewModel(IMapper mapper,
-        CommonDialogService commonDialogService,
-        SubjectDialogService subjectDialogService) : base(ViewModelType.SubjectsForGroup)
+        SubjectManager subjectManager) : base(ViewModelType.SubjectsForGroup)
     {
         _mapper = mapper;
-        _commonDialogService = commonDialogService;
-        _subjectDialogService = subjectDialogService;
+        _subjectManager = subjectManager;
     }
 
     public ObservableCollection<SubjectModel> SubjectModels { get; } = new();
@@ -48,12 +43,7 @@ public class SubjectForGroupViewModel : BaseViewModel
 
     private void OnLoadSubjectCommandExecuted(object? param)
     {
-        var context = ContextFactory.CreateContext();
-
-        var subjects = context.SubjectGroups
-            .Where(sg => sg.NumGroup == SelectedNumGroup)
-            .Include(sg => sg.Subject)
-            .Select(sg => sg.Subject);
+        var subjects = _subjectManager.GetSubjectsForGroup(SelectedNumGroup!.Value);
 
         var items = _mapper.Map<ObservableCollection<SubjectModel>>(subjects);
         SubjectModels.Clear();
@@ -73,19 +63,10 @@ public class SubjectForGroupViewModel : BaseViewModel
 
     private void OnDeleteSubjectCommandExecuted(object? param)
     {
-        var context = ContextFactory.CreateContext();
-
-        if (!_commonDialogService.ConfirmInformation($"Вы точно хотите удалить предмет: {SelectedSubject.Name} " +
-            $"для {SelectedNumGroup} класса ?", "Удаление предмета"))
+        if(!_subjectManager.DeleteSubjectForGroup(SelectedSubject, SelectedNumGroup!.Value))
         {
             return;
         }
-        
-        var row = context.SubjectGroups
-            .First(sg => sg.NumGroup == SelectedNumGroup && sg.SubjectId == SelectedSubject.Id);
-
-        context.Entry(row).State = EntityState.Deleted;
-        context.SaveChanges();
 
         SubjectModels.Remove(SelectedSubject);
     }
@@ -100,8 +81,9 @@ public class SubjectForGroupViewModel : BaseViewModel
 
     private void OnAddSubjectCommandExecuted(object? param)
     {
-        var newSubject = new SubjectModel();
-        if(!_subjectDialogService.AddSubject(newSubject, SelectedNumGroup.Value))
+        var newSubject = _subjectManager.AddSubjectForGroup(SelectedNumGroup!.Value);
+
+        if (newSubject == null)
         {
             return;
         }

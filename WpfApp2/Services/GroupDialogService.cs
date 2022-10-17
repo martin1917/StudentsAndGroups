@@ -10,10 +10,7 @@ public class GroupDialogService
     public bool Edit(GroupModel group)
     {
         var vm = new GroupEditViewModel(group);
-        var window = new GroupEditWindow
-        {
-            DataContext = vm
-        };
+        var window = new GroupEditWindow { DataContext = vm };
 
         if(window.ShowDialog() == false)
         {

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WpfApp2.ViewModels.Utils;
-using WpfApp2.ViewModels;
 
 namespace WpfApp2.Services;
 

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using WpfApp2.Data;
+using WpfApp2.Managers;
 using WpfApp2.Mapper;
 using WpfApp2.Services;
 using WpfApp2.State;
@@ -34,7 +35,8 @@ public partial class App
         .AddViewModels()
         .AddFactoryViewModels()
         .AddSingleton<Navigator>()
-        .AddDialogService();
+        .AddDialogService()
+        .AddManagers();
 
     protected override void OnStartup(StartupEventArgs e)
     {

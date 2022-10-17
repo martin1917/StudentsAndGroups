@@ -12,19 +12,8 @@ namespace WpfApp2.Services;
 
 public class StudentDialogService
 {
-    private IMapper _mapper;
-    private CommonDialogService _commonDialogService;
-
-    public StudentDialogService(IMapper mapper, CommonDialogService commonDialogService)
+    public bool Edit(StudentModel student, List<GroupModel> groups)
     {
-        _mapper = mapper;
-        _commonDialogService = commonDialogService;
-    }
-
-    public bool Edit(StudentModel student)
-    {
-        var context = ContextFactory.CreateContext();
-        var groups = _mapper.Map<List<GroupModel>>(context.Groups.AsNoTracking().ToList());
         var vm = new StudentEditViewModel(student, groups);
         var window = new StudentEditWindow { DataContext = vm };
 
@@ -45,10 +34,7 @@ public class StudentDialogService
     public bool Create(StudentModel student, GroupModel group)
     {
         var vm = new StudentCreateViewModel(group);
-        var window = new StudentCreateWindow
-        {
-            DataContext = vm
-        };
+        var window = new StudentCreateWindow { DataContext = vm };
 
         if (window.ShowDialog() == false)
         {
