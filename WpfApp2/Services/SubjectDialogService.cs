@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using WpfApp2.Data;
 using WpfApp2.Entity;
@@ -68,13 +67,16 @@ public class SubjectDialogService
         var sub = _mapper.Map<Subject>(subject);
         context.Entry(sub).State = EntityState.Modified;
 
-        foreach (var prevNum in nums)
+        var newNums = vm.NumGroups.Except(nums);
+        var PrevNums = nums.Except(vm.NumGroups);
+        
+        foreach (var prevNum in PrevNums)
         {
             var prevRow = context.SubjectGroups.First(sg => sg.SubjectId == sub.Id && sg.NumGroup == prevNum);
             context.Entry(prevRow).State = EntityState.Deleted;
         }
 
-        foreach (var newNum in vm.NumGroups)
+        foreach (var newNum in newNums)
         {
             context.SubjectGroups.Add(new SubjectGroup
             {

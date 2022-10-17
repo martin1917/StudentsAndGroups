@@ -31,7 +31,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0" Text="Класс:" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 5 0"/>
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Num}" Margin="5 0 0 0"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Num}" VerticalAlignment="Center" Margin="5 0 0 0"/>
 
             <TextBlock Grid.Column="0" Grid.Row="1" Text="Предмет:" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 5 0"/>
             <ComboBox Grid.Column="1" Grid.Row="1" Margin="5 0 0 0" ItemsSource="{Binding SubjectModels}" SelectedItem="{Binding SelectedSubject}">

@@ -19,6 +19,6 @@ public class StringToCollectionConverter : IValueConverter
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var str = Regex.Replace(((string)value).Trim(), @"\s+", " ");
-        return new List<int>(str.Split(",").Select(i => int.Parse(i)));
+        return new List<int>(str.Split(",").Select(i => int.Parse(i)).Distinct());
     }
 }

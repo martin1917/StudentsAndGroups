@@ -26,10 +26,7 @@ public class StudentDialogService
         var context = ContextFactory.CreateContext();
         var groups = _mapper.Map<List<GroupModel>>(context.Groups.AsNoTracking().ToList());
         var vm = new StudentEditViewModel(student, groups);
-        var window = new StudentEditWindow
-        {
-            DataContext = vm
-        };
+        var window = new StudentEditWindow { DataContext = vm };
 
         if (window.ShowDialog() == false)
         {
