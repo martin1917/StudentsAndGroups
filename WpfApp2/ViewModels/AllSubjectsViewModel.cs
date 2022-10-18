@@ -15,18 +15,12 @@ namespace WpfApp2.ViewModels;
 public class AllSubjectsViewModel : BaseViewModel
 {
 	private IMapper _mapper;
-	private SubjectDialogService _subjectDialogService;
-    private CommonDialogService _commonDialogService;
     private SubjectManager _subjectManager;
 
     public AllSubjectsViewModel(IMapper mapper,
-        SubjectDialogService subjectDialogService,
-        CommonDialogService commonDialogService,
         SubjectManager subjectManager) : base(ViewModelType.AllSubjects)
 	{
 		_mapper = mapper;
-		_subjectDialogService = subjectDialogService;
-        _commonDialogService = commonDialogService;
         _subjectManager = subjectManager;
         LoadData();
 	}

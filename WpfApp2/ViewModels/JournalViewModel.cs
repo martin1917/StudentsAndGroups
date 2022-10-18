@@ -167,5 +167,29 @@ public class JournalViewModel : BaseViewModel
 
         DataTable?.Dispose();
         DataTable = tmpTable;
+        DataTable.RowChanged += Foo;
+        DataTable.ColumnChanged += Goo;
+    }
+
+    private DataRow prevChangedRow;
+    private DataColumn prevChangedColumn;
+
+    private void Goo(object sender, DataColumnChangeEventArgs e)
+    {
+        prevChangedColumn = e.Column;
+    }
+
+    private void Foo(object sender, DataRowChangeEventArgs e)
+    {
+        prevChangedRow = e.Row;
+        Update();
+    }
+
+    private void Update()
+    {
+        if(prevChangedRow != null && prevChangedColumn != null)
+        {
+
+        }
     }
 }
