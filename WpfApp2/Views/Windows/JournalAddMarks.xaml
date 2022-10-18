@@ -1,0 +1,46 @@
+﻿<Window x:Class="WpfApp2.Views.Windows.JournalAddMarks"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2.Views.Windows"
+        xmlns:vm="clr-namespace:WpfApp2.ViewModels"
+        xmlns:conv="clr-namespace:WpfApp2.Infrastructure.Converters"
+        xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
+        xmlns:m="clr-namespace:WpfApp2.Models"
+        mc:Ignorable="d"
+        Title="Добавление оценок" Height="450" Width="376"
+        d:DataContext="{d:DesignInstance Type=vm:JournalAddMarksViewModel}">
+
+    <Window.Resources>
+        <conv:StudentToStringConverter x:Key="StudentToStringConverter"/>
+        <c:DialogResultCommand x:Key="DialogResultCommand"/>
+    </Window.Resources>
+    
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Margin="0 10 0 5" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Дата:" Margin="0 0 5 0"/>
+            <ComboBox Grid.Column="1" Margin="0 0 5 0" ItemsSource="{Binding NumInMonth}" SelectedItem="{Binding Day}"/>
+            <TextBlock Grid.Column="2" Text="октября" Margin="0 0 5 0"/>
+        </Grid>
+
+        <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5">
+            <Button Content="Добавить" Margin="0 0 5 0" Command="{Binding ConfirmOperationCommand}"/>
+            <Button Content="Отмена" Margin="5 0 0 0" Command="{StaticResource DialogResultCommand}" CommandParameter="False"/>
+        </UniformGrid>
+
+        <DataGrid Margin="5" ItemsSource="{Binding StudentsAndMarks}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding StudentModel.Id}" IsReadOnly="True" Width="auto"/>
+                <DataGridTextColumn Header="Студент" Binding="{Binding StudentModel, Converter={StaticResource StudentToStringConverter}}" IsReadOnly="True" Width="auto"/>
+                <DataGridTextColumn Header="Оценки" Binding="{Binding Marks, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>

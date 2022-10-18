@@ -10,6 +10,9 @@ using System.Windows.Input;
 using WpfApp2.Infrastructure.Commands;
 using System;
 using Microsoft.EntityFrameworkCore;
+using WpfApp2.Views.Windows;
+using WpfApp2.Entity;
+using System.Text.RegularExpressions;
 
 namespace WpfApp2.ViewModels;
 
@@ -65,6 +68,9 @@ public class JournalViewModel : BaseViewModel
     private DataTable? _dataTable;
     public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
 
+    private bool dataIsLoaded = false;
+    private List<DateOnly> uniqueDates;
+
     private ICommand _loadMarksCommand;
 	public ICommand LoadMarksCommand => _loadMarksCommand
         ??= new Command(OnLoadMarksCommandExecuted, CanLoadMarksCommandExecute);
@@ -77,7 +83,12 @@ public class JournalViewModel : BaseViewModel
 	}
 
 	private void OnLoadMarksCommandExecuted(object? param)
-	{
+    {
+        LoadMarks();
+    }
+
+    private void LoadMarks()
+    {
         var resultParsing = int.TryParse(Year, out int year);
         if (!resultParsing)
         {
@@ -107,13 +118,13 @@ public class JournalViewModel : BaseViewModel
             $"apl.Date < date('{endDate.Year}-{endDate.Month}-0{endDate.Day}')").ToList();
 
         // уникальные даты
-        var uniqueDates = effectiveLogs.AsEnumerable()
+        uniqueDates = effectiveLogs.AsEnumerable()
             .Select(i => i.Date)
             .Distinct()
             .OrderBy(i => i)
             .ToList();
-		
-		var SetOfStudentMarks = effectiveLogs.AsEnumerable()
+
+        var SetOfStudentMarks = effectiveLogs.AsEnumerable()
             .GroupBy(i => i.StudentId)
             .Select(gr => new StudentAndMarks(
                 gr.Key,
@@ -129,8 +140,8 @@ public class JournalViewModel : BaseViewModel
             foreach (var date in uniqueDates)
             {
                 var markDetailInDate = studentMarks.GetByDate(date);
-                marks.Add(new MarkDetail(markDetailInDate != null 
-                    ? markDetailInDate.Marks 
+                marks.Add(new MarkDetail(markDetailInDate != null
+                    ? markDetailInDate.Marks
                     : new List<int?>(), date));
             }
 
@@ -149,7 +160,7 @@ public class JournalViewModel : BaseViewModel
         foreach (var studentAndMarks in extendedTable)
         {
             var student = ctx.Students.First(s => s.Id == studentAndMarks.StudentId);
-            
+
             var row = tmpTable.NewRow();
             row["ID"] = student.Id;
             row["Студент"] = $"{student.SecondName} {student.FirstName[0]}.{student.Patronymic[0]}"; ;
@@ -163,5 +174,55 @@ public class JournalViewModel : BaseViewModel
 
         DataTable?.Dispose();
         DataTable = tmpTable;
+        dataIsLoaded = true;
+    }
+
+    private ICommand _addMarksCommand;
+    public ICommand AddMarksCommand => _addMarksCommand
+        ??= new Command(OnAddMarksCommandExecuted, CanAddMarksCommandExecute);
+
+    private bool CanAddMarksCommandExecute(object? arg)
+    {
+        return dataIsLoaded;
+    }
+
+    private void OnAddMarksCommandExecuted(object? obj)
+    {
+        if (!int.TryParse(Year, out int year))
+        {
+            return;
+        }
+
+        var ctx = ContextFactory.CreateContext();
+
+        var month = Months.IndexOf(SelectedMonth) + 1;
+        var studentModels = _mapper.Map<List<StudentModel>>(ctx.Students.Where(s => s.GroupId == SelectedGroup.Id));
+        var vm = new JournalAddMarksViewModel(studentModels, year, month, uniqueDates);
+        var window = new JournalAddMarks { DataContext = vm };
+        if (window.ShowDialog() == false) return;
+
+        foreach (var item in vm.StudentsAndMarks)
+        {
+            var entityId = item.StudentModel.Id;
+            var marksString = Regex.Replace(item.Marks.Trim(), @"\s+", " ").Split(", ");
+            if (string.IsNullOrEmpty(marksString[0])) continue;
+            var marks = marksString.Select(i => int.TryParse(i, out int res) ? res : -1);
+            foreach (var mark in marks)
+            {
+                var data = new AcademicPerformanceLog
+                {
+                    Date = new DateOnly(year, month, vm.Day.Value),
+                    Mark = mark == -1 ? null : mark,
+                    StudentId = entityId,
+                    GroupId = SelectedGroup.Id,
+                    SubjectId = SelectedSubject.Id
+                };
+
+                ctx.AcademicPerformanceLogs.Add(data);
+            }
+        }
+
+        ctx.SaveChanges();
+        LoadMarks();
     }
 }
