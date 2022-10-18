@@ -7,9 +7,24 @@
              xmlns:local="clr-namespace:WpfApp2"
              xmlns:m="clr-namespace:WpfApp2.Models"
              xmlns:vm="clr-namespace:WpfApp2.ViewModels"
+             xmlns:conv="clr-namespace:WpfApp2.Infrastructure.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:JournalViewModel}">
+
+    <UserControl.Resources>
+        <conv:ValueCellToBackgroundConverter x:Key="ValueCellToBackgroundConverter"/>
+        <Style x:Key="CellStyle" TargetType="DataGridCell">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="False">
+                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Converter={StaticResource ValueCellToBackgroundConverter}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     
     <Grid Background="White">
 
@@ -96,6 +111,11 @@
 
         <DataGrid Grid.Row="2"
                   Margin="10"
-                  ItemsSource="{Binding DataTable.DefaultView}"/>
+                  IsReadOnly="True" 
+                  CanUserReorderColumns="False" 
+                  CanUserSortColumns="False"
+                  CellStyle="{StaticResource CellStyle}"
+                  ItemsSource="{Binding DataTable.DefaultView}">            
+        </DataGrid>
     </Grid>
 </UserControl>

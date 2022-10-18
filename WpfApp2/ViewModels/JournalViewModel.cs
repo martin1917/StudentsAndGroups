@@ -71,16 +71,19 @@ public class JournalViewModel : BaseViewModel
 
 	private bool CanLoadMarksCommandExecute(object? param)
 	{
-		var resultParsing = int.TryParse(Year, out int result);
-		return SelectedSubject != null 
-			&& SelectedGroup != null 
-			&& SelectedMonth != null
-			&& resultParsing;
+        return SelectedSubject != null
+            && SelectedGroup != null
+            && SelectedMonth != null;
 	}
 
 	private void OnLoadMarksCommandExecuted(object? param)
 	{
-        int year = int.Parse(Year);
+        var resultParsing = int.TryParse(Year, out int year);
+        if (!resultParsing)
+        {
+            return;
+        }
+
         var month = Months.IndexOf(SelectedMonth) + 1;
         DateOnly startDate = new DateOnly(year, month, 1);
         DateOnly endDate = month != 12
@@ -121,29 +124,23 @@ public class JournalViewModel : BaseViewModel
         var extendedTable = new List<StudentAndMarks>();
         foreach (var studentMarks in SetOfStudentMarks)
         {
-            var studentId = studentMarks.StudentId;
             var marks = new List<MarkDetail>();
 
             foreach (var date in uniqueDates)
             {
                 var markDetailInDate = studentMarks.GetByDate(date);
-
-                if (markDetailInDate != null)
-                {
-                    marks.Add(new MarkDetail(markDetailInDate.Marks, date));
-                }
-                else
-                {
-                    marks.Add(new MarkDetail(new List<int?>(), date));
-                }
+                marks.Add(new MarkDetail(markDetailInDate != null 
+                    ? markDetailInDate.Marks 
+                    : new List<int?>(), date));
             }
 
-            extendedTable.Add(new StudentAndMarks(studentId, marks));
+            extendedTable.Add(new StudentAndMarks(studentMarks.StudentId, marks));
         }
 
         DataTable tmpTable = new();
 
-        tmpTable.Columns.Add("Student", typeof(string));
+        tmpTable.Columns.Add("ID", typeof(int));
+        tmpTable.Columns.Add("Студент", typeof(string));
         foreach (var date in uniqueDates)
         {
             tmpTable.Columns.Add($"{date.Day} {date.Month} {date.Year}", typeof(string));
@@ -151,12 +148,11 @@ public class JournalViewModel : BaseViewModel
 
         foreach (var studentAndMarks in extendedTable)
         {
-            var row = tmpTable.NewRow();
-
             var student = ctx.Students.First(s => s.Id == studentAndMarks.StudentId);
-            var name = $"{student.Id}) {student.SecondName} {student.FirstName[0]}.{student.Patronymic[0]}";
-            row["Student"] = name;
-
+            
+            var row = tmpTable.NewRow();
+            row["ID"] = student.Id;
+            row["Студент"] = $"{student.SecondName} {student.FirstName[0]}.{student.Patronymic[0]}"; ;
             foreach (var markDetail in studentAndMarks.MarkDetails)
             {
                 row[$"{markDetail.Date.Day} {markDetail.Date.Month} {markDetail.Date.Year}"] = markDetail.MarksToString();
@@ -167,29 +163,5 @@ public class JournalViewModel : BaseViewModel
 
         DataTable?.Dispose();
         DataTable = tmpTable;
-        DataTable.RowChanged += Foo;
-        DataTable.ColumnChanged += Goo;
-    }
-
-    private DataRow prevChangedRow;
-    private DataColumn prevChangedColumn;
-
-    private void Goo(object sender, DataColumnChangeEventArgs e)
-    {
-        prevChangedColumn = e.Column;
-    }
-
-    private void Foo(object sender, DataRowChangeEventArgs e)
-    {
-        prevChangedRow = e.Row;
-        Update();
-    }
-
-    private void Update()
-    {
-        if(prevChangedRow != null && prevChangedColumn != null)
-        {
-
-        }
     }
 }

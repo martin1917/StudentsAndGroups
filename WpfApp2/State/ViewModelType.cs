@@ -11,9 +11,6 @@ public enum ViewModelType
     /// <summary> VM с оценками </summary>
     AcademyJournal,
 
-    /// <summary> VM с посещением </summary>
-    VisitJournal,
-
     /// <summary> VM со всеми предметами </summary>
     AllSubjects,
 
