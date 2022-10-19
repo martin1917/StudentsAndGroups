@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Windows.Input;
 using WpfApp2.Data;
 using WpfApp2.Extensions;
@@ -141,6 +146,72 @@ public class AvgMarksViewModel : BaseViewModel
         }
 
         DataTable = tmpTable;
+    }
+
+    private ICommand _saveExcelFileCommand;
+    public ICommand SaveExcelFileCommand => _saveExcelFileCommand
+        ??= new Command(OnSaveExcelFileCommandExecuted);
+
+    private void OnSaveExcelFileCommandExecuted(object? param)
+    {
+        SaveFileDialog saveFileDialog = new()
+        {
+            Filter = "Excel file (*.xlsx)|*.xlsx",
+            ValidateNames = false,
+            CheckFileExists = true,
+            CheckPathExists = true,
+        };
+
+        if (saveFileDialog.ShowDialog() == false)
+        {
+            return;
+        }
+
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        var package = new ExcelPackage();
+        var sheet = package.Workbook.Worksheets.Add("Avg marks");
+
+
+        sheet.Cells[2, 2].Value = "Средние оценки";
+        sheet.Cells[3, 2].Value = "Группа:";
+        sheet.Cells[3, 3].Value = SelectedGroup.Name;
+        sheet.Cells[4, 2].Value = "Месяц:";
+        sheet.Cells[4, 3].Value = SelectedMonth;
+
+        sheet.Cells[2, 2, 4, 3].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+        sheet.Cells[2, 2, 4, 3].AutoFitColumns();
+
+        var initRow = 2;
+        var initCol = 5;
+        if (DataTable != null)
+        {
+            for (int i = 0; i < DataTable.Columns.Count; i++)
+            {
+                var col = DataTable.Columns[i];
+                sheet.Cells[initRow, initCol + i].Value = col.ColumnName;
+            }
+
+            for (int i = 0; i < DataTable.Rows.Count; i++)
+            {
+                var row = DataTable.Rows[i];
+                int column = initCol;
+                
+                for (int j = 0; j < row.ItemArray.Length; j++)
+                {
+                    var value = row.ItemArray[j];
+                    sheet.Cells[initRow + i + 1, column + j].Value = value;
+                }
+            }
+
+            var endRow = initRow + DataTable.Rows.Count;
+            var endCol = initCol + DataTable.Columns.Count;
+
+            sheet.Cells[initRow, initCol, endRow, endCol].AutoFitColumns();
+            sheet.Cells[initRow, initCol, endRow, endCol]
+                .Style.Border.BorderAround(ExcelBorderStyle.Thick);
+        }
+
+        File.WriteAllBytes(saveFileDialog.FileName, package.GetAsByteArray());
     }
 }
 
