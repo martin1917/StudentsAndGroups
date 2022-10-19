@@ -20,6 +20,9 @@
             <DataTemplate DataType="{x:Type vm:JournalViewModel}">
                 <view:Journal/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AvgMarksViewModel}">
+                <view:AvgMarks/>
+            </DataTemplate>
 
             <locator:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>

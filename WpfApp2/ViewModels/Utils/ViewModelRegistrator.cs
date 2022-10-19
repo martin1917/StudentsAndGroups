@@ -10,6 +10,7 @@ public static class ViewModelRegistrator
         .AddTransient<AllSubjectsViewModel>()
         .AddTransient<SubjectForGroupViewModel>()
         .AddTransient<JournalViewModel>()
+        .AddTransient<AvgMarksViewModel>()
         .AddTransient<MainViewModel>();
 
     public static IServiceCollection AddFactoryViewModels(this IServiceCollection services) => services
@@ -17,5 +18,6 @@ public static class ViewModelRegistrator
         .AddSingleton<CreateViewModel<AllSubjectsViewModel>>(s => () => s.GetRequiredService<AllSubjectsViewModel>())
         .AddSingleton<CreateViewModel<SubjectForGroupViewModel>>(s => () => s.GetRequiredService<SubjectForGroupViewModel>())
         .AddSingleton<CreateViewModel<JournalViewModel>>(s => () => s.GetRequiredService<JournalViewModel>())
+        .AddSingleton<CreateViewModel<AvgMarksViewModel>>(s => () => s.GetRequiredService<AvgMarksViewModel>())
         .AddSingleton<ViewModelFactory>();
 }

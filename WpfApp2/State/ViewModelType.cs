@@ -17,6 +17,9 @@ public enum ViewModelType
     /// <summary> VM с предметами для группы </summary>
     SubjectsForGroup,
 
+    /// <summary> VM со средними оценками </summary>
+    AvgMarks,
+
     /// <summary> VM для другого окна </summary>
     Other
 }

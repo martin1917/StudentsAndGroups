@@ -24,6 +24,9 @@
                 <MenuItem Header="Все предметы" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AllSubjects}"/>
                 <MenuItem Header="Предметы по группам" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.SubjectsForGroup}"/>
             </MenuItem>
+            <MenuItem Header="Отчеты">
+                <MenuItem Header="Средние оценки по всем предметам для студентов из группы" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AvgMarks}"/>
+            </MenuItem>
         </Menu>
 
         <ContentControl x:Name="contentControl" Content="{Binding CurrentViewModel}"/>
