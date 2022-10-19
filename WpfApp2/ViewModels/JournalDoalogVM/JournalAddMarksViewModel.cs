@@ -9,12 +9,12 @@ using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels;
+namespace WpfApp2.ViewModels.JournalDoalogVM;
 
 public class JournalAddMarksViewModel : BaseViewModel
 {
     public JournalAddMarksViewModel(List<StudentModel> studentModels, int year, int month, List<DateOnly> alreadyAddedDate)
-	{
+    {
         foreach (var student in studentModels)
         {
             StudentsAndMarks.Add(new StudentAndMarkInDate(student));
@@ -22,7 +22,7 @@ public class JournalAddMarksViewModel : BaseViewModel
 
         var nums = Enumerable
             .Range(1, DateTime.DaysInMonth(year, month))
-            .Where(n => !alreadyAddedDate.Select(i=>i.Day).Contains(n));
+            .Where(n => !alreadyAddedDate.Select(i => i.Day).Contains(n));
 
         NumInMonth = new(nums);
     }
@@ -50,7 +50,7 @@ public class JournalAddMarksViewModel : BaseViewModel
         string error = string.Empty;
         foreach (var item in StudentsAndMarks)
         {
-            var marks = Regex.Replace(item.Marks.Trim().ToUpper(), @"\s+", " ").Split(", ");
+            var marks = Regex.Replace(item.Marks.Trim().ToUpper(), @"\s+", "").Split(",");
 
             if (string.IsNullOrEmpty(marks[0])) continue;
 
@@ -59,7 +59,7 @@ public class JournalAddMarksViewModel : BaseViewModel
                 error += $"Студент ({item.StudentModel.Id}) не может остутствовать и иметь оценки за одну дату\n";
             }
 
-            foreach(var mark in marks)
+            foreach (var mark in marks)
             {
                 if (mark != "2" && mark != "3" && mark != "4" && mark != "5" && mark != "Н")
                 {

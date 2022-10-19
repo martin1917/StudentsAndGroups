@@ -10,9 +10,11 @@ using System.Windows.Input;
 using WpfApp2.Infrastructure.Commands;
 using System;
 using Microsoft.EntityFrameworkCore;
-using WpfApp2.Views.Windows;
 using WpfApp2.Entity;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using WpfApp2.ViewModels.JournalDoalogVM;
+using WpfApp2.Views.Windows.JournalDialogs;
 
 namespace WpfApp2.ViewModels;
 
@@ -224,5 +226,71 @@ public class JournalViewModel : BaseViewModel
 
         ctx.SaveChanges();
         LoadMarks();
+    }
+
+    private ICommand _ddCommand;
+    public ICommand DdCommand => _ddCommand
+        ??= new Command(OnDdCommandExecuted);
+
+    private void OnDdCommandExecuted(object? obj)
+    {
+        var dataGrid = (DataGrid)((MouseButtonEventArgs)obj!).Source;
+
+        var itemsSource = dataGrid.ItemsSource;
+        if (itemsSource == null) return;
+
+        var columnHeader = (dataGrid.CurrentCell.Column.Header as string);
+        var item = (DataRowView)dataGrid.CurrentCell.Item;
+
+        var partsColumnHeader = columnHeader
+            .Split(" ")
+            .Select(i => int.Parse(i))
+            .ToList();
+
+        var ctx = ContextFactory.CreateContext();
+        var date = new DateOnly(partsColumnHeader[2], partsColumnHeader[1], partsColumnHeader[0]);
+        var id = (int)item.Row["ID"];
+        var marks = (string)item.Row[columnHeader];
+        var student = ctx.Students.First(s => s.Id == id);
+
+        var vm = new JournalEditMarksViewModel(student, date, marks);
+        var window = new JournalEditMarks { DataContext = vm };
+        if (window.ShowDialog() == false) return;
+
+        item.Row[columnHeader] = vm.Marks;
+
+        var marksBefore = Regex.Replace(marks.Trim().ToUpper(), @"\s+", "").Split(",");
+        var marksAfter = Regex.Replace(vm.Marks.Trim().ToUpper(), @"\s+", "").Split(",");
+
+        var prevMarks = marksBefore.Select(i => i == "Н" ? (int?)null : int.Parse(i));
+        var newMarks = marksAfter.Select(i => i == "Н" ? (int?)null : int.Parse(i));
+
+        // remove
+        foreach (var prevMark in prevMarks.Except(newMarks))
+        {
+            var entity = ctx.AcademicPerformanceLogs
+                .First(apl => apl.SubjectId == SelectedSubject.Id
+                    && apl.GroupId == student.GroupId
+                    && apl.StudentId == student.Id
+                    && apl.Date == date
+                    && apl.Mark == prevMark);
+
+            ctx.Entry(entity).State = EntityState.Deleted;
+        }
+
+        // add
+        foreach (var newMark in newMarks.Except(prevMarks))
+        {
+            ctx.AcademicPerformanceLogs.Add(new AcademicPerformanceLog
+            {
+                SubjectId = SelectedSubject.Id,
+                GroupId = student.GroupId,
+                StudentId = student.Id,
+                Date = date,
+                Mark = newMark
+            });
+        }
+
+        ctx.SaveChanges();
     }
 }

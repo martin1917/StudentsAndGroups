@@ -8,7 +8,7 @@ using WpfApp2.Entity;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.ViewModels.Base;
 
-namespace WpfApp2.ViewModels;
+namespace WpfApp2.ViewModels.JournalDoalogVM;
 
 public class JournalEditMarksViewModel : BaseViewModel
 {
@@ -28,7 +28,7 @@ public class JournalEditMarksViewModel : BaseViewModel
     private string _marks;
     public string Marks { get => _marks; set => Set(ref _marks, value); }
 
-    private ICommand _confirmEditCommand; 
+    private ICommand _confirmEditCommand;
     public ICommand ConfirmEditCommand => _confirmEditCommand
         ??= new Command(OnConfirmEditCommandExecuted, CanConfirmEditCommandExecute);
 

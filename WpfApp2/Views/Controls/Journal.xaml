@@ -115,8 +115,13 @@
                   CanUserSortColumns="False"
                   IsReadOnly="True"
                   CellStyle="{StaticResource CellStyle}"
-                  ItemsSource="{Binding DataTable.DefaultView}"
-                  MouseDoubleClick="DataGrid_MouseDoubleClick">
+                  ItemsSource="{Binding DataTable.DefaultView}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding DdCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </DataGrid>
     </Grid>
 </UserControl>
