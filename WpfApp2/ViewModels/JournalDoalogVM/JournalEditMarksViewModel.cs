@@ -41,7 +41,7 @@ public class JournalEditMarksViewModel : BaseViewModel
     {
         var error = string.Empty;
 
-        var marks = Regex.Replace(Marks.Trim().ToUpper(), @"\s+", "").Split(",");
+        var marks = Regex.Replace(Marks.Trim().ToUpper(), @"\s+", " ").Split(" ");
 
         if (marks.Length > 1 && marks.Contains("Н"))
         {

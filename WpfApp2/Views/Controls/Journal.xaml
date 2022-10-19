@@ -14,6 +14,7 @@
 
     <UserControl.Resources>
         <conv:ValueCellToBackgroundConverter x:Key="ValueCellToBackgroundConverter"/>
+        <conv:VisibilityConverter x:Key="VisibilityConverter"/>
         <Style x:Key="CellStyle" TargetType="DataGridCell">
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
@@ -63,22 +64,28 @@
                 </Style>
             </Grid.Resources>
 
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Предмет:"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Группа:"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Группа:"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Предмет:" Visibility="{Binding SelectedGroup, Converter={StaticResource VisibilityConverter}}"/>
             <ComboBox Grid.Column="1" Grid.Row="0" 
-                      ItemsSource="{Binding SubjectModels}" 
-                      SelectedItem="{Binding SelectedSubject}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type m:SubjectModel}">
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <ComboBox Grid.Column="1" Grid.Row="1" 
                       ItemsSource="{Binding GroupModels}" 
                       SelectedItem="{Binding SelectedGroup}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type m:GroupModel}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding LoadSubjectCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <ComboBox Grid.Column="1" Grid.Row="1" 
+                      ItemsSource="{Binding SubjectModels}" 
+                      Visibility="{Binding SelectedGroup, Converter={StaticResource VisibilityConverter}}"
+                      SelectedItem="{Binding SelectedSubject}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type m:SubjectModel}">
                         <TextBlock Text="{Binding Name}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -119,7 +126,7 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding DdCommand}" PassEventArgsToCommand="True"/>
+                    <i:InvokeCommandAction Command="{Binding AddCommand}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DataGrid>

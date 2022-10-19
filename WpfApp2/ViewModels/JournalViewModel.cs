@@ -17,6 +17,7 @@ using WpfApp2.ViewModels.JournalDoalogVM;
 using WpfApp2.Views.Windows.JournalDialogs;
 using WpfApp2.Extensions;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace WpfApp2.ViewModels;
 
@@ -34,10 +35,10 @@ public class JournalViewModel : BaseViewModel
 	{
 		var ctx = ContextFactory.CreateContext();
         GroupModels = _mapper.Map<List<GroupModel>>(ctx.Groups);
-		SubjectModels = _mapper.Map<List<SubjectModel>>(ctx.Subjects);
+		//SubjectModels = _mapper.Map<List<SubjectModel>>(ctx.Subjects);
 	}
 
-	public List<SubjectModel> SubjectModels { get; set; }
+    public ObservableCollection<SubjectModel> SubjectModels { get; private set;  } = new();
 
     private SubjectModel _selectedSubject;
     public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
@@ -74,6 +75,25 @@ public class JournalViewModel : BaseViewModel
 
     private List<DateOnly> uniqueDates;
 
+    private ICommand _loadSubjectCommand;
+    public ICommand LoadSubjectCommand => _loadSubjectCommand
+        ??= new Command(OnLoadSubjectCommandExecuted);
+
+    private void OnLoadSubjectCommandExecuted(object? param)
+    {
+        var ctx = ContextFactory.CreateContext();
+
+        var deltaYear = DateTime.Now.Year - SelectedGroup.DateCreated.Year;
+        var deltaMonth = DateTime.Now.Month - SelectedGroup.DateCreated.Month;
+        var num = deltaMonth > 0 ? deltaYear + 1 : deltaYear;
+
+        SubjectModels.Clear();
+        foreach(var subject in ctx.SubjectGroups.Where(sg => sg.NumGroup == num).Select(sg => sg.Subject))
+        {
+            SubjectModels.Add(_mapper.Map<SubjectModel>(subject));
+        }
+    }
+
     private ICommand _loadMarksCommand;
 	public ICommand LoadMarksCommand => _loadMarksCommand
         ??= new Command(OnLoadMarksCommandExecuted, CanLoadMarksCommandExecute);
@@ -99,12 +119,7 @@ public class JournalViewModel : BaseViewModel
 
     private void LoadMarks()
     {
-        var resultParsing = int.TryParse(Year, out int year);
-        if (!resultParsing)
-        {
-            return;
-        }
-
+        _ = int.TryParse(Year, out int year);
         var month = Months.IndexOf(SelectedMonth) + 1;
         DateOnly startDate = new DateOnly(year, month, 1);
         DateOnly endDate = month != 12
@@ -234,11 +249,11 @@ public class JournalViewModel : BaseViewModel
         LoadMarks();
     }
 
-    private ICommand _ddCommand;
-    public ICommand DdCommand => _ddCommand
-        ??= new Command(OnDdCommandExecuted);
+    private ICommand _addCommand;
+    public ICommand AddCommand => _addCommand
+        ??= new Command(OnAddCommandExecuted);
 
-    private void OnDdCommandExecuted(object? obj)
+    private void OnAddCommandExecuted(object? obj)
     {
         var dataGrid = (DataGrid)((MouseButtonEventArgs)obj!).Source;
 

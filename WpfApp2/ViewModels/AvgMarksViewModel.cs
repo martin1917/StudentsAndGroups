@@ -117,7 +117,7 @@ public class AvgMarksViewModel : BaseViewModel
 
         var deltaYear = DateTime.Now.Year - SelectedGroup.DateCreated.Year;
         var deltaMonth = DateTime.Now.Month - SelectedGroup.DateCreated.Month;
-        var num = deltaMonth >= 0 ? deltaYear + 1 : (deltaYear + 1) + 1;
+        var num = deltaMonth > 0 ? deltaYear + 1 : deltaYear;
 
         var subjects = ctx.SubjectGroups.Where(sg => sg.NumGroup == num).Select(sg => sg.Subject);
         var students = ctx.Students.Where(s => s.GroupId == SelectedGroup.Id);

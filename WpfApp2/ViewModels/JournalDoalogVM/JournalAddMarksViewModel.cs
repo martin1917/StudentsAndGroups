@@ -50,7 +50,7 @@ public class JournalAddMarksViewModel : BaseViewModel
         string error = string.Empty;
         foreach (var item in StudentsAndMarks)
         {
-            var marks = Regex.Replace(item.Marks.Trim().ToUpper(), @"\s+", "").Split(",");
+            var marks = Regex.Replace(item.Marks.Trim().ToUpper(), @"\s+", " ").Split(" ");
 
             if (string.IsNullOrEmpty(marks[0])) continue;
 

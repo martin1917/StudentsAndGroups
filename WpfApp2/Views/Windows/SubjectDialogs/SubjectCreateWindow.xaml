@@ -14,7 +14,6 @@
 
     <Window.Resources>
         <c:DialogResultCommand x:Key="DialogResultCommand"/>
-        <conv:StringToCollectionConverter x:Key="StringToCollectionConverter"/>
     </Window.Resources>
     
     <StackPanel Margin="15 0" VerticalAlignment="Center">
