@@ -39,8 +39,9 @@ public class SubjectManager
         var ctx = ContextFactory.CreateContext();
         var entity = _mapper.Map<Subject>(subjectModel);
         var added = ctx.Subjects.Add(entity);
-        subjectModel.Id = added.Entity.Id;
+        ctx.SaveChanges();
 
+        subjectModel.Id = added.Entity.Id;
         foreach (var numClass in result.Classes)
         {
             ctx.SubjectGroups.Add(new SubjectGroup

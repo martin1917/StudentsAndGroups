@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using WpfApp2.ViewModels.JournalDoalogVM;
 using WpfApp2.Views.Windows.JournalDialogs;
 using WpfApp2.Extensions;
+using System.Windows;
 
 namespace WpfApp2.ViewModels;
 
@@ -65,13 +66,12 @@ public class JournalViewModel : BaseViewModel
     private string _selectedMonth;
 	public string SelectedMonth { get => _selectedMonth; set => Set(ref _selectedMonth, value); }
 
-    private string _year;
+    private string _year = $"{DateTime.Now.Year}";
 	public string Year { get => _year; set => Set(ref _year, value); }
 
     private DataTable? _dataTable;
     public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
 
-    private bool dataIsLoaded = false;
     private List<DateOnly> uniqueDates;
 
     private ICommand _loadMarksCommand;
@@ -87,6 +87,13 @@ public class JournalViewModel : BaseViewModel
 
 	private void OnLoadMarksCommandExecuted(object? param)
     {
+        if (!int.TryParse(Year, out _))
+        {
+            var error = "Год должен быть числом";
+            MessageBox.Show(error, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+
         LoadMarks();
     }
 
@@ -176,7 +183,6 @@ public class JournalViewModel : BaseViewModel
 
         DataTable?.Dispose();
         DataTable = tmpTable;
-        dataIsLoaded = true;
     }
 
     private ICommand _addMarksCommand;
@@ -185,7 +191,7 @@ public class JournalViewModel : BaseViewModel
 
     private bool CanAddMarksCommandExecute(object? arg)
     {
-        return dataIsLoaded;
+        return DataTable != null;
     }
 
     private void OnAddMarksCommandExecuted(object? obj)

@@ -9,6 +9,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection.PortableExecutable;
+using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Data;
 using WpfApp2.Extensions;
@@ -58,8 +59,8 @@ public class AvgMarksViewModel : BaseViewModel
 
     private string _selectedMonth;
     public string SelectedMonth { get => _selectedMonth; set => Set(ref _selectedMonth, value); }
-    
-    private string _year;
+
+    private string _year = $"{DateTime.Now.Year}";
     public string Year { get => _year; set => Set(ref _year, value); }
 
     private DataTable? _dataTable;
@@ -79,6 +80,8 @@ public class AvgMarksViewModel : BaseViewModel
         var resultParsing = int.TryParse(Year, out int year);
         if (!resultParsing)
         {
+            var error = "Год должен быть числом";
+            MessageBox.Show(error, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
 
@@ -150,7 +153,12 @@ public class AvgMarksViewModel : BaseViewModel
 
     private ICommand _saveExcelFileCommand;
     public ICommand SaveExcelFileCommand => _saveExcelFileCommand
-        ??= new Command(OnSaveExcelFileCommandExecuted);
+        ??= new Command(OnSaveExcelFileCommandExecuted, CanSaveExcelFileCommandExecute);
+
+    private bool CanSaveExcelFileCommandExecute(object? arg)
+    {
+        return DataTable != null;
+    }
 
     private void OnSaveExcelFileCommandExecuted(object? param)
     {
