@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Input;
 using WpfApp2.Data;
+using WpfApp2.Extensions;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
@@ -92,8 +93,8 @@ public class AvgMarksViewModel : BaseViewModel
             "apl.Date as Date " +
             "FROM AcademicPerformanceLogs apl " +
             $"WHERE apl.GroupId == {SelectedGroup.Id} AND " +
-            $"apl.Date >= date('{startDate.Year}-{startDate.Month}-0{startDate.Day}') AND " +
-            $"apl.Date < date('{endDate.Year}-{endDate.Month}-0{endDate.Day}') ";
+            $"apl.Date >= date('{startDate.ConvertToSQLiteFormat()}') AND " +
+            $"apl.Date < date('{endDate.ConvertToSQLiteFormat()}') ";
 
         var ctx = ContextFactory.CreateContext();
         var data = ctx.AcademicPerformanceLogs

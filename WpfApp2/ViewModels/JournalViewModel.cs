@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using WpfApp2.ViewModels.JournalDoalogVM;
 using WpfApp2.Views.Windows.JournalDialogs;
+using WpfApp2.Extensions;
 
 namespace WpfApp2.ViewModels;
 
@@ -116,8 +117,8 @@ public class JournalViewModel : BaseViewModel
             "from AcademicPerformanceLogs apl " +
             $"where apl.GroupId == {SelectedGroup.Id} and " +
             $"apl.SubjectId == {SelectedSubject.Id} and " +
-            $"apl.Date >= date('{startDate.Year}-{startDate.Month}-0{startDate.Day}') and " +
-            $"apl.Date < date('{endDate.Year}-{endDate.Month}-0{endDate.Day}')").ToList();
+            $"apl.Date >= date('{startDate.ConvertToSQLiteFormat()}') and " +
+            $"apl.Date < date('{endDate.ConvertToSQLiteFormat()}')");
 
         // уникальные даты
         uniqueDates = effectiveLogs.AsEnumerable()
@@ -134,23 +135,9 @@ public class JournalViewModel : BaseViewModel
                     i.Select(x => x.Mark).ToList(),
                     i.Key)).ToList()));
 
-        var extendedTable = new List<StudentAndMarks>();
-        foreach (var studentMarks in SetOfStudentMarks)
-        {
-            var marks = new List<MarkDetail>();
-
-            foreach (var date in uniqueDates)
-            {
-                var markDetailInDate = studentMarks.GetByDate(date);
-                marks.Add(new MarkDetail(markDetailInDate != null
-                    ? markDetailInDate.Marks
-                    : new List<int?>(), date));
-            }
-
-            extendedTable.Add(new StudentAndMarks(studentMarks.StudentId, marks));
-        }
-
         DataTable tmpTable = new();
+
+        var students = ctx.Students.Where(s => s.GroupId == SelectedGroup.Id);
 
         tmpTable.Columns.Add("ID", typeof(int));
         tmpTable.Columns.Add("Студент", typeof(string));
@@ -159,16 +146,29 @@ public class JournalViewModel : BaseViewModel
             tmpTable.Columns.Add($"{date.Day} {date.Month} {date.Year}", typeof(string));
         }
 
-        foreach (var studentAndMarks in extendedTable)
+        foreach (var student in students)
         {
-            var student = ctx.Students.First(s => s.Id == studentAndMarks.StudentId);
-
             var row = tmpTable.NewRow();
             row["ID"] = student.Id;
-            row["Студент"] = $"{student.SecondName} {student.FirstName[0]}.{student.Patronymic[0]}"; ;
-            foreach (var markDetail in studentAndMarks.MarkDetails)
+            row["Студент"] = $"{student.SecondName} {student.FirstName[0]}.{student.Patronymic[0]}.";
+
+            var marksForStudent = SetOfStudentMarks.FirstOrDefault(el => el.StudentId == student.Id);
+
+            if (marksForStudent == null)
             {
-                row[$"{markDetail.Date.Day} {markDetail.Date.Month} {markDetail.Date.Year}"] = markDetail.MarksToString();
+                foreach (var date in uniqueDates)
+                {
+                    row[$"{date.Day} {date.Month} {date.Year}"] = string.Empty;
+                }
+            }
+            else
+            {
+                foreach (var date in uniqueDates)
+                {
+                    var marksInDay = marksForStudent.MarkDetails.FirstOrDefault(i => i.Date == date);
+                    var marks = marksInDay != null ? marksInDay.MarksToString() : string.Empty;
+                    row[$"{date.Day} {date.Month} {date.Year}"] = marks;
+                }
             }
 
             tmpTable.Rows.Add(row);

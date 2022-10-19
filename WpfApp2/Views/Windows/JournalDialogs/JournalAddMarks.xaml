@@ -22,12 +22,10 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Дата:" Margin="0 0 5 0"/>
+            <TextBlock Grid.Column="0" Text="Число:" Margin="0 0 5 0"/>
             <ComboBox Grid.Column="1" Margin="0 0 5 0" ItemsSource="{Binding NumInMonth}" SelectedItem="{Binding Day}"/>
-            <TextBlock Grid.Column="2" Text="октября" Margin="0 0 5 0"/>
         </Grid>
 
         <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5">
