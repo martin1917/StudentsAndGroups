@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Data;
+using WpfApp2.State;
 using WpfApp2.Extensions;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
@@ -23,7 +23,7 @@ public class AvgMarksViewModel : BaseViewModel
 {
     private IMapper _mapper;
 
-    public AvgMarksViewModel(IMapper mapper)
+    public AvgMarksViewModel(IMapper mapper) : base (ViewModelType.AvgMarks)
 	{
         _mapper = mapper;
         

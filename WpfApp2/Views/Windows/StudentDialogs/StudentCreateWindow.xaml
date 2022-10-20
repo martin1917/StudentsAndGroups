@@ -8,6 +8,7 @@
         xmlns:vm="clr-namespace:WpfApp2.ViewModels.StudentDialogVM"
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:StudentCreateViewModel}"
         Title="Создание студентов" Height="324" Width="423">
 

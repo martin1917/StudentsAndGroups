@@ -9,6 +9,7 @@
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
         Title="Редактирование студентов" Height="324" Width="423"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:StudentEditViewModel}">
 
     <Window.Resources>

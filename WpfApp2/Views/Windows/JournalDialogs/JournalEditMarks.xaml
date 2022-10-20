@@ -8,6 +8,7 @@
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
         Title="JournalEditMarks" Height="150" Width="400"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:JournalEditMarksViewModel}">
 
     <Window.Resources>

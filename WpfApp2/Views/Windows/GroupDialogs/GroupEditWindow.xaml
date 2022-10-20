@@ -10,6 +10,7 @@
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
         Title="Создание/редактирование группы" Height="184" Width="423"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:GroupEditViewModel}">
 
     <Window.Resources>

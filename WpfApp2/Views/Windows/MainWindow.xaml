@@ -8,6 +8,7 @@
         xmlns:nav="clr-namespace:WpfApp2.State"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}">
     
     <i:Interaction.Triggers>
@@ -19,16 +20,15 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Группы и студенты" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.GroupsStudents}"/>
-            <MenuItem Header="Журнал" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AcademyJournal}"/>
             <MenuItem Header="Предметы">
                 <MenuItem Header="Все предметы" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AllSubjects}"/>
                 <MenuItem Header="Предметы по группам" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.SubjectsForGroup}"/>
             </MenuItem>
+            <MenuItem Header="Журнал" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AcademyJournal}"/>
             <MenuItem Header="Отчеты">
                 <MenuItem Header="Средние оценки по всем предметам для студентов из группы" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewModelType.AvgMarks}"/>
             </MenuItem>
         </Menu>
-
         <ContentControl x:Name="contentControl" Content="{Binding CurrentViewModel}"/>
     </DockPanel>
 </Window>

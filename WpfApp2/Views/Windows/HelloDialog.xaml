@@ -1,0 +1,25 @@
+﻿<Window x:Class="WpfApp2.Views.Windows.HelloDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2.Views.Windows"
+        mc:Ignorable="d"
+        Title="Здравствуйте" Height="162" Width="404"
+        ResizeMode="NoResize" 
+        WindowStyle="None" 
+        Background="#FFFFEEA1"
+        MouseDoubleClick="Window_MouseDoubleClick"
+        WindowStartupLocation="CenterScreen">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Школа" FontSize="50"/>
+        <TextBlock Grid.Row="1" Foreground="Blue" TextAlignment="Center" Text="Левин Максим 20ВП1" Margin="0 10 0 0"/>
+        <TextBlock Grid.Row="3" Foreground="#FF989898" TextAlignment="Center" Text="Нажмите 2 раза, чтобы продолжить" Margin="0 20 0 0"/>
+    </Grid>
+</Window>

@@ -10,6 +10,7 @@
         xmlns:m="clr-namespace:WpfApp2.Models"
         mc:Ignorable="d"
         Title="Добавление оценок" Height="450" Width="376"
+        WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:JournalAddMarksViewModel}">
 
     <Window.Resources>
