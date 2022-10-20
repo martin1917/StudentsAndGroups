@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace WpfApp2.Infrastructure.Commands;
 
+/// <summary> Команда, устанавливающая резульат диалоговому окну </summary>
 public class DialogResultCommand : ICommand
 {
     public event EventHandler? CanExecuteChanged;

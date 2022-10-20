@@ -5,6 +5,7 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels;
 
+/// <summary> Главная VM </summary>
 public class MainViewModel : BaseViewModel
 {
 	private readonly Navigator _navigator;
@@ -26,10 +27,12 @@ public class MainViewModel : BaseViewModel
 		base.Dispose();
 	}
 
+	/// <summary> Текущая VM </summary>
     public BaseViewModel CurrentViewModel => _navigator.CurrentViewModel;
 
     private ICommand _updateCurrentViewModelCommand;
-	public ICommand UpdateCurrentViewModelCommand => _updateCurrentViewModelCommand
+    /// <summary> Команда по обновлению текущей VM </summary>
+    public ICommand UpdateCurrentViewModelCommand => _updateCurrentViewModelCommand
 		??= new Command(OnUpdateCurrentViewModelCommandExecuted, CanUpdateCurrentViewModelCommandExecute);
 
 	private bool CanUpdateCurrentViewModelCommandExecute(object? param)

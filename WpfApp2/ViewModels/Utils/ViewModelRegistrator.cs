@@ -3,6 +3,7 @@ using WpfApp2.Services;
 
 namespace WpfApp2.ViewModels.Utils;
 
+/// <summary> Регистрация VM и фабрик по их созданию в DI контейнере </summary>
 public static class ViewModelRegistrator
 {
     public static IServiceCollection AddViewModels(this IServiceCollection services) => services

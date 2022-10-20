@@ -11,10 +11,18 @@ using WpfApp2.Managers;
 
 namespace WpfApp2.ViewModels;
 
+/// <summary> VM с предметами для класса </summary>
 public class SubjectForGroupViewModel : BaseViewModel
 {
     private IMapper _mapper;
+
     private SubjectManager _subjectManager;
+    private SubjectModel _selectedSubject;
+
+    private int? _selectedNumGroup;
+    private ICommand _loadSubjectCommand;
+    private ICommand _deleteSubjectCommand;
+    private ICommand _addSubjectCommand;
 
     public SubjectForGroupViewModel(IMapper mapper,
         SubjectManager subjectManager) : base(ViewModelType.SubjectsForGroup)
@@ -23,18 +31,19 @@ public class SubjectForGroupViewModel : BaseViewModel
         _subjectManager = subjectManager;
     }
 
+    /// <summary> предметы </summary>
     public ObservableCollection<SubjectModel> SubjectModels { get; } = new();
 
-    public SubjectModel _selectedSubject;
+    /// <summary> выбранный предмет </summary>
     public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
 
+    /// <summary> Номера классов </summary>
     public List<int> Nums { get; } = Enumerable.Range(1, 11).ToList();
 
-    private int? _selectedNumGroup;
+    /// <summary> Выбранный номер класса </summary>
     public int? SelectedNumGroup { get => _selectedNumGroup; set => Set(ref _selectedNumGroup, value); }
 
-    // загрузка предметов
-    private ICommand _loadSubjectCommand;
+    /// <summary> загрузка предметов </summary>
     public ICommand LoadSubjectCommand => _loadSubjectCommand
         ??= new Command(OnLoadSubjectCommandExecuted, CanLoadSubjectCommandExecute);
 
@@ -53,8 +62,7 @@ public class SubjectForGroupViewModel : BaseViewModel
         }
     }
 
-    // удаление предмета для группы
-    private ICommand _deleteSubjectCommand;
+    /// <summary> удаление предмета для группы </summary>
     public ICommand DeleteSubjectCommand => _deleteSubjectCommand
         ??= new Command(OnDeleteSubjectCommandExecuted, CanDeleteSubjectCommandExecute);
 
@@ -71,8 +79,7 @@ public class SubjectForGroupViewModel : BaseViewModel
         SubjectModels.Remove(SelectedSubject);
     }
 
-    // добавление предмета для группы
-    private ICommand _addSubjectCommand;
+    /// <summary> добавление предмета для группы </summary>
     public ICommand AddSubjectCommand => _addSubjectCommand
         ??= new Command(OnAddSubjectCommandExecuted, CanAddSubjectCommandExecute);
 

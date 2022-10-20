@@ -9,6 +9,7 @@ using WpfApp2.Services;
 
 namespace WpfApp2.Managers;
 
+/// <summary> Класс менеджера для ПРЕДМЕТОВ </summary>
 public class SubjectManager
 {
     private readonly IMapper _mapper;
@@ -24,6 +25,10 @@ public class SubjectManager
         _commonDialogService = commonDialogService;
     }
 
+    /// <summary>
+    /// Создание предмета
+    /// </summary>
+    /// <returns> Созданный предмет </returns>
     public SubjectModel? Create()
     {
         var subjectModel = new SubjectModel();
@@ -55,6 +60,11 @@ public class SubjectManager
         return subjectModel;
     }
 
+    /// <summary>
+    /// Редактирование предмета
+    /// </summary>
+    /// <param name="subjectModel">Редактируемая группа</param>
+    /// <returns> true - если редактирование успешно; false - иначе</returns>
     public bool Edit(SubjectModel subjectModel)
     {
         var result = _subjectDialogService.Edit(subjectModel);
@@ -96,6 +106,11 @@ public class SubjectManager
         return true;
     }
 
+    /// <summary>
+    /// Удаление предмета
+    /// </summary>
+    /// <param name="subjectModel">Удаляемая группа</param>
+    /// <returns> true - если удаление успешно; false - иначе</returns>
     public bool DeleteSubject(SubjectModel subjectModel)
     {
         var message =
@@ -124,6 +139,11 @@ public class SubjectManager
         return true;
     }
 
+    /// <summary>
+    /// Добавление предмета в список изучаемых дисциплин для класса
+    /// </summary>
+    /// <param name="numGroup">номер класса</param>
+    /// <returns> Добавленный предмет </returns>
     public SubjectModel? AddSubjectForGroup(int numGroup)
     {
         var result = _subjectDialogService.AddSubject(numGroup);
@@ -144,6 +164,11 @@ public class SubjectManager
         return result;
     }
 
+    /// <summary>
+    /// Получить все изучаемые дисциплины для класса
+    /// </summary>
+    /// <param name="numGroup">номер класса</param>
+    /// <returns>Перечисление предметов</returns>
     public IEnumerable<Subject> GetSubjectsForGroup(int numGroup)
     {
         var ctx = ContextFactory.CreateContext();
@@ -156,6 +181,12 @@ public class SubjectManager
         return subjects;
     }
 
+    /// <summary>
+    /// Убрать предмет из списка изучаемых дисциплин у класса
+    /// </summary>
+    /// <param name="subjectModel">Убираемый предмет</param>
+    /// <param name="NumGroup">номер класса</param>
+    /// <returns> true - если удаление успешно; false - иначе</returns>
     public bool DeleteSubjectForGroup(SubjectModel subjectModel, int NumGroup)
     {
         var ctx = ContextFactory.CreateContext();

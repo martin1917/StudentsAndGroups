@@ -17,13 +17,18 @@ namespace WpfApp2;
 
 public partial class App
 {
+    /// <summary> получение активного окна </summary>
     public static Window? ActiveWindow => Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
+    /// <summary> получение окна, на котором сейчас фокус </summary>
     public static Window? FocusedWindow => Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsFocused);
 
+    /// <summary> получение текущего окна </summary>
     public static Window? CurrentWindow => FocusedWindow ?? ActiveWindow;
 
     private static IHost? __host;
+
+    /// <summary> Хост </summary>
     public static IHost Host => __host
         ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).ConfigureAppConfiguration(conf =>
         {
@@ -31,6 +36,11 @@ public partial class App
             conf.AddEnvironmentVariables();
         }).Build();
 
+    /// <summary>
+    /// Конфигурация сервисов
+    /// </summary>
+    /// <param name="host"></param>
+    /// <param name="services"></param>
     public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
         .AddTransient<DbInitializer>()
         .AddAutoMapper(typeof(AppMappingProfile))

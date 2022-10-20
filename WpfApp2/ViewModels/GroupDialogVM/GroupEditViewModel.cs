@@ -8,8 +8,13 @@ using WpfApp2.Infrastructure.Commands;
 
 namespace WpfApp2.ViewModels.GroupDialogVM;
 
+/// <summary> VM для диалога (Редактирование группы) </summary>
 public class GroupEditViewModel : BaseViewModel
 {
+    private string _name;
+    private DateTime _dateCreated = DateTime.Now;
+    private ICommand _confirmCommand;
+
 	public GroupEditViewModel(GroupModel group)
 	{
         Name = group.Name ?? string.Empty;
@@ -19,13 +24,13 @@ public class GroupEditViewModel : BaseViewModel
         }
     }
 
-    private string _name;
+    /// <summary> Название предмета </summary>
     public string Name { get => _name; set => Set(ref _name, value); }
 
-    private DateTime _dateCreated = DateTime.Now;
+    /// <summary> Дата создания </summary>
     public DateTime DateCreated { get => _dateCreated; set => Set(ref _dateCreated, value); }
 
-    private ICommand _confirmCommand;
+    /// <summary> Валидация </summary>
     public ICommand ConfirmCommand => _confirmCommand
         ??= new Command(OnConfirmCommandExecuted);
 

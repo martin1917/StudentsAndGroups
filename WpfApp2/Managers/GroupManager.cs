@@ -7,6 +7,7 @@ using WpfApp2.Services;
 
 namespace WpfApp2.Managers;
 
+/// <summary> Класс менеджера для ГРУПП </summary>
 public class GroupManager
 {
     private readonly IMapper _mapper;
@@ -22,6 +23,11 @@ public class GroupManager
         _commonDialogService = commonDialogService;
     }
 
+    /// <summary>
+    /// Редактирование группы
+    /// </summary>
+    /// <param name="groupModel">Редактируемая группа</param>
+    /// <returns> true - если редактирование успешно; false - иначе</returns>
     public bool Edit(GroupModel groupModel)
     {
         if (!_groupDialogService.Edit(groupModel))
@@ -36,6 +42,10 @@ public class GroupManager
         return true;
     }
 
+    /// <summary>
+    /// Создание группы
+    /// </summary>
+    /// <returns> Созданная группа </returns>
     public GroupModel? Create()
     {
         var groupModel = new GroupModel();
@@ -53,6 +63,11 @@ public class GroupManager
         return groupModel;
     }
 
+    /// <summary>
+    /// Удаление группы
+    /// </summary>
+    /// <param name="groupModel">Удаляемая группа</param>
+    /// <returns> true - если удаление успешно; false - иначе</returns>
     public bool Delete(GroupModel groupModel)
     {
         var message =

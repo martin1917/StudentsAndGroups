@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace WpfApp2.Data;
 
+/// <summary> Фабрика по созданию контекста </summary>
 public class ContextFactory
 {
+    /// <summary> Создание контекста </summary>
+    /// <returns> Готовый контекст для работы с БД </returns>
     public static Context CreateContext()
     {
         var builder = new DbContextOptionsBuilder<Context>();

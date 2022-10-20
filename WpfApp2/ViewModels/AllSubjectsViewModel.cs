@@ -12,10 +12,15 @@ using WpfApp2.Managers;
 
 namespace WpfApp2.ViewModels;
 
+/// <summary> VM со всеми предметами </summary>
 public class AllSubjectsViewModel : BaseViewModel
 {
 	private IMapper _mapper;
     private SubjectManager _subjectManager;
+    private SubjectModel _selectedSubject;
+    private ICommand _createSubjectCommand;
+    private ICommand _editSubjectCommand;
+    private ICommand _deleteSubjectCommand;
 
     public AllSubjectsViewModel(IMapper mapper,
         SubjectManager subjectManager) : base(ViewModelType.AllSubjects)
@@ -36,15 +41,14 @@ public class AllSubjectsViewModel : BaseViewModel
 		}
 	}
 
+	/// <summary> предметы </summary>
 	public ObservableCollection<SubjectModel> SubjectModels { get; } = new();
 
-
-	public SubjectModel _selectedSubject;
+	/// <summary> Выбранный предмет </summary>
 	public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
 
-	// Создание предмета
-	private ICommand _createSubjectCommand;
-	public ICommand CreateSubjectCommand => _createSubjectCommand
+    /// <summary> Создание предмета </summary>
+    public ICommand CreateSubjectCommand => _createSubjectCommand
 		??= new Command(OnCreateSubjectCommandExecuted);
 
     private void OnCreateSubjectCommandExecuted(object? param)
@@ -59,8 +63,7 @@ public class AllSubjectsViewModel : BaseViewModel
 		SubjectModels.Add(newSubject);
     }
 
-    // Редактирование предмета
-    private ICommand _editSubjectCommand;
+    /// <summary> Редактирование предмета </summary>
     public ICommand EditSubjectCommand => _editSubjectCommand
         ??= new Command(OnEditSubjectCommandExecuted, CanEditSubjectCommandExecute);
 
@@ -72,8 +75,7 @@ public class AllSubjectsViewModel : BaseViewModel
         _subjectManager.Edit(SelectedSubject);
     }
 
-    // удаление предмета
-    private ICommand _deleteSubjectCommand;
+    /// <summary> удаление предмета </summary>
     public ICommand DeleteSubjectCommand => _deleteSubjectCommand
         ??= new Command(OnDeleteSubjectCommandExecuted, CanDeleteSubjectCommandExecute);
 

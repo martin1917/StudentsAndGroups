@@ -5,8 +5,14 @@ using WpfApp2.Views.Windows.GroupDialogs;
 
 namespace WpfApp2.Services;
 
+/// <summary> Диалоговый сервис для ГРУПП </summary>
 public class GroupDialogService
 {
+    /// <summary>
+    /// Отображение диалогового окна - для редактирование
+    /// </summary>
+    /// <param name="group">редактируемая группа</param>
+    /// <returns></returns>
     public bool Edit(GroupModel group)
     {
         var vm = new GroupEditViewModel(group);

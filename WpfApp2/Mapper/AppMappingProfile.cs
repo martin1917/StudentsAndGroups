@@ -4,6 +4,7 @@ using WpfApp2.Entity;
 
 namespace WpfApp2.Mapper;
 
+/// <summary> Класс, отображающий один класс на другой</summary>
 public class AppMappingProfile : Profile
 {
 	public AppMappingProfile()

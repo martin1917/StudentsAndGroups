@@ -8,30 +8,38 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels.StudentDialogVM;
 
+/// <summary> VM для диалога (создание ученика) </summary>
 public class StudentCreateViewModel : BaseViewModel
 {
+    private string _firstName = string.Empty;
+    private string _secondName = string.Empty;
+    private string _patronymic = string.Empty;
+    private DateTime _birthDay;
+    private GroupModel _groupModel;
+    private ICommand _confirmCommand;
+
     public StudentCreateViewModel(GroupModel group)
     {
         GroupModel = group;
         BirthDay = DateTime.Now;
     }
 
-    private string _firstName = string.Empty;
+    /// <summary> Имя ученика </summary>
     public string FirstName { get => _firstName; set => Set(ref _firstName, value); }
 
-    private string _secondName = string.Empty;
+    /// <summary> Фамилия ученика </summary>
     public string SecondName { get => _secondName; set => Set(ref _secondName, value); }
 
-    private string _patronymic = string.Empty;
+    /// <summary> Отчество ученика </summary>
     public string Patronymic { get => _patronymic; set => Set(ref _patronymic, value); }
 
-    private DateTime _birthDay;
+    /// <summary> Дата рождения ученика </summary>
     public DateTime BirthDay { get => _birthDay; set => Set(ref _birthDay, value); }
 
-    private GroupModel _groupModel;
+    /// <summary> Учебная группа ученика </summary>
     public GroupModel GroupModel { get => _groupModel; set => Set(ref _groupModel, value); }
 
-    private ICommand _confirmCommand;
+    /// <summary> валидация </summary>
     public ICommand ConfirmCommand => _confirmCommand
         ??= new Command(OnConfirmCommandExecuted);
 

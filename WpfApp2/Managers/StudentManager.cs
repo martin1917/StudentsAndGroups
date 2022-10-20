@@ -8,6 +8,7 @@ using WpfApp2.Services;
 
 namespace WpfApp2.Managers;
 
+/// <summary> Класс менеджера для СТУДЕНТОВ </summary>
 public class StudentManager
 {
     private readonly IMapper _mapper;
@@ -23,6 +24,11 @@ public class StudentManager
         _commonDialogService = commonDialogService;
     }
 
+    /// <summary>
+    /// Редактирование студента
+    /// </summary>
+    /// <param name="studentModel">Редактируемый студент</param>
+    /// <returns> true - если редактирование успешно; false - иначе</returns>
     public bool Edit(StudentModel studentModel)
     {
         var ctx = ContextFactory.CreateContext();
@@ -40,6 +46,11 @@ public class StudentManager
         return true;
     }
 
+    /// <summary>
+    /// Создать студента в группк
+    /// </summary>
+    /// <param name="targetGroup">Группа, в которой будет создан студент</param>
+    /// <returns>Созданный студент</returns>
     public StudentModel? CreateIn(GroupModel targetGroup)
     {
         var studentModel = new StudentModel();
@@ -58,6 +69,11 @@ public class StudentManager
         return studentModel;
     }
 
+    /// <summary>
+    /// Удаление студента
+    /// </summary>
+    /// <param name="studentModel">Удаляемый студент</param>
+    /// <returns> true - если удаление успешно; false - иначе</returns>
     public bool Delete(StudentModel studentModel)
     {
         var message = 

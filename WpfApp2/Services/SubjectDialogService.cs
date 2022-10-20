@@ -8,6 +8,7 @@ using WpfApp2.Views.Windows.SubjectDialogs;
 
 namespace WpfApp2.Services;
 
+/// <summary> Диалоговый сервис для ПРЕДМЕТОВ </summary>
 public class SubjectDialogService
 {
     private IMapper _mapper;
@@ -17,6 +18,11 @@ public class SubjectDialogService
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Отображение диалогового окна - для редактирование
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <returns></returns>
     public SubjectDTO Edit(SubjectModel subject)
     {
         var vm = new SubjectCreateViewModel(subject);
@@ -30,6 +36,11 @@ public class SubjectDialogService
         return new SubjectDTO(vm.Name, vm.NumGroups);
     }
 
+    /// <summary>
+    /// Отображение диалогового окна - для добавления предмета для указанногокласса
+    /// </summary>
+    /// <param name="numGroup">номер класса</param>
+    /// <returns></returns>
     public SubjectModel? AddSubject(int numGroup)
     {
         var context = ContextFactory.CreateContext();

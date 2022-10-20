@@ -1,5 +1,6 @@
 ﻿namespace WpfApp2.State;
 
+/// <summary> Типы VM </summary>
 public enum ViewModelType
 {
     /// <summary> главная VM </summary>

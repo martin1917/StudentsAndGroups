@@ -5,8 +5,10 @@ using WpfApp2.Entity;
 
 namespace WpfApp2.Data;
 
+/// <summary> Класс заполняющий БД тестовыми данными </summary>
 public class DbInitializer
 {
+    /// <summary> Заполнение БД </summary>
     public void Initialize()
     {
         var context = ContextFactory.CreateContext();

@@ -12,11 +12,23 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels;
 
+/// <summary> VM со студентами и группами </summary>
 public class GroupsStudentsViewModel : BaseViewModel
 {
     private StudentManager _studentManager;
     private GroupManager _groupManager;
+
     private IMapper _mapper;
+
+    private GroupModel? _selectedGroup;
+    private StudentModel? _selectedStudent;
+
+    private ICommand _editStudentCommand;
+    private ICommand _createStudentCommand;
+    private ICommand _deleteStudentCommand;
+    private ICommand _editGroupCommand;
+    private ICommand _createGroupCommand;
+    private ICommand _deleteGroupCommand;
 
     public GroupsStudentsViewModel(
         StudentManager studentManager,
@@ -30,15 +42,13 @@ public class GroupsStudentsViewModel : BaseViewModel
         LoadData();
     }
 
-    // Группы
+    /// <summary> Группы </summary>
     public ObservableCollection<GroupModel> Groups { get; } = new();
 
-    // Выбранная группа
-    private GroupModel? _selectedGroup;
+    /// <summary> Выбранная группа </summary>
     public GroupModel? SelectedGroup { get => _selectedGroup; set => Set(ref _selectedGroup, value); }
 
-    // Выбранный студент
-    private StudentModel? _selectedStudent;
+    /// <summary> Выбранный студент </summary>
     public StudentModel? SelectedStudent { get => _selectedStudent; set => Set(ref _selectedStudent, value); }
 
     private void LoadData()
@@ -51,9 +61,7 @@ public class GroupsStudentsViewModel : BaseViewModel
         }
     }
 
-    #region Команды по изменение студентов
-    // редактирование студента
-    private ICommand _editStudentCommand;
+    /// <summary> редактирование студента </summary>
     public ICommand EditStudentCommand => _editStudentCommand
         ??= new Command(OnEditStudentCommandExecuted, CanEditStudentCommandExecute);
 
@@ -73,9 +81,8 @@ public class GroupsStudentsViewModel : BaseViewModel
             SelectedGroup.StudentModels.Remove(SelectedStudent);
         }
     }
-
-    // создание студента
-    private ICommand _createStudentCommand;
+    
+    /// <summary> создание студента </summary>
     public ICommand CreateStudentCommand => _createStudentCommand
         ??= new Command(OnCreateStudentCommandExecuted, CanCreateStudentCommandExecute);
 
@@ -92,9 +99,8 @@ public class GroupsStudentsViewModel : BaseViewModel
         var group = Groups.First(g => g.Id == newStudentModel!.GroupId);
         group.StudentModels.Add(newStudentModel);
     }
-
-    // удаление студента
-    private ICommand _deleteStudentCommand;
+        
+    /// <summary> удаление студента </summary>
     public ICommand DeleteStudentCommand => _deleteStudentCommand
         ??= new Command(OnDeleteStudentCommandExecuted, CanDeleteStudentCommandExecute);
 
@@ -110,11 +116,8 @@ public class GroupsStudentsViewModel : BaseViewModel
         var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
         group.StudentModels.Remove(SelectedStudent);
     }
-    #endregion
-
-    #region Команды по изменение групп
-    // редактирование группы
-    private ICommand _editGroupCommand;
+    
+    /// <summary> редактирование группы </summary>
     public ICommand EditGroupCommand => _editGroupCommand
         ??= new Command(OnEditGroupCommandExecuted, CanEditGroupCommandExecute);
 
@@ -125,9 +128,8 @@ public class GroupsStudentsViewModel : BaseViewModel
     {
         _groupManager.Edit(SelectedGroup);
     }
-
-    // Создание группы
-    private ICommand _createGroupCommand;
+    
+    /// <summary> Создание группы </summary>
     public ICommand CreateGroupCommand => _createGroupCommand
         ??= new Command(OnCreateGroupCommandExecuted);
 
@@ -136,9 +138,8 @@ public class GroupsStudentsViewModel : BaseViewModel
         var newGroupModel = _groupManager.Create();
         Groups.Add(newGroupModel);
     }
-
-    // удаление группы
-    private ICommand _deleteGroupCommand;
+    
+    /// <summary> удаление группы </summary>
     public ICommand DeleteGroupCommand => _deleteGroupCommand
         ??= new Command(OnDeleteGroupCommandExecuted, CanDeleteGroupCommandExecute);
 
@@ -153,5 +154,4 @@ public class GroupsStudentsViewModel : BaseViewModel
 
         Groups.Remove(SelectedGroup);
     }
-    #endregion
 }

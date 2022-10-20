@@ -4,8 +4,14 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels.Utils;
 
+/// <summary>
+/// Делегат, создающий VM
+/// </summary>
+/// <typeparam name="TViewModel"></typeparam>
+/// <returns></returns>
 public delegate TViewModel CreateViewModel<TViewModel>() where TViewModel : BaseViewModel;
 
+/// <summary> Фабрика по созданию VM </summary>
 public class ViewModelFactory
 {
     private readonly CreateViewModel<GroupsStudentsViewModel> _createGroupsStudentsViewModel;
@@ -27,6 +33,12 @@ public class ViewModelFactory
         _createAvgMarksViewModel = createAvgMarksViewModel;
     }
 
+    /// <summary>
+    /// Создать и вернуть VM по передаваемому парамметру
+    /// </summary>
+    /// <param name="viewType">тип VM</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public BaseViewModel CreateViewModel(ViewModelType viewType)
     {
         switch (viewType)

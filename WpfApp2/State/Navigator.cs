@@ -4,13 +4,16 @@ using WpfApp2.ViewModels.Utils;
 
 namespace WpfApp2.State;
 
+/// <summary> Класс навигатор, который будет менять содержимое окна </summary>
 public class Navigator
 {
+    /// <summary> Событие, возникающее, когда меняется текущая VM </summary>
     public event Action StateChanged;
 
     private readonly ViewModelFactory _viewModelFactory;
     private BaseViewModel _currentViewModel;
 
+    /// <summary> Текущая VM </summary>
     public BaseViewModel CurrentViewModel
     {
         get => _currentViewModel;
@@ -30,6 +33,10 @@ public class Navigator
         _viewModelFactory = viewModelFactory;
     }
 
+    /// <summary>
+    /// Смена текущей VM
+    /// </summary>
+    /// <param name="viewModelType">Тип VM, на которую нужно сменить текущую</param>
     public void ChangeState(ViewModelType viewModelType)
     {
         CurrentViewModel = _viewModelFactory.CreateViewModel(viewModelType);

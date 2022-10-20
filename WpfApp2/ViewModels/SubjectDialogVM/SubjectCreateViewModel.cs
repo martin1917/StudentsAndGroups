@@ -10,9 +10,14 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels.SubjectDialogVM;
 
+/// <summary> VM для диалога (создания предмета) </summary>
 public class SubjectCreateViewModel : BaseViewModel
 {
     private int subjectId;
+	private string _name;
+    private string _nums;
+    private List<int> _numGroups;
+    private ICommand _confirmCommand;
 
 	public SubjectCreateViewModel(SubjectModel subject)
 	{
@@ -39,16 +44,16 @@ public class SubjectCreateViewModel : BaseViewModel
         }
     }
 
-	private string _name;
+    /// <summary> Имя нового предмета </summary>
 	public string Name { get => _name; set => Set(ref _name, value); }
 
-    private string _nums;
+    /// <summary> Классы, в которых он будет преподаваться (строковый вид) </summary>
     public string Nums { get => _nums; set => Set(ref _nums, value); }
 
-    private List<int> _numGroups;
+    /// <summary> Классы, в которых он будет преподаваться </summary>
     public List<int> NumGroups { get => _numGroups; set => Set(ref _numGroups, value); }
 
-    private ICommand _confirmCommand;
+    /// <summary> Валидация </summary>
     public ICommand ConfirmCommand => _confirmCommand
         ??= new Command(OnConfirmCommandExecuted);
 

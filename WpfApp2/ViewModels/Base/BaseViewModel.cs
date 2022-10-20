@@ -4,10 +4,13 @@ using WpfApp2.State;
 
 namespace WpfApp2.ViewModels.Base;
 
+/// <summary> Базовая VM </summary>
 public abstract class BaseViewModel : INotifyPropertyChanged
 {
+    /// <summary> Событие, возникающей, когда менятеся значения свойств </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    /// <summary> Тип VM </summary>
     public ViewModelType ViewModelType { get; init; }
 
     public BaseViewModel(ViewModelType viewModelType = ViewModelType.Other)

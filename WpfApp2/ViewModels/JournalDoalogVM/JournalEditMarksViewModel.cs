@@ -10,8 +10,11 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels.JournalDoalogVM;
 
+/// <summary> VM для диалога (редактирование оценок) </summary>
 public class JournalEditMarksViewModel : BaseViewModel
 {
+    private string _marks;
+    private ICommand _confirmEditCommand;
 
     public JournalEditMarksViewModel(Student student, DateOnly date, string marks)
     {
@@ -20,15 +23,16 @@ public class JournalEditMarksViewModel : BaseViewModel
         Marks = marks;
     }
 
-    public List<int> NumsInMonth { get; set; }
-
+    /// <summary> Ученик </summary>
     public Student Student { get; }
+
+    /// <summary> Дата </summary>
     public DateOnly Date { get; }
 
-    private string _marks;
+    /// <summary> Оценки (строковый формат) </summary>
     public string Marks { get => _marks; set => Set(ref _marks, value); }
 
-    private ICommand _confirmEditCommand;
+    /// <summary> Валидация </summary>
     public ICommand ConfirmEditCommand => _confirmEditCommand
         ??= new Command(OnConfirmEditCommandExecuted, CanConfirmEditCommandExecute);
 

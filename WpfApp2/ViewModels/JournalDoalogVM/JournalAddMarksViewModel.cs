@@ -11,8 +11,12 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels.JournalDoalogVM;
 
+/// <summary> VM для диалога (добавление оценок) </summary>
 public class JournalAddMarksViewModel : BaseViewModel
 {
+    private int? _day;
+    private ICommand _confirmOperationCommand;
+
     public JournalAddMarksViewModel(List<StudentModel> studentModels, int year, int month, List<DateOnly> alreadyAddedDate)
     {
         foreach (var student in studentModels)
@@ -27,14 +31,16 @@ public class JournalAddMarksViewModel : BaseViewModel
         NumInMonth = new(nums);
     }
 
+    /// <summary> Список студентов и их всех оценок </summary>
     public ObservableCollection<StudentAndMarkInDate> StudentsAndMarks { get; } = new();
 
+    /// <summary> оставшиеся даты указанного месяца </summary>
     public List<int> NumInMonth { get; }
 
-    private int? _day;
+    /// <summary> Выбранный день месяца </summary>
     public int? Day { get => _day; set => Set(ref _day, value); }
 
-    private ICommand _confirmOperationCommand;
+    /// <summary> Валидация </summary>
     public ICommand ConfirmOperationCommand => _confirmOperationCommand
         ??= new Command(OnConfirmOperationCommandExecuted, CanConfirmOperationCommandExecute);
 

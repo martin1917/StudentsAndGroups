@@ -11,9 +11,16 @@ using WpfApp2.Infrastructure.Commands;
 
 namespace WpfApp2.ViewModels.StudentDialogVM;
 
+/// <summary> VM для диалога (редактирование ученика) </summary>
 public class StudentEditViewModel : BaseViewModel
 {
     public List<GroupModel> AllGroups { get; set; }
+    private string _firstName;
+    private string _secondName;
+    private string _patronymic;
+    private DateTime _birthDay = DateTime.Now;
+    private GroupModel _groupModel;
+    private ICommand _confirmCommand;
 
     public StudentEditViewModel(StudentModel student, List<GroupModel> allGroups)
     {
@@ -25,22 +32,22 @@ public class StudentEditViewModel : BaseViewModel
         GroupModel = allGroups.First(g => g.Id == student.GroupId);
     }
 
-    private string _firstName;
+    /// <summary> Имя ученика </summary>
     public string FirstName { get => _firstName; set => Set(ref _firstName, value); }
 
-    private string _secondName;
+    /// <summary> Фамилия ученика </summary>
     public string SecondName { get => _secondName; set => Set(ref _secondName, value); }
 
-    private string _patronymic;
+    /// <summary> Отчество ученика </summary>
     public string Patronymic { get => _patronymic; set => Set(ref _patronymic, value); }
 
-    private DateTime _birthDay = DateTime.Now;
+    /// <summary> Дата рождения ученика </summary>
     public DateTime BirthDay { get => _birthDay; set => Set(ref _birthDay, value); }
 
-    private GroupModel _groupModel;
+    /// <summary> Учебная группа ученика </summary>
     public GroupModel GroupModel { get => _groupModel; set => Set(ref _groupModel, value); }
 
-    private ICommand _confirmCommand;
+    /// <summary> Валидация </summary>
     public ICommand ConfirmCommand => _confirmCommand
         ??= new Command(OnConfirmCommandExecuted);
 

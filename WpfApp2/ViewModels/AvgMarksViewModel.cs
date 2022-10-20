@@ -19,9 +19,16 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels;
 
+/// <summary> VM со средними оценками по предметам </summary>
 public class AvgMarksViewModel : BaseViewModel
 {
     private IMapper _mapper;
+    private GroupModel _selectedGroup;
+    private string _selectedMonth;
+    private string _year = $"{DateTime.Now.Year}";
+    private DataTable? _dataTable;
+    private ICommand _loadAvgMarks;
+    private ICommand _saveExcelFileCommand;
 
     public AvgMarksViewModel(IMapper mapper) : base (ViewModelType.AvgMarks)
 	{
@@ -36,11 +43,13 @@ public class AvgMarksViewModel : BaseViewModel
         GroupModels = _mapper.Map<List<GroupModel>>(ctx.Groups);
     }
 
+    /// <summary> Группы </summary>
     public List<GroupModel> GroupModels { get; set; }
 
-    private GroupModel _selectedGroup;
+    /// <summary> Выбаррная группа </summary>
     public GroupModel SelectedGroup { get => _selectedGroup; set => Set(ref _selectedGroup, value); }
 
+    /// <summary> Месяца </summary>
     public List<string> Months { get; set; } = new()
     {
         "Январь",
@@ -57,16 +66,16 @@ public class AvgMarksViewModel : BaseViewModel
         "Декабрь",
     };
 
-    private string _selectedMonth;
+    /// <summary> Выбранный месяц </summary>
     public string SelectedMonth { get => _selectedMonth; set => Set(ref _selectedMonth, value); }
 
-    private string _year = $"{DateTime.Now.Year}";
+    /// <summary> Год </summary>
     public string Year { get => _year; set => Set(ref _year, value); }
 
-    private DataTable? _dataTable;
+    /// <summary> Таблица с данными </summary>
     public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
 
-    private ICommand _loadAvgMarks;
+    /// <summary> Загрузка средних оценок </summary>
     public ICommand LoadAvgMarks => _loadAvgMarks
         ??= new Command(OnLoadAvgMarksExecuted, CanLoadAvgMarksExecute);
 
@@ -151,7 +160,7 @@ public class AvgMarksViewModel : BaseViewModel
         DataTable = tmpTable;
     }
 
-    private ICommand _saveExcelFileCommand;
+    /// <summary> Сохранение данных в Excel </summary>
     public ICommand SaveExcelFileCommand => _saveExcelFileCommand
         ??= new Command(OnSaveExcelFileCommandExecuted, CanSaveExcelFileCommandExecute);
 
@@ -222,5 +231,3 @@ public class AvgMarksViewModel : BaseViewModel
         File.WriteAllBytes(saveFileDialog.FileName, package.GetAsByteArray());
     }
 }
-
-public record AvgMark(int StudentId, int SubjectId, double Mark);

@@ -21,11 +21,22 @@ using System.Collections.ObjectModel;
 
 namespace WpfApp2.ViewModels;
 
+/// <summary> VM, содержащая оценки </summary>
 public class JournalViewModel : BaseViewModel
 {
 	private readonly IMapper _mapper;
+    private SubjectModel _selectedSubject;
+    private GroupModel _selectedGroup;
+    private string _selectedMonth;
+    private string _year = $"{DateTime.Now.Year}";
+    private DataTable? _dataTable;
+    private List<DateOnly> uniqueDates;
+    private ICommand _loadSubjectCommand;
+    private ICommand _loadMarksCommand;
+    private ICommand _addMarksCommand;
+    private ICommand _addCommand;
 
-	public JournalViewModel(IMapper mapper) : base(ViewModelType.AcademyJournal)
+    public JournalViewModel(IMapper mapper) : base(ViewModelType.AcademyJournal)
 	{
 		_mapper = mapper;
         LoadData();
@@ -38,16 +49,19 @@ public class JournalViewModel : BaseViewModel
 		//SubjectModels = _mapper.Map<List<SubjectModel>>(ctx.Subjects);
 	}
 
+    /// <summary> Предметы </summary>
     public ObservableCollection<SubjectModel> SubjectModels { get; private set;  } = new();
 
-    private SubjectModel _selectedSubject;
+    /// <summary> Выбранный предмет </summary>
     public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
 
+    /// <summary> Группы </summary>
 	public List<GroupModel> GroupModels { get; set; }
 
-    private GroupModel _selectedGroup;
+    /// <summary> Выбранная группа </summary>
 	public GroupModel SelectedGroup { get => _selectedGroup; set => Set(ref _selectedGroup, value); }
 
+    /// <summary> Месяца </summary>
     public List<string> Months { get; set; } = new()
     {
         "Январь",
@@ -64,18 +78,16 @@ public class JournalViewModel : BaseViewModel
         "Декабрь",
     };
 
-    private string _selectedMonth;
+    /// <summary> Выбранный месяц </summary>
 	public string SelectedMonth { get => _selectedMonth; set => Set(ref _selectedMonth, value); }
 
-    private string _year = $"{DateTime.Now.Year}";
+    /// <summary> Год </summary>
 	public string Year { get => _year; set => Set(ref _year, value); }
 
-    private DataTable? _dataTable;
+    /// <summary> Таблица с данными </summary>
     public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
 
-    private List<DateOnly> uniqueDates;
-
-    private ICommand _loadSubjectCommand;
+    /// <summary> Загрузить предметы </summary>
     public ICommand LoadSubjectCommand => _loadSubjectCommand
         ??= new Command(OnLoadSubjectCommandExecuted);
 
@@ -94,7 +106,7 @@ public class JournalViewModel : BaseViewModel
         }
     }
 
-    private ICommand _loadMarksCommand;
+    /// <summary> Загрузить оценки </summary>
 	public ICommand LoadMarksCommand => _loadMarksCommand
         ??= new Command(OnLoadMarksCommandExecuted, CanLoadMarksCommandExecute);
 
@@ -200,7 +212,7 @@ public class JournalViewModel : BaseViewModel
         DataTable = tmpTable;
     }
 
-    private ICommand _addMarksCommand;
+    /// <summary> Добавить оценки </summary>
     public ICommand AddMarksCommand => _addMarksCommand
         ??= new Command(OnAddMarksCommandExecuted, CanAddMarksCommandExecute);
 
@@ -249,7 +261,7 @@ public class JournalViewModel : BaseViewModel
         LoadMarks();
     }
 
-    private ICommand _addCommand;
+    /// <summary> Редактировать оценки </summary>
     public ICommand AddCommand => _addCommand
         ??= new Command(OnAddCommandExecuted);
 
@@ -258,7 +270,9 @@ public class JournalViewModel : BaseViewModel
         var dataGrid = (DataGrid)((MouseButtonEventArgs)obj!).Source;
 
         var itemsSource = dataGrid.ItemsSource;
-        if (itemsSource == null) return;
+        if (itemsSource == null 
+            || dataGrid.CurrentCell.Column == null
+            || dataGrid.Columns.Count < 3) return;
 
         var columnHeader = (dataGrid.CurrentCell.Column.Header as string);
         var item = (DataRowView)dataGrid.CurrentCell.Item;
