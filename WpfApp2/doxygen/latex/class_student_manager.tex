@@ -1,0 +1,105 @@
+\hypertarget{class_student_manager}{}\doxysection{Student\+Manager Class Reference}
+\label{class_student_manager}\index{StudentManager@{StudentManager}}
+
+
+Класс менеджера для СТУДЕНТОВ   
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_student_manager_a755b99217f5fe1713fa7406ee335a317}{Student\+Manager}} (IMapper mapper, \mbox{\hyperlink{class_student_dialog_service}{Student\+Dialog\+Service}} student\+Dialog\+Service, \mbox{\hyperlink{class_common_dialog_service}{Common\+Dialog\+Service}} common\+Dialog\+Service)
+\begin{DoxyCompactList}\small\item\em конструктор  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_student_manager_a770982c738a47ffaa5adcc82899a1218}{Edit}} (\mbox{\hyperlink{class_student_model}{Student\+Model}} student\+Model)
+\begin{DoxyCompactList}\small\item\em Редактирование студента  \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_student_model}{Student\+Model}}? \mbox{\hyperlink{class_student_manager_a8ddfb258e49d5ac8a9f0984e359968b7}{Create\+In}} (\mbox{\hyperlink{class_group_model}{Group\+Model}} target\+Group)
+\begin{DoxyCompactList}\small\item\em Создать студента в группк  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_student_manager_a99dc70e5126fa29f3bd484566bf9f90f}{Delete}} (\mbox{\hyperlink{class_student_model}{Student\+Model}} student\+Model)
+\begin{DoxyCompactList}\small\item\em Удаление студента  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Класс менеджера для СТУДЕНТОВ  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_student_manager_a755b99217f5fe1713fa7406ee335a317}\label{class_student_manager_a755b99217f5fe1713fa7406ee335a317}} 
+\index{StudentManager@{StudentManager}!StudentManager@{StudentManager}}
+\index{StudentManager@{StudentManager}!StudentManager@{StudentManager}}
+\doxysubsubsection{\texorpdfstring{StudentManager()}{StudentManager()}}
+{\footnotesize\ttfamily Student\+Manager.\+Student\+Manager (\begin{DoxyParamCaption}\item[{IMapper}]{mapper,  }\item[{\mbox{\hyperlink{class_student_dialog_service}{Student\+Dialog\+Service}}}]{student\+Dialog\+Service,  }\item[{\mbox{\hyperlink{class_common_dialog_service}{Common\+Dialog\+Service}}}]{common\+Dialog\+Service }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+конструктор  
+
+
+\begin{DoxyParams}{Parameters}
+{\em mapper} & Маппер, для отображения одних сущностей на другие\\
+\hline
+{\em student\+Dialog\+Service} & Сервис, который будет показывать диалог для студентов\\
+\hline
+{\em common\+Dialog\+Service} & Сервис, который будет показывать общие сообщения в виде Message\+Box\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_student_manager_a8ddfb258e49d5ac8a9f0984e359968b7}\label{class_student_manager_a8ddfb258e49d5ac8a9f0984e359968b7}} 
+\index{StudentManager@{StudentManager}!CreateIn@{CreateIn}}
+\index{CreateIn@{CreateIn}!StudentManager@{StudentManager}}
+\doxysubsubsection{\texorpdfstring{CreateIn()}{CreateIn()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_student_model}{Student\+Model}}? Student\+Manager.\+Create\+In (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_group_model}{Group\+Model}}}]{target\+Group }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Создать студента в группк  
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Group} & Группа, в которой будет создан студент\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Созданный студент
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_student_manager_a99dc70e5126fa29f3bd484566bf9f90f}\label{class_student_manager_a99dc70e5126fa29f3bd484566bf9f90f}} 
+\index{StudentManager@{StudentManager}!Delete@{Delete}}
+\index{Delete@{Delete}!StudentManager@{StudentManager}}
+\doxysubsubsection{\texorpdfstring{Delete()}{Delete()}}
+{\footnotesize\ttfamily bool Student\+Manager.\+Delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_student_model}{Student\+Model}}}]{student\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Удаление студента  
+
+
+\begin{DoxyParams}{Parameters}
+{\em student\+Model} & Удаляемый студент\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если удаление успешно; false -\/ иначе
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_student_manager_a770982c738a47ffaa5adcc82899a1218}\label{class_student_manager_a770982c738a47ffaa5adcc82899a1218}} 
+\index{StudentManager@{StudentManager}!Edit@{Edit}}
+\index{Edit@{Edit}!StudentManager@{StudentManager}}
+\doxysubsubsection{\texorpdfstring{Edit()}{Edit()}}
+{\footnotesize\ttfamily bool Student\+Manager.\+Edit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_student_model}{Student\+Model}}}]{student\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Редактирование студента  
+
+
+\begin{DoxyParams}{Parameters}
+{\em student\+Model} & Редактируемый студент\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если редактирование успешно; false -\/ иначе
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Managers/Student\+Manager.\+cs\end{DoxyCompactItemize}

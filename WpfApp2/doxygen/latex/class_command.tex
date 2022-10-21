@@ -1,0 +1,73 @@
+\hypertarget{class_command}{}\doxysection{Command Class Reference}
+\label{class_command}\index{Command@{Command}}
+
+
+Класс команды   
+
+
+Inheritance diagram for Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_a25e3a30aa51bda5ee20677ca66f8c733}{Command}} (Action$<$ object?$>$ execute, Func$<$ object?, bool $>$? can\+Execute=null)
+\begin{DoxyCompactList}\small\item\em Конструктор  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_command_a74173ea6e14bfdff9181fe52c4cbda60}{Can\+Execute}} (object? parameter)
+\begin{DoxyCompactList}\small\item\em Проверить может ли быть выполнена команда  \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_command_af50eac1997c51ea753bfebacdec860ac}\label{class_command_af50eac1997c51ea753bfebacdec860ac}} 
+void {\bfseries Execute} (object? parameter)
+\begin{DoxyCompactList}\small\item\em Выполнить команду  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_command_a5035fe026e899ff01427053263c087c6}\label{class_command_a5035fe026e899ff01427053263c087c6}} 
+Event\+Handler? {\bfseries Can\+Execute\+Changed}
+\begin{DoxyCompactList}\small\item\em Событие возникает, когда возможность выполнения команды изменяется  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Класс команды  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_command_a25e3a30aa51bda5ee20677ca66f8c733}\label{class_command_a25e3a30aa51bda5ee20677ca66f8c733}} 
+\index{Command@{Command}!Command@{Command}}
+\index{Command@{Command}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{Command()}{Command()}}
+{\footnotesize\ttfamily Command.\+Command (\begin{DoxyParamCaption}\item[{Action$<$ object?$>$}]{execute,  }\item[{Func$<$ object?, bool $>$?}]{can\+Execute = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор  
+
+
+\begin{DoxyParams}{Parameters}
+{\em execute} & Делегат, который будет выполнен, при выполнении команды\\
+\hline
+{\em can\+Execute} & Делегат, который будет выполнен, при проверке может ли быть выполнена команда \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_command_a74173ea6e14bfdff9181fe52c4cbda60}\label{class_command_a74173ea6e14bfdff9181fe52c4cbda60}} 
+\index{Command@{Command}!CanExecute@{CanExecute}}
+\index{CanExecute@{CanExecute}!Command@{Command}}
+\doxysubsubsection{\texorpdfstring{CanExecute()}{CanExecute()}}
+{\footnotesize\ttfamily bool Command.\+Can\+Execute (\begin{DoxyParamCaption}\item[{object?}]{parameter }\end{DoxyParamCaption})}
+
+
+
+Проверить может ли быть выполнена команда  
+
+\begin{DoxyReturn}{Returns}
+true -\/ если выполнение возможно; else -\/ невозможно 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Infrastructure/\+Commands/Command.\+cs\end{DoxyCompactItemize}

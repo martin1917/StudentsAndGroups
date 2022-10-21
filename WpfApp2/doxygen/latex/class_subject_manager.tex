@@ -1,0 +1,162 @@
+\hypertarget{class_subject_manager}{}\doxysection{Subject\+Manager Class Reference}
+\label{class_subject_manager}\index{SubjectManager@{SubjectManager}}
+
+
+Класс менеджера для ПРЕДМЕТОВ   
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_subject_manager_addb55bf67fe4bd3b69ade3ff4cdb02ae}{Subject\+Manager}} (IMapper mapper, \mbox{\hyperlink{class_subject_dialog_service}{Subject\+Dialog\+Service}} subject\+Dialog\+Service, \mbox{\hyperlink{class_common_dialog_service}{Common\+Dialog\+Service}} common\+Dialog\+Service)
+\begin{DoxyCompactList}\small\item\em Конструктор  \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_subject_model}{Subject\+Model}}? \mbox{\hyperlink{class_subject_manager_a958398e35044afb9bea9839f98a4d900}{Create}} ()
+\begin{DoxyCompactList}\small\item\em Создание предмета  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_subject_manager_a945af22feac9bb6d607d748466092cf8}{Edit}} (\mbox{\hyperlink{class_subject_model}{Subject\+Model}} subject\+Model)
+\begin{DoxyCompactList}\small\item\em Редактирование предмета  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_subject_manager_ac66d8e37cf7a8cd1e6fb1f15c11c295d}{Delete\+Subject}} (\mbox{\hyperlink{class_subject_model}{Subject\+Model}} subject\+Model)
+\begin{DoxyCompactList}\small\item\em Удаление предмета  \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_subject_model}{Subject\+Model}}? \mbox{\hyperlink{class_subject_manager_a0491529f4a430ebb6704eac4e51f728c}{Add\+Subject\+For\+Group}} (int num\+Group)
+\begin{DoxyCompactList}\small\item\em Добавление предмета в список изучаемых дисциплин для класса  \end{DoxyCompactList}\item 
+IEnumerable$<$ \mbox{\hyperlink{class_subject}{Subject}} $>$ \mbox{\hyperlink{class_subject_manager_a6f9c31d2c024e3adffda52e92f91912e}{Get\+Subjects\+For\+Group}} (int num\+Group)
+\begin{DoxyCompactList}\small\item\em Получить все изучаемые дисциплины для класса  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_subject_manager_a05d3902e975125902c323db9e606c8c9}{Delete\+Subject\+For\+Group}} (\mbox{\hyperlink{class_subject_model}{Subject\+Model}} subject\+Model, int Num\+Group)
+\begin{DoxyCompactList}\small\item\em Убрать предмет из списка изучаемых дисциплин у класса  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Класс менеджера для ПРЕДМЕТОВ  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_subject_manager_addb55bf67fe4bd3b69ade3ff4cdb02ae}\label{class_subject_manager_addb55bf67fe4bd3b69ade3ff4cdb02ae}} 
+\index{SubjectManager@{SubjectManager}!SubjectManager@{SubjectManager}}
+\index{SubjectManager@{SubjectManager}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{SubjectManager()}{SubjectManager()}}
+{\footnotesize\ttfamily Subject\+Manager.\+Subject\+Manager (\begin{DoxyParamCaption}\item[{IMapper}]{mapper,  }\item[{\mbox{\hyperlink{class_subject_dialog_service}{Subject\+Dialog\+Service}}}]{subject\+Dialog\+Service,  }\item[{\mbox{\hyperlink{class_common_dialog_service}{Common\+Dialog\+Service}}}]{common\+Dialog\+Service }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор  
+
+
+\begin{DoxyParams}{Parameters}
+{\em mapper} & Маппер, для отображения одних сущностей на другие\\
+\hline
+{\em subject\+Dialog\+Service} & Сервис, который будет показывать диалог для предметов\\
+\hline
+{\em common\+Dialog\+Service} & Сервис, который будет показывать общие сообщения в виде Message\+Box\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_subject_manager_a0491529f4a430ebb6704eac4e51f728c}\label{class_subject_manager_a0491529f4a430ebb6704eac4e51f728c}} 
+\index{SubjectManager@{SubjectManager}!AddSubjectForGroup@{AddSubjectForGroup}}
+\index{AddSubjectForGroup@{AddSubjectForGroup}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{AddSubjectForGroup()}{AddSubjectForGroup()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_subject_model}{Subject\+Model}}? Subject\+Manager.\+Add\+Subject\+For\+Group (\begin{DoxyParamCaption}\item[{int}]{num\+Group }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Добавление предмета в список изучаемых дисциплин для класса  
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Group} & номер класса\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Добавленный предмет 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_subject_manager_a958398e35044afb9bea9839f98a4d900}\label{class_subject_manager_a958398e35044afb9bea9839f98a4d900}} 
+\index{SubjectManager@{SubjectManager}!Create@{Create}}
+\index{Create@{Create}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_subject_model}{Subject\+Model}}? Subject\+Manager.\+Create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Создание предмета  
+
+\begin{DoxyReturn}{Returns}
+Созданный предмет 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_subject_manager_ac66d8e37cf7a8cd1e6fb1f15c11c295d}\label{class_subject_manager_ac66d8e37cf7a8cd1e6fb1f15c11c295d}} 
+\index{SubjectManager@{SubjectManager}!DeleteSubject@{DeleteSubject}}
+\index{DeleteSubject@{DeleteSubject}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{DeleteSubject()}{DeleteSubject()}}
+{\footnotesize\ttfamily bool Subject\+Manager.\+Delete\+Subject (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_subject_model}{Subject\+Model}}}]{subject\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Удаление предмета  
+
+
+\begin{DoxyParams}{Parameters}
+{\em subject\+Model} & Удаляемая группа\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если удаление успешно; false -\/ иначе
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_subject_manager_a05d3902e975125902c323db9e606c8c9}\label{class_subject_manager_a05d3902e975125902c323db9e606c8c9}} 
+\index{SubjectManager@{SubjectManager}!DeleteSubjectForGroup@{DeleteSubjectForGroup}}
+\index{DeleteSubjectForGroup@{DeleteSubjectForGroup}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{DeleteSubjectForGroup()}{DeleteSubjectForGroup()}}
+{\footnotesize\ttfamily bool Subject\+Manager.\+Delete\+Subject\+For\+Group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_subject_model}{Subject\+Model}}}]{subject\+Model,  }\item[{int}]{Num\+Group }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Убрать предмет из списка изучаемых дисциплин у класса  
+
+
+\begin{DoxyParams}{Parameters}
+{\em subject\+Model} & Убираемый предмет\\
+\hline
+{\em Num\+Group} & номер класса\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если удаление успешно; false -\/ иначе
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_subject_manager_a945af22feac9bb6d607d748466092cf8}\label{class_subject_manager_a945af22feac9bb6d607d748466092cf8}} 
+\index{SubjectManager@{SubjectManager}!Edit@{Edit}}
+\index{Edit@{Edit}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{Edit()}{Edit()}}
+{\footnotesize\ttfamily bool Subject\+Manager.\+Edit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_subject_model}{Subject\+Model}}}]{subject\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Редактирование предмета  
+
+
+\begin{DoxyParams}{Parameters}
+{\em subject\+Model} & Редактируемая группа\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если редактирование успешно; false -\/ иначе
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_subject_manager_a6f9c31d2c024e3adffda52e92f91912e}\label{class_subject_manager_a6f9c31d2c024e3adffda52e92f91912e}} 
+\index{SubjectManager@{SubjectManager}!GetSubjectsForGroup@{GetSubjectsForGroup}}
+\index{GetSubjectsForGroup@{GetSubjectsForGroup}!SubjectManager@{SubjectManager}}
+\doxysubsubsection{\texorpdfstring{GetSubjectsForGroup()}{GetSubjectsForGroup()}}
+{\footnotesize\ttfamily IEnumerable$<$ \mbox{\hyperlink{class_subject}{Subject}} $>$ Subject\+Manager.\+Get\+Subjects\+For\+Group (\begin{DoxyParamCaption}\item[{int}]{num\+Group }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Получить все изучаемые дисциплины для класса  
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Group} & номер класса\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Перечисление предметов
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Managers/Subject\+Manager.\+cs\end{DoxyCompactItemize}

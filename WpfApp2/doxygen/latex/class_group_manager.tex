@@ -1,0 +1,100 @@
+\hypertarget{class_group_manager}{}\doxysection{Group\+Manager Class Reference}
+\label{class_group_manager}\index{GroupManager@{GroupManager}}
+
+
+Класс менеджера для ГРУПП   
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_group_manager_a19dcf68aca3e5ae6d176b9a612eb8738}{Group\+Manager}} (IMapper mapper, \mbox{\hyperlink{class_group_dialog_service}{Group\+Dialog\+Service}} group\+Dialog\+Service, \mbox{\hyperlink{class_common_dialog_service}{Common\+Dialog\+Service}} common\+Dialog\+Service)
+\begin{DoxyCompactList}\small\item\em Конструктор  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_group_manager_acc3b49df03514e4eff0c5b2eeb017263}{Edit}} (\mbox{\hyperlink{class_group_model}{Group\+Model}} group\+Model)
+\begin{DoxyCompactList}\small\item\em Редактирование группы  \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_group_model}{Group\+Model}}? \mbox{\hyperlink{class_group_manager_a98a10a207fe08c57a8923f7ea5a937c9}{Create}} ()
+\begin{DoxyCompactList}\small\item\em Создание группы  \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_group_manager_a3eff4244a4145fc59cd271e6c7dba5c1}{Delete}} (\mbox{\hyperlink{class_group_model}{Group\+Model}} group\+Model)
+\begin{DoxyCompactList}\small\item\em Удаление группы  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Класс менеджера для ГРУПП  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_group_manager_a19dcf68aca3e5ae6d176b9a612eb8738}\label{class_group_manager_a19dcf68aca3e5ae6d176b9a612eb8738}} 
+\index{GroupManager@{GroupManager}!GroupManager@{GroupManager}}
+\index{GroupManager@{GroupManager}!GroupManager@{GroupManager}}
+\doxysubsubsection{\texorpdfstring{GroupManager()}{GroupManager()}}
+{\footnotesize\ttfamily Group\+Manager.\+Group\+Manager (\begin{DoxyParamCaption}\item[{IMapper}]{mapper,  }\item[{\mbox{\hyperlink{class_group_dialog_service}{Group\+Dialog\+Service}}}]{group\+Dialog\+Service,  }\item[{\mbox{\hyperlink{class_common_dialog_service}{Common\+Dialog\+Service}}}]{common\+Dialog\+Service }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Конструктор  
+
+
+\begin{DoxyParams}{Parameters}
+{\em mapper} & Маппер, для отображения одних сущностей на другие\\
+\hline
+{\em group\+Dialog\+Service} & Сервис, который будет показывать диалог для групп\\
+\hline
+{\em common\+Dialog\+Service} & Сервис, который будет показывать общие сообщения в виде Message\+Box\\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_group_manager_a98a10a207fe08c57a8923f7ea5a937c9}\label{class_group_manager_a98a10a207fe08c57a8923f7ea5a937c9}} 
+\index{GroupManager@{GroupManager}!Create@{Create}}
+\index{Create@{Create}!GroupManager@{GroupManager}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_group_model}{Group\+Model}}? Group\+Manager.\+Create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Создание группы  
+
+\begin{DoxyReturn}{Returns}
+Созданная группа 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_group_manager_a3eff4244a4145fc59cd271e6c7dba5c1}\label{class_group_manager_a3eff4244a4145fc59cd271e6c7dba5c1}} 
+\index{GroupManager@{GroupManager}!Delete@{Delete}}
+\index{Delete@{Delete}!GroupManager@{GroupManager}}
+\doxysubsubsection{\texorpdfstring{Delete()}{Delete()}}
+{\footnotesize\ttfamily bool Group\+Manager.\+Delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_group_model}{Group\+Model}}}]{group\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Удаление группы  
+
+
+\begin{DoxyParams}{Parameters}
+{\em group\+Model} & Удаляемая группа\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если удаление успешно; false -\/ иначе
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_group_manager_acc3b49df03514e4eff0c5b2eeb017263}\label{class_group_manager_acc3b49df03514e4eff0c5b2eeb017263}} 
+\index{GroupManager@{GroupManager}!Edit@{Edit}}
+\index{Edit@{Edit}!GroupManager@{GroupManager}}
+\doxysubsubsection{\texorpdfstring{Edit()}{Edit()}}
+{\footnotesize\ttfamily bool Group\+Manager.\+Edit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_group_model}{Group\+Model}}}]{group\+Model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Редактирование группы  
+
+
+\begin{DoxyParams}{Parameters}
+{\em group\+Model} & Редактируемая группа\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true -\/ если редактирование успешно; false -\/ иначе
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Managers/Group\+Manager.\+cs\end{DoxyCompactItemize}
