@@ -38,17 +38,17 @@
 </br></br>  
 3. Представление "Все предметы"  
 ![](./Docs/images/11-2.png)  
-[Более подробное пояснение](./Docs/descriptions/All_subjects.md.md)  
+[Более подробное пояснение](./Docs/descriptions/All_subjects.md)  
 </br></br>  
 4. Представление "Предметы по группам"  
 ![](./Docs/images/14-2.png)  
-[Более подробное пояснение](./Docs/descriptions/Subjects_for_group.md.md.md)  
+[Более подробное пояснение](./Docs/descriptions/Subjects_for_group.md)  
 </br></br>  
 5. Представление "Журнал"  
 ![](./Docs/images/19-4.png)  
-[Более подробное пояснение](./Docs/descriptions/Journal.md.md.md)  
+[Более подробное пояснение](./Docs/descriptions/Journal.md)  
 </br></br>  
 6. Представление "Средние оценки по всем предметам для студентов из группы"  
 ![](./Docs/images/23-2.png)  
-[Более подробное пояснение](./Docs/descriptions/Avg_marks.md.md.md)  
+[Более подробное пояснение](./Docs/descriptions/Avg_marks.md)  
 </br></br>  
