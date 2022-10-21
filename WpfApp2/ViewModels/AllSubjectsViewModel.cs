@@ -43,10 +43,10 @@ public class AllSubjectsViewModel : BaseViewModel
 		{
 			SubjectModels.Add(item);
 		}
-	}
-
+    }
+	
 	/// <summary> предметы </summary>
-	public ObservableCollection<SubjectModel> SubjectModels { get; } = new();
+    public ObservableCollection<SubjectModel> SubjectModels { get; } = new();
 
 	/// <summary> Выбранный предмет </summary>
 	public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
