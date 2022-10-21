@@ -1,8 +1,0 @@
-var searchData=
-[
-  ['group_0',['Group',['../class_academic_performance_log.html#a80cea162bc1136c49180b41f4ba7d913',1,'AcademicPerformanceLog.Group()'],['../class_student.html#af07b8d3cd405396065eb97c5df30af10',1,'Student.Group()']]],
-  ['groupid_1',['GroupId',['../class_academic_performance_log.html#ab033871d901685b1d6614ad57f485bf4',1,'AcademicPerformanceLog.GroupId()'],['../class_student.html#a0909198fc40ddd738c06e42915de5d05',1,'Student.GroupId()'],['../class_academic_performance_log_model.html#a2d6cec91546622c27c5c867316e85482',1,'AcademicPerformanceLogModel.GroupId()'],['../class_student_model.html#ab624506b9a9a6df3bbd794ba48ac8a4c',1,'StudentModel.GroupId()']]],
-  ['groupmodel_2',['GroupModel',['../class_academic_performance_log_model.html#a04f5e0264556924718bbb86a4f36b7cb',1,'AcademicPerformanceLogModel.GroupModel()'],['../class_student_model.html#a67b69b6f92a1b1ffa0e01205809c0251',1,'StudentModel.GroupModel()'],['../class_student_create_view_model.html#a7b4ab92388d6e39a28c9bac6b57ff2f7',1,'StudentCreateViewModel.GroupModel()'],['../class_student_edit_view_model.html#abf688b68c56f1ad01b28466a9b0b03b5',1,'StudentEditViewModel.GroupModel()']]],
-  ['groupmodels_3',['GroupModels',['../class_avg_marks_view_model.html#a0bd39e54aa605a695b891071933a72d7',1,'AvgMarksViewModel.GroupModels()'],['../class_journal_view_model.html#af5eba60cec1b9f689106cbf9c798cef4',1,'JournalViewModel.GroupModels()']]],
-  ['groups_4',['Groups',['../class_context.html#abb6d33c4371a813ab80c05603aeb2776',1,'Context.Groups()'],['../class_groups_students_view_model.html#a0b0c836d572d8d2f8572547673fe19df',1,'GroupsStudentsViewModel.Groups()']]]
-];
