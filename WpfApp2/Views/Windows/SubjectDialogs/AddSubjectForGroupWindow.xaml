@@ -9,7 +9,7 @@
         xmlns:conv="clr-namespace:WpfApp2.Infrastructure.Converters"
         xmlns:c="clr-namespace:WpfApp2.Infrastructure.Commands"
         mc:Ignorable="d"
-        Title="AddSubjectForGroupWindow" Height="176" Width="356"
+        Title="Добавление предмета" Height="176" Width="356"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:AddSubjectForGroupViewModel}">
 

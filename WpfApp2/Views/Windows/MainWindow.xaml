@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:nav="clr-namespace:WpfApp2.State"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Школа" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}">
     
