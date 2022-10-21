@@ -7,6 +7,7 @@ namespace WpfApp2.Mapper;
 /// <summary> Класс, отображающий один класс на другой</summary>
 public class AppMappingProfile : Profile
 {
+    /// <summary> Конструтор, в котором происходит конфигурация маппера </summary>
 	public AppMappingProfile()
 	{
 		CreateMap<Group, GroupModel>()

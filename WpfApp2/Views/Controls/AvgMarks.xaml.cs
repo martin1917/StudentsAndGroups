@@ -1,28 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿namespace WpfApp2.Views.Controls;
 
-namespace WpfApp2.Views.Controls
+/// <summary> Представление со средними оценками </summary>
+public partial class AvgMarks
 {
-    /// <summary>
-    /// Логика взаимодействия для AvgMarks.xaml
-    /// </summary>
-    public partial class AvgMarks : UserControl
+    /// <summary> Конструктор </summary>
+    public AvgMarks()
     {
-        public AvgMarks()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

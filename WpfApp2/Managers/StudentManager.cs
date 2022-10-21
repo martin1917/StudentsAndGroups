@@ -15,6 +15,12 @@ public class StudentManager
     private readonly StudentDialogService _studentDialogService;
     private readonly CommonDialogService _commonDialogService;
 
+    /// <summary>
+    /// конструктор
+    /// </summary>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
+    /// <param name="studentDialogService">Сервис, который будет показывать диалог для студентов</param>
+    /// <param name="commonDialogService">Сервис, который будет показывать общие сообщения в виде MessageBox</param>
     public StudentManager(IMapper mapper,
         StudentDialogService studentDialogService,
         CommonDialogService commonDialogService)

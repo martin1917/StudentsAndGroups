@@ -12,7 +12,7 @@ public class GroupDialogService
     /// Отображение диалогового окна - для редактирование
     /// </summary>
     /// <param name="group">редактируемая группа</param>
-    /// <returns></returns>
+    /// <returns>true - если редактирование удачно; false - иначе</returns>
     public bool Edit(GroupModel group)
     {
         var vm = new GroupEditViewModel(group);

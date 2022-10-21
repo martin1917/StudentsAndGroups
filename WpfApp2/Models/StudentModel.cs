@@ -3,7 +3,7 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.Models;
 
-/// <summary> Ученик (Отображается на UI) </summary>
+/// (Отображается на UI) <summary> Ученик </summary>
 public class StudentModel : BaseViewModel
 {
     private int _id;

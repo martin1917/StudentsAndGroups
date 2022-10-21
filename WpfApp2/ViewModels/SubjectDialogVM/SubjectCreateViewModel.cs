@@ -19,6 +19,10 @@ public class SubjectCreateViewModel : BaseViewModel
     private List<int> _numGroups;
     private ICommand _confirmCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="subject">Предмет</param>
 	public SubjectCreateViewModel(SubjectModel subject)
 	{
         subjectId = subject.Id;

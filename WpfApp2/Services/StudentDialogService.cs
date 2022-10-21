@@ -14,7 +14,7 @@ public class StudentDialogService
     /// </summary>
     /// <param name="student"></param>
     /// <param name="groups"></param>
-    /// <returns></returns>
+    /// <returns>true - если редактирование удачно; false - иначе</returns>
     public bool Edit(StudentModel student, List<GroupModel> groups)
     {
         var vm = new StudentEditViewModel(student, groups);
@@ -39,7 +39,7 @@ public class StudentDialogService
     /// </summary>
     /// <param name="student"></param>
     /// <param name="group"></param>
-    /// <returns></returns>
+    /// <returns>true - если создание удачно; false - иначе</returns>
     public bool Create(StudentModel student, GroupModel group)
     {
         var vm = new StudentCreateViewModel(group);

@@ -16,6 +16,12 @@ public class SubjectManager
     private readonly SubjectDialogService _subjectDialogService;
     private readonly CommonDialogService _commonDialogService;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
+    /// <param name="subjectDialogService">Сервис, который будет показывать диалог для предметов</param>
+    /// <param name="commonDialogService">Сервис, который будет показывать общие сообщения в виде MessageBox</param>
     public SubjectManager(IMapper mapper,
         SubjectDialogService subjectDialogService,
         CommonDialogService commonDialogService)

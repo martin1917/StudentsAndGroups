@@ -20,6 +20,14 @@ public class ViewModelFactory
     private readonly CreateViewModel<JournalViewModel> _createJournalViewModel;
     private readonly CreateViewModel<AvgMarksViewModel> _createAvgMarksViewModel;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="createGroupsStudentsViewModel">создание VM с группами и студентами</param>
+    /// <param name="createAllSubjectsViewModel">создание VM со всеми предметами</param>
+    /// <param name="createSubjectForGroupViewModel">создание VM с изучаемыми предметами для группы</param>
+    /// <param name="createJournalViewModel">создание VM с оценками (журанл)</param>
+    /// <param name="createAvgMarksViewModel">создание VM со средними оценками</param>
     public ViewModelFactory(CreateViewModel<GroupsStudentsViewModel> createGroupsStudentsViewModel,
         CreateViewModel<AllSubjectsViewModel> createAllSubjectsViewModel,
         CreateViewModel<SubjectForGroupViewModel> createSubjectForGroupViewModel,

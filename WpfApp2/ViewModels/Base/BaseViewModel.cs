@@ -13,6 +13,10 @@ public abstract class BaseViewModel : INotifyPropertyChanged
     /// <summary> Тип VM </summary>
     public ViewModelType ViewModelType { get; init; }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="viewModelType">Тип VM</param>
     public BaseViewModel(ViewModelType viewModelType = ViewModelType.Other)
     {
         ViewModelType = viewModelType;

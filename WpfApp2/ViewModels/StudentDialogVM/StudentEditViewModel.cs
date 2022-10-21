@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows;
-using WpfApp2.Entity;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 using WpfApp2.Infrastructure.Commands;
@@ -22,6 +21,11 @@ public class StudentEditViewModel : BaseViewModel
     private GroupModel _groupModel;
     private ICommand _confirmCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="student">Студент</param>
+    /// <param name="allGroups">Группы, в которые можно перевести студента</param>
     public StudentEditViewModel(StudentModel student, List<GroupModel> allGroups)
     {
         AllGroups = allGroups;

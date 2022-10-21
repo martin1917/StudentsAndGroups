@@ -15,6 +15,7 @@ public class StudentToStringConverter : IValueConverter
         return $"{studentModel.SecondName} {studentModel.FirstName[0]}.{studentModel.Patronymic[0]}.";
     }
 
+    /// <summary> Не используется (Необходим из-за интерфейса IValueConverter) </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return null;

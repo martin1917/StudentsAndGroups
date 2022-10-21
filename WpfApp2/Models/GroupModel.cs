@@ -4,7 +4,7 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.Models;
 
-/// <summary> Учебная группа (Отображается на UI) </summary>
+/// <summary> (Отображается на UI) Учебная группа </summary>
 public class GroupModel : BaseViewModel
 {
     private int _id;

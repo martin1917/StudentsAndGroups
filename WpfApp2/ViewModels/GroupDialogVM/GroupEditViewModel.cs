@@ -15,6 +15,10 @@ public class GroupEditViewModel : BaseViewModel
     private DateTime _dateCreated = DateTime.Now;
     private ICommand _confirmCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="group">Группа</param>
 	public GroupEditViewModel(GroupModel group)
 	{
         Name = group.Name ?? string.Empty;

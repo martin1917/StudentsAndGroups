@@ -18,6 +18,10 @@ public class StudentCreateViewModel : BaseViewModel
     private GroupModel _groupModel;
     private ICommand _confirmCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="group">Группа</param>
     public StudentCreateViewModel(GroupModel group)
     {
         GroupModel = group;

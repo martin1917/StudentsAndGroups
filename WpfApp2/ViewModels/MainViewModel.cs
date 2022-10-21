@@ -10,6 +10,10 @@ public class MainViewModel : BaseViewModel
 {
 	private readonly Navigator _navigator;
 
+	/// <summary>
+	/// Конструктор
+	/// </summary>
+	/// <param name="navigator">Навигатор</param>
     public MainViewModel(Navigator navigator) : base(ViewModelType.Main)
 	{
 		_navigator = navigator;
@@ -32,20 +36,16 @@ public class MainViewModel : BaseViewModel
 
     private ICommand _updateCurrentViewModelCommand;
     /// <summary> Команда по обновлению текущей VM </summary>
-    public ICommand UpdateCurrentViewModelCommand => _updateCurrentViewModelCommand
-		??= new Command(OnUpdateCurrentViewModelCommandExecuted, CanUpdateCurrentViewModelCommandExecute);
+    public ICommand UpdateCurrentViewModelCommand => 
+		_updateCurrentViewModelCommand ??= new Command(OnUpdateCurrentViewModelCommandExecuted, CanUpdateCurrentViewModelCommandExecute);
 
 	private bool CanUpdateCurrentViewModelCommandExecute(object? param)
-	{
-		return param is ViewModelType viewType 
+		=> param is ViewModelType viewType 
 			&& viewType != CurrentViewModel?.ViewModelType;
-    }
 
     private void OnUpdateCurrentViewModelCommandExecuted(object? param)
 	{
 		if (param is ViewModelType viewType)
-		{
 			_navigator.ChangeState(viewType);
-		}
 	}
 }

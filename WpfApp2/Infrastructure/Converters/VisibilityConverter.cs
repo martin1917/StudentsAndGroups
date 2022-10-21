@@ -20,6 +20,7 @@ public class VisibilityConverter : IValueConverter
         return Visibility.Visible;
     }
 
+    /// <summary> Не используется (Необходим из-за интерфейса IValueConverter) </summary>
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return default;

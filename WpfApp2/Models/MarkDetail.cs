@@ -5,7 +5,7 @@ using System.Linq;
 namespace WpfApp2.Models;
 
 /// <summary>
-/// Оценки за дату
+/// Оценки за определенную дату
 /// </summary>
 /// <param name="Marks">Оценки</param>
 /// <param name="Date">Дата</param>

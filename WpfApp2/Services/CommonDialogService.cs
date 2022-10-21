@@ -8,8 +8,8 @@ public class CommonDialogService
     /// <summary>
     /// Подтверждение своих действий
     /// </summary>
-    /// <param name="information"></param>
-    /// <param name="caption"></param>
+    /// <param name="information">сообщение</param>
+    /// <param name="caption">Заголовок</param>
     /// <returns></returns>
     public bool ConfirmInformation(string information, string caption)
     {
@@ -19,7 +19,7 @@ public class CommonDialogService
     /// <summary>
     /// Вывод сообщения об ошибке валидации
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="message">сообщение с ошибкой</param>
     public void ShowErrors(string message)
     {
         MessageBox.Show(message, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);

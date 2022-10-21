@@ -30,10 +30,13 @@ public class AvgMarksViewModel : BaseViewModel
     private ICommand _loadAvgMarks;
     private ICommand _saveExcelFileCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
     public AvgMarksViewModel(IMapper mapper) : base (ViewModelType.AvgMarks)
 	{
-        _mapper = mapper;
-        
+        _mapper = mapper;        
         LoadData();
     }
 
@@ -76,13 +79,11 @@ public class AvgMarksViewModel : BaseViewModel
     public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
 
     /// <summary> Загрузка средних оценок </summary>
-    public ICommand LoadAvgMarks => _loadAvgMarks
-        ??= new Command(OnLoadAvgMarksExecuted, CanLoadAvgMarksExecute);
+    public ICommand LoadAvgMarks => 
+        _loadAvgMarks ??= new Command(OnLoadAvgMarksExecuted, CanLoadAvgMarksExecute);
 
     private bool CanLoadAvgMarksExecute(object? param)
-    {
-        return SelectedGroup != null && SelectedMonth != null;
-    }
+        => SelectedGroup != null && SelectedMonth != null;
 
     private void OnLoadAvgMarksExecuted(object? param)
     {
@@ -161,13 +162,11 @@ public class AvgMarksViewModel : BaseViewModel
     }
 
     /// <summary> Сохранение данных в Excel </summary>
-    public ICommand SaveExcelFileCommand => _saveExcelFileCommand
-        ??= new Command(OnSaveExcelFileCommandExecuted, CanSaveExcelFileCommandExecute);
+    public ICommand SaveExcelFileCommand => 
+        _saveExcelFileCommand ??= new Command(OnSaveExcelFileCommandExecuted, CanSaveExcelFileCommandExecute);
 
     private bool CanSaveExcelFileCommandExecute(object? arg)
-    {
-        return DataTable != null;
-    }
+        => DataTable != null;
 
     private void OnSaveExcelFileCommandExecuted(object? param)
     {

@@ -6,7 +6,6 @@ using WpfApp2.Data;
 using WpfApp2.State;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
-using WpfApp2.Services;
 using WpfApp2.ViewModels.Base;
 using WpfApp2.Managers;
 
@@ -22,6 +21,11 @@ public class AllSubjectsViewModel : BaseViewModel
     private ICommand _editSubjectCommand;
     private ICommand _deleteSubjectCommand;
 
+	/// <summary>
+	/// Конструктор
+	/// </summary>
+	/// <param name="mapper">Маппер</param>
+	/// <param name="subjectManager">Менеджер для работы с предметами</param>
     public AllSubjectsViewModel(IMapper mapper,
         SubjectManager subjectManager) : base(ViewModelType.AllSubjects)
 	{
@@ -48,24 +52,19 @@ public class AllSubjectsViewModel : BaseViewModel
 	public SubjectModel SelectedSubject { get => _selectedSubject; set => Set(ref _selectedSubject, value); }
 
     /// <summary> Создание предмета </summary>
-    public ICommand CreateSubjectCommand => _createSubjectCommand
-		??= new Command(OnCreateSubjectCommandExecuted);
+    public ICommand CreateSubjectCommand => 
+		_createSubjectCommand ??= new Command(OnCreateSubjectCommandExecuted);
 
     private void OnCreateSubjectCommandExecuted(object? param)
 	{
         var newSubject = _subjectManager.Create();
-
-		if (newSubject == null)
-		{
-			return;
-		}
-
+		if (newSubject == null) return;
 		SubjectModels.Add(newSubject);
     }
 
     /// <summary> Редактирование предмета </summary>
-    public ICommand EditSubjectCommand => _editSubjectCommand
-        ??= new Command(OnEditSubjectCommandExecuted, CanEditSubjectCommandExecute);
+    public ICommand EditSubjectCommand => 
+		_editSubjectCommand ??= new Command(OnEditSubjectCommandExecuted, CanEditSubjectCommandExecute);
 
 	private bool CanEditSubjectCommandExecute(object? param)
 		=> SelectedSubject != null;
@@ -76,18 +75,15 @@ public class AllSubjectsViewModel : BaseViewModel
     }
 
     /// <summary> удаление предмета </summary>
-    public ICommand DeleteSubjectCommand => _deleteSubjectCommand
-        ??= new Command(OnDeleteSubjectCommandExecuted, CanDeleteSubjectCommandExecute);
+    public ICommand DeleteSubjectCommand => 
+		_deleteSubjectCommand ??= new Command(OnDeleteSubjectCommandExecuted, CanDeleteSubjectCommandExecute);
 
     private bool CanDeleteSubjectCommandExecute(object? param)
         => SelectedSubject != null;
 
     private void OnDeleteSubjectCommandExecuted(object? param)
     {
-		if (!_subjectManager.DeleteSubject(SelectedSubject))
-		{
-			return;
-		}
+		if (!_subjectManager.DeleteSubject(SelectedSubject)) return;
         SubjectModels.Remove(SelectedSubject);
     }
 }

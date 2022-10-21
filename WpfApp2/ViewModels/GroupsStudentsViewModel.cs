@@ -30,6 +30,12 @@ public class GroupsStudentsViewModel : BaseViewModel
     private ICommand _createGroupCommand;
     private ICommand _deleteGroupCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="studentManager">Менеджер для работы со студентами</param>
+    /// <param name="groupManager">Менеджер для работы с группами</param>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
     public GroupsStudentsViewModel(
         StudentManager studentManager,
         GroupManager groupManager,
@@ -62,17 +68,15 @@ public class GroupsStudentsViewModel : BaseViewModel
     }
 
     /// <summary> редактирование студента </summary>
-    public ICommand EditStudentCommand => _editStudentCommand
-        ??= new Command(OnEditStudentCommandExecuted, CanEditStudentCommandExecute);
+    public ICommand EditStudentCommand => 
+        _editStudentCommand ??= new Command(OnEditStudentCommandExecuted, CanEditStudentCommandExecute);
 
-    private bool CanEditStudentCommandExecute(object? arg) => SelectedStudent != null;
+    private bool CanEditStudentCommandExecute(object? arg) 
+        => SelectedStudent != null;
 
     private void OnEditStudentCommandExecuted(object? obj)
     {
-        if (!_studentManager.Edit(SelectedStudent))
-        {
-            return;
-        }
+        if (!_studentManager.Edit(SelectedStudent)) return;
 
         if (SelectedGroup!.Id != SelectedStudent!.GroupId)
         {
@@ -83,43 +87,39 @@ public class GroupsStudentsViewModel : BaseViewModel
     }
     
     /// <summary> создание студента </summary>
-    public ICommand CreateStudentCommand => _createStudentCommand
-        ??= new Command(OnCreateStudentCommandExecuted, CanCreateStudentCommandExecute);
+    public ICommand CreateStudentCommand => 
+        _createStudentCommand ??= new Command(OnCreateStudentCommandExecuted, CanCreateStudentCommandExecute);
 
-    private bool CanCreateStudentCommandExecute(object? param) => SelectedGroup != null;
+    private bool CanCreateStudentCommandExecute(object? param) 
+        => SelectedGroup != null;
 
     private void OnCreateStudentCommandExecuted(object? param)
     {
         var newStudentModel = _studentManager.CreateIn(SelectedGroup);
-        if (newStudentModel == null)
-        {
-            return;
-        }
+        if (newStudentModel == null) return;
 
         var group = Groups.First(g => g.Id == newStudentModel!.GroupId);
         group.StudentModels.Add(newStudentModel);
     }
         
     /// <summary> удаление студента </summary>
-    public ICommand DeleteStudentCommand => _deleteStudentCommand
-        ??= new Command(OnDeleteStudentCommandExecuted, CanDeleteStudentCommandExecute);
+    public ICommand DeleteStudentCommand => 
+        _deleteStudentCommand ??= new Command(OnDeleteStudentCommandExecuted, CanDeleteStudentCommandExecute);
 
-    private bool CanDeleteStudentCommandExecute(object? param) => SelectedStudent != null;
+    private bool CanDeleteStudentCommandExecute(object? param) 
+        => SelectedStudent != null;
 
     private void OnDeleteStudentCommandExecuted(object? param)
     {
-        if (!_studentManager.Delete(SelectedStudent))
-        {
-            return;
-        }
+        if (!_studentManager.Delete(SelectedStudent)) return;
 
         var group = Groups.First(g => g.Id == SelectedStudent!.GroupId);
         group.StudentModels.Remove(SelectedStudent);
     }
     
     /// <summary> редактирование группы </summary>
-    public ICommand EditGroupCommand => _editGroupCommand
-        ??= new Command(OnEditGroupCommandExecuted, CanEditGroupCommandExecute);
+    public ICommand EditGroupCommand => 
+        _editGroupCommand ??= new Command(OnEditGroupCommandExecuted, CanEditGroupCommandExecute);
 
     private bool CanEditGroupCommandExecute(object? param)
         => SelectedGroup != null;
@@ -130,8 +130,8 @@ public class GroupsStudentsViewModel : BaseViewModel
     }
     
     /// <summary> Создание группы </summary>
-    public ICommand CreateGroupCommand => _createGroupCommand
-        ??= new Command(OnCreateGroupCommandExecuted);
+    public ICommand CreateGroupCommand => 
+        _createGroupCommand ??= new Command(OnCreateGroupCommandExecuted);
 
     private void OnCreateGroupCommandExecuted(object? param)
     {
@@ -140,17 +140,15 @@ public class GroupsStudentsViewModel : BaseViewModel
     }
     
     /// <summary> удаление группы </summary>
-    public ICommand DeleteGroupCommand => _deleteGroupCommand
-        ??= new Command(OnDeleteGroupCommandExecuted, CanDeleteGroupCommandExecute);
+    public ICommand DeleteGroupCommand => 
+        _deleteGroupCommand ??= new Command(OnDeleteGroupCommandExecuted, CanDeleteGroupCommandExecute);
 
-    private bool CanDeleteGroupCommandExecute(object? param) => SelectedGroup != null;
+    private bool CanDeleteGroupCommandExecute(object? param) 
+        => SelectedGroup != null;
 
     private void OnDeleteGroupCommandExecuted(object? param)
     {
-        if (!_groupManager.Delete(SelectedGroup))
-        {
-            return;
-        }
+        if (!_groupManager.Delete(SelectedGroup)) return;
 
         Groups.Remove(SelectedGroup);
     }

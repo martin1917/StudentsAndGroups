@@ -3,7 +3,7 @@
 namespace WpfApp2.Models;
 
 /// <summary>
-/// DTO после редактирования предмета
+/// DTO, возвращаемое после редактирования предмета
 /// </summary>
 /// <param name="Name">Имя измененного предмта</param>
 /// <param name="Classes">классы, после изменения</param>

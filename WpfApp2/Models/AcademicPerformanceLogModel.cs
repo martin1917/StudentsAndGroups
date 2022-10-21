@@ -3,7 +3,7 @@ using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.Models;
 
-/// <summary> Класс, характеризующий успеваемость ученика (Отображение на UI) </summary>
+/// <summary> (Отображение на UI) Класс, характеризующий успеваемость ученика </summary>
 public class AcademicPerformanceLogModel : BaseViewModel
 {
     private int _id;

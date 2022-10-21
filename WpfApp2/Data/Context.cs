@@ -8,6 +8,10 @@ namespace WpfApp2.Data;
 /// <summary> Контекст базы данных </summary>
 public class Context : DbContext
 {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="options">объект, содержащий настройки контекста</param>
 	public Context(DbContextOptions<Context> options) : base(options) { }
 
     /// <summary> Поле для взаимодействия с таблицей Groups в БД </summary>

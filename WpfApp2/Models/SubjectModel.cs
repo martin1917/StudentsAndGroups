@@ -2,7 +2,7 @@
 
 namespace WpfApp2.Models;
 
-/// <summary> Учебный предмет (Отображается на UI) </summary>
+/// <summary> (Отображается на UI) Учебный предмет </summary>
 public class SubjectModel : BaseViewModel
 {
     private int _id;

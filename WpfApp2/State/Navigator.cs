@@ -28,6 +28,10 @@ public class Navigator
         }
     }
 
+    /// <summary>
+    /// Конструтор
+    /// </summary>
+    /// <param name="viewModelFactory">Фабрика по созданию VM</param>
     public Navigator(ViewModelFactory viewModelFactory)
     {
         _viewModelFactory = viewModelFactory;

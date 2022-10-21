@@ -24,6 +24,11 @@ public class SubjectForGroupViewModel : BaseViewModel
     private ICommand _deleteSubjectCommand;
     private ICommand _addSubjectCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
+    /// <param name="subjectManager">Менеджер для работы с предметами</param>
     public SubjectForGroupViewModel(IMapper mapper,
         SubjectManager subjectManager) : base(ViewModelType.SubjectsForGroup)
     {
@@ -44,8 +49,8 @@ public class SubjectForGroupViewModel : BaseViewModel
     public int? SelectedNumGroup { get => _selectedNumGroup; set => Set(ref _selectedNumGroup, value); }
 
     /// <summary> загрузка предметов </summary>
-    public ICommand LoadSubjectCommand => _loadSubjectCommand
-        ??= new Command(OnLoadSubjectCommandExecuted, CanLoadSubjectCommandExecute);
+    public ICommand LoadSubjectCommand => 
+        _loadSubjectCommand ??= new Command(OnLoadSubjectCommandExecuted, CanLoadSubjectCommandExecute);
 
     private bool CanLoadSubjectCommandExecute(object? param)
         => SelectedNumGroup != null;
@@ -63,8 +68,8 @@ public class SubjectForGroupViewModel : BaseViewModel
     }
 
     /// <summary> удаление предмета для группы </summary>
-    public ICommand DeleteSubjectCommand => _deleteSubjectCommand
-        ??= new Command(OnDeleteSubjectCommandExecuted, CanDeleteSubjectCommandExecute);
+    public ICommand DeleteSubjectCommand => 
+        _deleteSubjectCommand ??= new Command(OnDeleteSubjectCommandExecuted, CanDeleteSubjectCommandExecute);
 
     private bool CanDeleteSubjectCommandExecute(object? param)
         => SelectedSubject != null;
@@ -72,16 +77,14 @@ public class SubjectForGroupViewModel : BaseViewModel
     private void OnDeleteSubjectCommandExecuted(object? param)
     {
         if(!_subjectManager.DeleteSubjectForGroup(SelectedSubject, SelectedNumGroup!.Value))
-        {
             return;
-        }
 
         SubjectModels.Remove(SelectedSubject);
     }
 
     /// <summary> добавление предмета для группы </summary>
-    public ICommand AddSubjectCommand => _addSubjectCommand
-        ??= new Command(OnAddSubjectCommandExecuted, CanAddSubjectCommandExecute);
+    public ICommand AddSubjectCommand => 
+        _addSubjectCommand ??= new Command(OnAddSubjectCommandExecuted, CanAddSubjectCommandExecute);
 
     private bool CanAddSubjectCommandExecute(object? param)
         => SelectedNumGroup != null;
@@ -90,10 +93,7 @@ public class SubjectForGroupViewModel : BaseViewModel
     {
         var newSubject = _subjectManager.AddSubjectForGroup(SelectedNumGroup!.Value);
 
-        if (newSubject == null)
-        {
-            return;
-        }
+        if (newSubject == null) return;
 
         SubjectModels.Add(newSubject);
     }

@@ -17,6 +17,13 @@ public class JournalAddMarksViewModel : BaseViewModel
     private int? _day;
     private ICommand _confirmOperationCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="studentModels">Список студентов</param>
+    /// <param name="year">год</param>
+    /// <param name="month">месяц</param>
+    /// <param name="alreadyAddedDate">Уже добавленые даты (дни переданного месяца)</param>
     public JournalAddMarksViewModel(List<StudentModel> studentModels, int year, int month, List<DateOnly> alreadyAddedDate)
     {
         foreach (var student in studentModels)

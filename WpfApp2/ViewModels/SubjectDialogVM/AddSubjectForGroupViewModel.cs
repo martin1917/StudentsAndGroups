@@ -9,6 +9,11 @@ public class AddSubjectForGroupViewModel : BaseViewModel
 {
     private SubjectModel _selectedSubject;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="subjectModels">Список предметов</param>
+    /// <param name="num">номер класса</param>
     public AddSubjectForGroupViewModel(List<SubjectModel> subjectModels, int num)
 	{
         SubjectModels = subjectModels;

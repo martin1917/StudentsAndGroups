@@ -16,6 +16,12 @@ public class JournalEditMarksViewModel : BaseViewModel
     private string _marks;
     private ICommand _confirmEditCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="student">Студент</param>
+    /// <param name="date">Дата</param>
+    /// <param name="marks">Оценки</param>
     public JournalEditMarksViewModel(Student student, DateOnly date, string marks)
     {
         Student = student;

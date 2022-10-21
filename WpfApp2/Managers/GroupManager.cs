@@ -14,6 +14,12 @@ public class GroupManager
     private readonly GroupDialogService _groupDialogService;
     private readonly CommonDialogService _commonDialogService;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
+    /// <param name="groupDialogService">Сервис, который будет показывать диалог для групп</param>
+    /// <param name="commonDialogService">Сервис, который будет показывать общие сообщения в виде MessageBox</param>
     public GroupManager(IMapper mapper, 
         GroupDialogService groupDialogService,
         CommonDialogService commonDialogService)

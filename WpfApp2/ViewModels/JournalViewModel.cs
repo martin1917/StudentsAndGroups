@@ -36,6 +36,10 @@ public class JournalViewModel : BaseViewModel
     private ICommand _addMarksCommand;
     private ICommand _addCommand;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
     public JournalViewModel(IMapper mapper) : base(ViewModelType.AcademyJournal)
 	{
 		_mapper = mapper;
@@ -88,8 +92,8 @@ public class JournalViewModel : BaseViewModel
     public DataTable? DataTable { get => _dataTable; set => Set(ref _dataTable, value); }
 
     /// <summary> Загрузить предметы </summary>
-    public ICommand LoadSubjectCommand => _loadSubjectCommand
-        ??= new Command(OnLoadSubjectCommandExecuted);
+    public ICommand LoadSubjectCommand => 
+        _loadSubjectCommand ??= new Command(OnLoadSubjectCommandExecuted);
 
     private void OnLoadSubjectCommandExecuted(object? param)
     {
@@ -107,15 +111,13 @@ public class JournalViewModel : BaseViewModel
     }
 
     /// <summary> Загрузить оценки </summary>
-	public ICommand LoadMarksCommand => _loadMarksCommand
-        ??= new Command(OnLoadMarksCommandExecuted, CanLoadMarksCommandExecute);
+	public ICommand LoadMarksCommand => 
+        _loadMarksCommand ??= new Command(OnLoadMarksCommandExecuted, CanLoadMarksCommandExecute);
 
 	private bool CanLoadMarksCommandExecute(object? param)
-	{
-        return SelectedSubject != null
+        => SelectedSubject != null
             && SelectedGroup != null
             && SelectedMonth != null;
-	}
 
 	private void OnLoadMarksCommandExecuted(object? param)
     {
@@ -213,20 +215,15 @@ public class JournalViewModel : BaseViewModel
     }
 
     /// <summary> Добавить оценки </summary>
-    public ICommand AddMarksCommand => _addMarksCommand
-        ??= new Command(OnAddMarksCommandExecuted, CanAddMarksCommandExecute);
+    public ICommand AddMarksCommand => 
+        _addMarksCommand ??= new Command(OnAddMarksCommandExecuted, CanAddMarksCommandExecute);
 
     private bool CanAddMarksCommandExecute(object? arg)
-    {
-        return DataTable != null;
-    }
+        => DataTable != null;
 
     private void OnAddMarksCommandExecuted(object? obj)
     {
-        if (!int.TryParse(Year, out int year))
-        {
-            return;
-        }
+        if (!int.TryParse(Year, out int year)) return;
 
         var ctx = ContextFactory.CreateContext();
 
@@ -262,8 +259,8 @@ public class JournalViewModel : BaseViewModel
     }
 
     /// <summary> Редактировать оценки </summary>
-    public ICommand AddCommand => _addCommand
-        ??= new Command(OnAddCommandExecuted);
+    public ICommand AddCommand => 
+        _addCommand ??= new Command(OnAddCommandExecuted);
 
     private void OnAddCommandExecuted(object? obj)
     {

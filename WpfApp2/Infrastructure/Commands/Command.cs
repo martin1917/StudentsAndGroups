@@ -9,12 +9,16 @@ public class Command : ICommand
     private readonly Action<object?> _execute;
     private readonly Func<object?, bool>? _canExecute;
 
+    /// <summary> Событие возникает, когда возможность выполнения команды изменяется </summary>
     public event EventHandler? CanExecuteChanged
     {
         add => CommandManager.RequerySuggested += value;
         remove => CommandManager.RequerySuggested -= value;
     }
 
+    /// <summary> Конструктор </summary>
+    /// <param name="execute">Делегат, который будет выполнен, при выполнении команды</param>
+    /// <param name="canExecute">Делегат, который будет выполнен, при проверке может ли быть выполнена команда </param>
     public Command(Action<object?> execute, Func<object?, bool>? canExecute = null)
     {
         _execute = execute;

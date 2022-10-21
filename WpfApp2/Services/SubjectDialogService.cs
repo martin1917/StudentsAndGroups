@@ -22,7 +22,7 @@ public class SubjectDialogService
     /// Отображение диалогового окна - для редактирование
     /// </summary>
     /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <returns>true - если редактирование удачно; false - иначе</returns>
     public SubjectDTO Edit(SubjectModel subject)
     {
         var vm = new SubjectCreateViewModel(subject);
@@ -40,7 +40,7 @@ public class SubjectDialogService
     /// Отображение диалогового окна - для добавления предмета для указанногокласса
     /// </summary>
     /// <param name="numGroup">номер класса</param>
-    /// <returns></returns>
+    /// <returns>true - если добавление удачно; false - иначе</returns>
     public SubjectModel? AddSubject(int numGroup)
     {
         var context = ContextFactory.CreateContext();
