@@ -6,7 +6,6 @@ namespace WpfApp2.Entity;
 /// <summary> Учебная группа </summary>
 public class Group
 { 
-
     public int Id { get; set; }
 
     /// <summary> Название учебной группы </summary>

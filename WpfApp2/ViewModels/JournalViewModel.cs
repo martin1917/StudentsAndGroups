@@ -293,8 +293,13 @@ public class JournalViewModel : BaseViewModel
         var marksBefore = Regex.Replace(marks.Trim().ToUpper(), @"\s+", " ").Split(" ");
         var marksAfter = Regex.Replace(vm.Marks.Trim().ToUpper(), @"\s+", " ").Split(" ");
 
-        var prevMarks = marksBefore.Select(i => i == "Н" ? (int?)null : int.Parse(i));
-        var newMarks = marksAfter.Select(i => i == "Н" ? (int?)null : int.Parse(i));
+        var prevMarks = !string.IsNullOrEmpty(marksBefore[0])
+            ? marksBefore.Select(i => i == "Н" ? (int?)null : int.Parse(i))
+            : new List<int?>();
+
+        var newMarks = !string.IsNullOrEmpty(marksAfter[0])
+            ? marksAfter.Select(i => i == "Н" ? (int?)null : int.Parse(i))
+            : new List<int?>();
 
         // remove
         foreach (var prevMark in prevMarks.Except(newMarks))

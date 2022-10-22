@@ -51,7 +51,7 @@ public class StudentManager
     }
 
     /// <summary>
-    /// Создать студента в группк
+    /// Создать студента в группе
     /// </summary>
     /// <param name="targetGroup">Группа, в которой будет создан студент</param>
     /// <returns>Созданный студент</returns>
