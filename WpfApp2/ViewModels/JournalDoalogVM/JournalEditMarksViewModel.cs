@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using WpfApp2.Entity;
 using WpfApp2.Infrastructure.Commands;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
@@ -67,7 +65,7 @@ public class JournalEditMarksViewModel : BaseViewModel
             }
         }
 
-        if (string.IsNullOrEmpty(error))
+        if (string.IsNullOrEmpty(error) || string.IsNullOrEmpty(marks[0]))
         {
             var window = App.CurrentWindow;
             window.DialogResult = true;
