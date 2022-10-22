@@ -37,14 +37,12 @@ public class StudentManager
     /// <returns> true - если редактирование успешно; false - иначе</returns>
     public bool Edit(StudentModel studentModel)
     {
-        var ctx = ContextFactory.CreateContext();
-        var groups = _mapper.Map<List<GroupModel>>(ctx.Groups);
-
-        if (!_studentDialogService.Edit(studentModel, groups))
+        if (!_studentDialogService.Edit(studentModel))
         {
             return false;
         }
 
+        var ctx = ContextFactory.CreateContext();
         var entity = _mapper.Map<Student>(studentModel);
         ctx.Entry(entity).State = EntityState.Modified;
         ctx.SaveChanges();

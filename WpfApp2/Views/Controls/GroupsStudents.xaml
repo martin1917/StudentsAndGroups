@@ -25,12 +25,19 @@
         </Grid.ColumnDefinitions>
 
         <GroupBox Header="Группы" Grid.Column="0">
-            <DockPanel>
+            <DockPanel x:Name="groupDockPanel">
+                <DockPanel.Resources>
+                    <CollectionViewSource x:Key="groupCollection" Source="{Binding Groups}" Filter="CollectionViewSource_Filter"/>
+                </DockPanel.Resources>
                 <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="-3 3">
                     <Button Content="Добавить" Margin="3 0" FontSize="15" Command="{Binding CreateGroupCommand}"/>
                     <Button Content="Удалить" Margin="3 0" FontSize="15" Command="{Binding DeleteGroupCommand}"/>
                 </UniformGrid>
-                <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}">
+                <DockPanel DockPanel.Dock="Top" Margin="0 5">
+                    <TextBlock Text="Фильтр" Margin="0 0 5 0"/>
+                    <TextBox x:Name="groupFilter" TextChanged="groupFilter_TextChanged"/>
+                </DockPanel>
+                <ListBox ItemsSource="{Binding Source={StaticResource groupCollection}}" SelectedItem="{Binding SelectedGroup}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
                             <i:InvokeCommandAction Command="{Binding EditGroupCommand}"/>
@@ -51,7 +58,11 @@
                     <Button Content="Добавить" Margin="3 0" FontSize="15" Command="{Binding CreateStudentCommand}"/>
                     <Button Content="Удалить" Margin="3 0" FontSize="15" Command="{Binding DeleteStudentCommand}"/>
                 </UniformGrid>
-                <ListBox ItemsSource="{Binding SelectedGroup.StudentModels}" SelectedItem="{Binding SelectedStudent}">
+                <DockPanel DockPanel.Dock="Top" Margin="0 5">
+                    <TextBlock Text="Фильтр" Margin="0 0 5 0"/>
+                    <TextBox Text="{Binding StudentFilter, UpdateSourceTrigger=PropertyChanged}"/>
+                </DockPanel>
+                <ListBox ItemsSource="{Binding SelectedGroupStudents}" SelectedItem="{Binding SelectedStudent}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:StudentModel}">
                             <TextBlock>

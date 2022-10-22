@@ -17,6 +17,6 @@ public record MarkDetail(List<int?> Marks, DateOnly Date)
     /// <returns></returns>
     public string? MarksToString()
     {
-        return string.Join(", ", Marks.Select(i => i == null ? "Н" : $"{i}"));
+        return string.Join(" ", Marks.Select(i => i == null ? "Н" : $"{i}"));
     }
 }

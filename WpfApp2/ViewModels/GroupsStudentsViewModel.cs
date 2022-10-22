@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 using WpfApp2.Data;
 using WpfApp2.Infrastructure.Commands;
@@ -17,18 +20,17 @@ public class GroupsStudentsViewModel : BaseViewModel
 {
     private StudentManager _studentManager;
     private GroupManager _groupManager;
-
     private IMapper _mapper;
-
     private GroupModel? _selectedGroup;
     private StudentModel? _selectedStudent;
-
     private ICommand _editStudentCommand;
     private ICommand _createStudentCommand;
     private ICommand _deleteStudentCommand;
     private ICommand _editGroupCommand;
     private ICommand _createGroupCommand;
     private ICommand _deleteGroupCommand;
+    private string _studentFilter;
+    private readonly CollectionViewSource _selectedGroupStudents = new();
 
     /// <summary>
     /// Конструктор
@@ -44,15 +46,55 @@ public class GroupsStudentsViewModel : BaseViewModel
         _studentManager = studentManager;
         _groupManager = groupManager;
         _mapper = mapper;
-
+        
         LoadData();
+        _selectedGroupStudents.Filter += OnStudentFiltered;
+    }
+
+    private void OnStudentFiltered(object sender, FilterEventArgs e)
+    {
+        if (e.Item is not StudentModel student) return;
+        if (student.FirstName == null || student.SecondName == null || student.Patronymic == null) return;
+
+        var fullName = string.Join(" ", student.SecondName, student.FirstName, student.Patronymic);
+        if (string.IsNullOrEmpty(_studentFilter)) return;
+
+        if (fullName.Contains(_studentFilter)) return;
+
+        e.Accepted = false;
+    }
+
+
+    /// <summary> Фильтр для студентов из выбранной группы </summary>
+    public string StudentFilter 
+    {
+        get => _studentFilter;
+        set
+        {
+            if (!Set(ref _studentFilter, value)) return;
+            _selectedGroupStudents.View?.Refresh();
+        }
+    }
+
+    /// <summary> Студенты выбранной группы </summary>
+    public ICollectionView SelectedGroupStudents => _selectedGroupStudents?.View;
+
+    /// <summary> Выбранная группа </summary>
+    public GroupModel? SelectedGroup
+    { 
+        get => _selectedGroup; 
+        set
+        {
+            if (!Set(ref _selectedGroup, value)) return;
+
+            _selectedGroupStudents.Source = value?.StudentModels;
+            _selectedGroupStudents.View?.Refresh();
+            OnPropertyChanged(nameof(SelectedGroupStudents));
+        }
     }
 
     /// <summary> Группы </summary>
     public ObservableCollection<GroupModel> Groups { get; } = new();
-
-    /// <summary> Выбранная группа </summary>
-    public GroupModel? SelectedGroup { get => _selectedGroup; set => Set(ref _selectedGroup, value); }
 
     /// <summary> Выбранный студент </summary>
     public StudentModel? SelectedStudent { get => _selectedStudent; set => Set(ref _selectedStudent, value); }

@@ -50,7 +50,6 @@ public class JournalViewModel : BaseViewModel
 	{
 		var ctx = ContextFactory.CreateContext();
         GroupModels = _mapper.Map<List<GroupModel>>(ctx.Groups);
-		//SubjectModels = _mapper.Map<List<SubjectModel>>(ctx.Subjects);
 	}
 
     /// <summary> Предметы </summary>
@@ -236,7 +235,7 @@ public class JournalViewModel : BaseViewModel
         foreach (var item in vm.StudentsAndMarks)
         {
             var entityId = item.StudentModel.Id;
-            var marksString = Regex.Replace(item.Marks.Trim(), @"\s+", " ").Split(", ");
+            var marksString = Regex.Replace(item.Marks.Trim(), @"\s+", " ").Split(" ");
             if (string.IsNullOrEmpty(marksString[0])) continue;
             var marks = marksString.Select(i => int.TryParse(i, out int res) ? res : -1);
             foreach (var mark in marks)
@@ -283,7 +282,7 @@ public class JournalViewModel : BaseViewModel
         var date = new DateOnly(partsColumnHeader[2], partsColumnHeader[1], partsColumnHeader[0]);
         var id = (int)item.Row["ID"];
         var marks = (string)item.Row[columnHeader];
-        var student = ctx.Students.First(s => s.Id == id);
+        var student = _mapper.Map<StudentModel>(ctx.Students.First(s => s.Id == id));
 
         var vm = new JournalEditMarksViewModel(student, date, marks);
         var window = new JournalEditMarks { DataContext = vm };
@@ -291,8 +290,8 @@ public class JournalViewModel : BaseViewModel
 
         item.Row[columnHeader] = vm.Marks;
 
-        var marksBefore = Regex.Replace(marks.Trim().ToUpper(), @"\s+", "").Split(",");
-        var marksAfter = Regex.Replace(vm.Marks.Trim().ToUpper(), @"\s+", "").Split(",");
+        var marksBefore = Regex.Replace(marks.Trim().ToUpper(), @"\s+", " ").Split(" ");
+        var marksAfter = Regex.Replace(vm.Marks.Trim().ToUpper(), @"\s+", " ").Split(" ");
 
         var prevMarks = marksBefore.Select(i => i == "Н" ? (int?)null : int.Parse(i));
         var newMarks = marksAfter.Select(i => i == "Н" ? (int?)null : int.Parse(i));

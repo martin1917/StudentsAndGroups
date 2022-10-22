@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Entity;
 using WpfApp2.Infrastructure.Commands;
+using WpfApp2.Models;
 using WpfApp2.ViewModels.Base;
 
 namespace WpfApp2.ViewModels.JournalDoalogVM;
@@ -22,7 +23,7 @@ public class JournalEditMarksViewModel : BaseViewModel
     /// <param name="student">Студент</param>
     /// <param name="date">Дата</param>
     /// <param name="marks">Оценки</param>
-    public JournalEditMarksViewModel(Student student, DateOnly date, string marks)
+    public JournalEditMarksViewModel(StudentModel student, DateOnly date, string marks)
     {
         Student = student;
         Date = date;
@@ -30,7 +31,7 @@ public class JournalEditMarksViewModel : BaseViewModel
     }
 
     /// <summary> Ученик </summary>
-    public Student Student { get; }
+    public StudentModel Student { get; }
 
     /// <summary> Дата </summary>
     public DateOnly Date { get; }

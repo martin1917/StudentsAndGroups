@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
+using WpfApp2.Data;
 using WpfApp2.Models;
 using WpfApp2.ViewModels.StudentDialogVM;
 using WpfApp2.Views.Windows.StudentDialogs;
@@ -9,14 +11,24 @@ namespace WpfApp2.Services;
 /// <summary> Диалоговый сервис для УЧЕНИКОВ </summary>
 public class StudentDialogService
 {
+    private IMapper _mapper;
+
+    public StudentDialogService(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
+
     /// <summary>
     /// Отображение диалогового окна - для редактирование
     /// </summary>
     /// <param name="student"></param>
     /// <param name="groups"></param>
     /// <returns>true - если редактирование удачно; false - иначе</returns>
-    public bool Edit(StudentModel student, List<GroupModel> groups)
+    public bool Edit(StudentModel student)
     {
+        var ctx = ContextFactory.CreateContext();
+        var groups = _mapper.Map<List<GroupModel>>(ctx.Groups);
+
         var vm = new StudentEditViewModel(student, groups);
         var window = new StudentEditWindow { DataContext = vm };
 
