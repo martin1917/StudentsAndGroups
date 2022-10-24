@@ -14,7 +14,7 @@ namespace WpfApp2.ViewModels.SubjectDialogVM;
 public class SubjectCreateViewModel : BaseViewModel
 {
     private int subjectId;
-	private string _name;
+    private string _name;
     private string _nums;
     private List<int> _numGroups;
     private ICommand _confirmCommand;
@@ -26,7 +26,7 @@ public class SubjectCreateViewModel : BaseViewModel
 	public SubjectCreateViewModel(SubjectModel subject)
 	{
         subjectId = subject.Id;
-        Name = subject.Name;
+        Name = subject.Name ?? string.Empty;
         LoadDate();
     }
 
