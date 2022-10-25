@@ -120,9 +120,10 @@ public class JournalViewModel : BaseViewModel
 
 	private void OnLoadMarksCommandExecuted(object? param)
     {
-        if (!int.TryParse(Year, out _))
+        var resultParsing = !int.TryParse(Year, out int year);
+        if (!resultParsing || year < 1000 || year > 9999)
         {
-            var error = "Год должен быть числом";
+            var error = "Год должен быть числом от 1000 до 9999";
             MessageBox.Show(error, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
