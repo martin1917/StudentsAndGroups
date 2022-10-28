@@ -34,7 +34,12 @@
             <Button Content="Отмена" Margin="5 0 0 0" Command="{StaticResource DialogResultCommand}" CommandParameter="False"/>
         </UniformGrid>
 
-        <DataGrid Margin="5" ItemsSource="{Binding StudentsAndMarks}" AutoGenerateColumns="False">
+        <DataGrid Margin="5" 
+                  ItemsSource="{Binding StudentsAndMarks}" 
+                  AutoGenerateColumns="False" 
+                  CanUserReorderColumns="False" 
+                  CanUserSortColumns="False" 
+                  CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding StudentModel.Id}" IsReadOnly="True" Width="auto"/>
                 <DataGridTextColumn Header="Студент" Binding="{Binding StudentModel, Converter={StaticResource StudentToStringConverter}}" IsReadOnly="True" Width="auto"/>
