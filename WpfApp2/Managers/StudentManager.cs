@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using WpfApp2.Data;
 using WpfApp2.Entity;
 using WpfApp2.Models;
@@ -28,6 +29,18 @@ public class StudentManager
         _mapper = mapper;
         _studentDialogService = studentDialogService;
         _commonDialogService = commonDialogService;
+    }
+
+    /// <summary>
+    /// Получение студентов из группы
+    /// </summary>
+    /// <param name="groupId">ID группы</param>
+    /// <returns>Студенты, учащиеся в группе с ID = groupId</returns>
+    public IEnumerable<StudentModel> GetStudentsInGroup(int groupId)
+    {
+        var ctx = ContextFactory.CreateContext();
+        var students = ctx.Students.Where(s => s.GroupId == groupId);
+        return _mapper.Map<IEnumerable<StudentModel>>(students);
     }
 
     /// <summary>

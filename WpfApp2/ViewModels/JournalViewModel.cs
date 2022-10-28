@@ -18,6 +18,7 @@ using WpfApp2.Views.Windows.JournalDialogs;
 using WpfApp2.Extensions;
 using System.Windows;
 using System.Collections.ObjectModel;
+using WpfApp2.Managers;
 
 namespace WpfApp2.ViewModels;
 
@@ -25,6 +26,8 @@ namespace WpfApp2.ViewModels;
 public class JournalViewModel : BaseViewModel
 {
 	private readonly IMapper _mapper;
+    private readonly SubjectManager _subjectManager;
+    private readonly StudentManager _studentManager;
     private SubjectModel _selectedSubject;
     private GroupModel _selectedGroup;
     private string _selectedMonth;
@@ -40,9 +43,13 @@ public class JournalViewModel : BaseViewModel
     /// Конструктор
     /// </summary>
     /// <param name="mapper">Маппер, для отображения одних сущностей на другие</param>
-    public JournalViewModel(IMapper mapper) : base(ViewModelType.AcademyJournal)
+    public JournalViewModel(IMapper mapper,
+        SubjectManager subjectManager,
+        StudentManager studentManager) : base(ViewModelType.AcademyJournal)
 	{
 		_mapper = mapper;
+        _subjectManager = subjectManager;
+        _studentManager = studentManager;
         LoadData();
     }
 
@@ -96,14 +103,14 @@ public class JournalViewModel : BaseViewModel
 
     private void OnLoadSubjectCommandExecuted(object? param)
     {
-        var ctx = ContextFactory.CreateContext();
-
         var deltaYear = DateTime.Now.Year - SelectedGroup.DateCreated.Year;
         var deltaMonth = DateTime.Now.Month - SelectedGroup.DateCreated.Month;
         var num = deltaMonth > 0 ? deltaYear + 1 : deltaYear;
 
+        var subjects = _subjectManager.GetSubjectsForGroup(num);
+
         SubjectModels.Clear();
-        foreach(var subject in ctx.SubjectGroups.Where(sg => sg.NumGroup == num).Select(sg => sg.Subject))
+        foreach(var subject in subjects)
         {
             SubjectModels.Add(_mapper.Map<SubjectModel>(subject));
         }
@@ -171,10 +178,11 @@ public class JournalViewModel : BaseViewModel
                     i.Select(x => x.Mark).ToList(),
                     i.Key)).ToList()));
 
+
+        var students = _studentManager.GetStudentsInGroup(SelectedGroup.Id);
+
+        // заполнение таблицы данными
         DataTable tmpTable = new();
-
-        var students = ctx.Students.Where(s => s.GroupId == SelectedGroup.Id);
-
         tmpTable.Columns.Add("ID", typeof(int));
         tmpTable.Columns.Add("Студент", typeof(string));
         foreach (var date in uniqueDates)
@@ -268,11 +276,12 @@ public class JournalViewModel : BaseViewModel
 
         var itemsSource = dataGrid.ItemsSource;
         if (itemsSource == null 
-            || dataGrid.CurrentCell.Column == null
-            || dataGrid.Columns.Count < 3) return;
+            || dataGrid.CurrentCell.Column == null) return;
 
         var columnHeader = (dataGrid.CurrentCell.Column.Header as string);
         var item = (DataRowView)dataGrid.CurrentCell.Item;
+
+        if (columnHeader.Equals("ID") || columnHeader.Equals("Студент")) return;
 
         var partsColumnHeader = columnHeader
             .Split(" ")
